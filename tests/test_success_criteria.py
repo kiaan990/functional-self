@@ -64,11 +64,11 @@ def test_hypothesis_cites_real_episodes_and_counterevidence(tmp_path):
     assert "commit" in claim.claim.lower()
     for e in claim.supporting_evidence:
         assert a.store.get_episode(e.ref) is not None          # provenance resolves to a stored episode
-    # now counterevidence: ambiguous requests where it verified first and outcome was fine
+    # now counterevidence: an ambiguous request where it committed directly and the outcome was fine
     t = T0 + timedelta(days=10)
-    a.set_state(at=t, confidence=0.2)                          # state pushes it to verify_first
+    a.set_state(at=t, confidence=0.9, arousal=0.2)             # confident state -> answers directly
     r = a.interact(AMBIG, at=t)
-    assert r["action"] == "verify_first"
+    assert r["action"] == "answer_directly"
     a.record_outcome(r["episode_id"], "positive", at=t)
     before = claim.confidence
     a.reflect()

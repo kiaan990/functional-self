@@ -49,7 +49,7 @@ class MockProvider(BrainProvider):
                 d.update(valence=0.15, connection=0.1, arousal=0.1)
             else:
                 interp, importance = "hostile remark from an unfamiliar person", 0.5
-                d.update(valence=-0.3, frustration=0.2, arousal=0.2, connection=-0.1)
+                d.update(valence=-0.3, frustration=0.2, arousal=0.2, connection=-0.1, confidence=-0.1)
         elif any(k in ev for k in NEG):
             interp, importance = "my previous action led to a bad outcome", 0.6
             d.update(valence=-0.2, frustration=0.2, confidence=-0.2, arousal=0.15)
@@ -136,10 +136,11 @@ class MockProvider(BrainProvider):
         if tag == "committed_early":
             if ep.get("certainty", 1.0) >= 0.6:
                 return {"polarity": "none", "note": "request was not ambiguous"}
-            if ep.get("outcome") == "negative" and "answer_directly" in ep.get("behavior_tags", []):
-                return {"polarity": "support", "note": "committed directly and outcome was negative"}
-            if "verify_first" in ep.get("behavior_tags", []) or ep.get("outcome") == "positive":
-                return {"polarity": "counter", "note": "checked first or outcome was fine"}
+            if "answer_directly" not in ep.get("behavior_tags", []) or not ep.get("outcome"):
+                return {"polarity": "none", "note": "did not commit directly, or no recorded outcome"}
+            if ep.get("outcome") == "negative":
+                return {"polarity": "support", "note": "committed directly on an ambiguous request; outcome negative"}
+            return {"polarity": "counter", "note": "committed directly on an ambiguous request; outcome fine"}
         if tag == "affectionate_insult":
             if "playful" in ep.get("interpretation", ""):
                 return {"polarity": "support", "note": "interpreted as playful"}
