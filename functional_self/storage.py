@@ -176,6 +176,10 @@ class Store:
                               (claim_id, episode_id)).fetchone()
         return (r["polarity"], r["note"]) if r else None
 
+    def invalidate_classifications(self, episode_id: str) -> None:
+        self.conn.execute("DELETE FROM evidence_class WHERE episode_id=?", (episode_id,))
+        self.conn.commit()
+
     def set_classification(self, claim_id: str, episode_id: str, polarity: str, note: str) -> None:
         self.conn.execute("INSERT OR REPLACE INTO evidence_class VALUES (?,?,?,?)", (claim_id, episode_id, polarity, note))
         self.conn.commit()

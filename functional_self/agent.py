@@ -136,6 +136,7 @@ class FunctionalSelfAgent:
         if outcome == "negative" and "answer_directly" in ep.behavior_tags and ep.certainty < 0.6:
             ep.lesson_candidate = ep.lesson_candidate or "When uncertainty is high, I commit before checking assumptions"
         self.store.update_episode(ep)
+        self.store.invalidate_classifications(episode_id)   # the outcome changed what this episode is evidence of
         deltas = {"negative": {"valence": -0.12, "frustration": 0.12, "confidence": -0.1},
                   "positive": {"valence": 0.12, "confidence": 0.08}}.get(outcome, {})
         self.state, applied = self.affect.apply(self.state, deltas, at=at)

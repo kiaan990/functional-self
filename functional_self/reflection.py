@@ -22,7 +22,11 @@ class Reflector:
         self.store, self.brain, self.sm, self.soul, self.enabled = store, brain, self_model, soul, enabled
 
     # ---- step 1: thought -> hypothesis + question ----
+    MAX_ACTIVE_CLAIMS = 6   # attention budget: no new hypotheses while this many are open
+
     def hypothesize(self, trigger: str = "manual", window: int = 40) -> Optional[tuple[SelfClaim, Question]]:
+        if len(self.store.claims()) >= self.MAX_ACTIVE_CLAIMS:
+            return None
         eps = self.store.episodes(limit=window)
         ctx = {"episodes": [e.model_dump(mode="json", include={"id", "event", "interpretation",
                                                                  "outcome", "behavior_tags", "lesson_candidate"})
@@ -69,9 +73,8 @@ class Reflector:
                 except RuntimeError as e:
                     self.store.audit("model_failure", task="classify_evidence", error=str(e)[:200])
                     continue   # not cached: will be judged again next time
-                # an episode without a recorded outcome may gain one later: don't freeze its verdict
-                if ep.outcome is not None or polarity != "none":
-                    self.store.set_classification(claim.id, ep.id, polarity, note)
+                # cached per (claim, episode); record_outcome() invalidates the episode's cache when its outcome changes
+                self.store.set_classification(claim.id, ep.id, polarity, note)
             if polarity in ("support", "counter"):
                 prov = Provenance.OUTCOME if ep.outcome else Provenance.EPISODE
                 refs.append(EvidenceRef(ref=ep.id, provenance=prov, polarity=polarity, note=note))

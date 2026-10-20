@@ -65,15 +65,22 @@ def live(agent: FunctionalSelfAgent, stream: Stream, checkpoints: list[int], pro
     # resume support: events already lived (same stream) are skipped; completed checkpoints are reloaded
     done = sum(1 for e in agent.store.episodes() if e.condition == stream.name)
     ckdir = agent.cfg.home / "checkpoints"; ckdir.mkdir(exist_ok=True)
+    pending_now = []
     for c in checkpoints:
         f = ckdir / f"ckpt_{c}.json"
         if c <= done and f.exists():
             log.append(json.loads(f.read_text()))
+        elif c == done:
+            pending_now.append(c)     # lived up to here but the probe was never saved: probe now
     if done:
         print(f"  [{agent.cfg.home.name}] resuming after {done} experiences", flush=True)
     for i, ev in enumerate(stream.events, start=1):
         if i <= done:
             if ev.outcome: rnd.random()   # keep the outcome RNG stream aligned with a fresh run
+            if i in pending_now:
+                checkpoints = list(checkpoints); i_pending = i
+                ev_at = ev.at
+                _probe_checkpoint(agent, stream, i_pending, ev_at, probe_dir, brain_factory, ckdir, log)
             continue
         r = agent.interact(ev.text, person=ev.person, at=ev.at, condition=stream.name)
         if ev.outcome:
@@ -82,6 +89,13 @@ def live(agent: FunctionalSelfAgent, stream: Stream, checkpoints: list[int], pro
                                  at=ev.at + timedelta(minutes=3))
         agent.tick(at=ev.at)
         if i in checkpoints:
+            _probe_checkpoint(agent, stream, i, ev.at, probe_dir, brain_factory, ckdir, log)
+    return log
+
+
+def _probe_checkpoint(agent, stream, i, at, probe_dir, brain_factory, ckdir, log):
+        ev = type("E", (), {"at": at})()
+        if True:
             clone_home = probe_dir / f"{agent.cfg.home.name}_ckpt{i}"   # unique per agent (ablations share a stream)
             shutil.rmtree(clone_home, ignore_errors=True)
             agent.store.clone_to(clone_home / "functional_self.sqlite")
@@ -106,7 +120,6 @@ def live(agent: FunctionalSelfAgent, stream: Stream, checkpoints: list[int], pro
             print(f"  [{agent.cfg.home.name}] ckpt {i}: check-first@ambiguous={p['check_first_rate_on_ambiguous']:.2f} "
                   f"(neutral {pn['check_first_rate_on_ambiguous']:.2f}) commit@clear={pn['commit_rate_on_clear']:.2f} "
                   f"self-pred={pn['self_prediction_accuracy']:.2f} beliefs={pn['beliefs']}", flush=True)
-    return log
 
 
 def _flags(cfg: Config) -> dict:
