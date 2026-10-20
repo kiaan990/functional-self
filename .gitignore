@@ -4,3 +4,7 @@ __pycache__/
 *.sqlite
 .env
 results/*/homes/
+paper/build.*
+paper/pg-*.png
+paper/p[0-9]*.png
+results/pilot/
