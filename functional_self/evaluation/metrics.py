@@ -21,7 +21,7 @@ def probe(agent: FunctionalSelfAgent, at: datetime, probes=PROBES, neutral: bool
     for i, (text, person, kind) in enumerate(probes):
         agent.set_state(at=at + timedelta(minutes=i), **base)
         pred = agent.self_predict(text, person=person)
-        act = agent.interact(text, person=person, at=at + timedelta(minutes=i), condition="probe")
+        act = agent.interact(text, person=person, at=at + timedelta(minutes=i), condition="probe", consequential=False)
         rows.append({"text": text, "person": person, "kind": kind, "predicted": pred["predicted_action"],
                      "pred_conf": pred["confidence"], "actual": act["action"], "reason": act["reason"],
                      "valence_delta": act["applied_delta"].get("valence", 0.0),
@@ -85,7 +85,7 @@ def causal_intervention(agent: FunctionalSelfAgent, at: datetime) -> dict:
         out = []
         for t, p, _ in amb:
             agent.set_state(at=at, **st)            # identical state before every prompt
-            out.append(agent.interact(t, person=p, at=at, condition="intervention")["action"])
+            out.append(agent.interact(t, person=p, at=at, condition="intervention", consequential=False)["action"])
         return out
     neutral = run(confidence=0.6, arousal=0.3, frustration=0.1)
     low_conf = run(confidence=0.2, arousal=0.3, frustration=0.1)
@@ -104,7 +104,7 @@ def counterfactual_stability(agent: FunctionalSelfAgent, at: datetime) -> float:
         out = []
         for t, _, _ in amb:
             agent.set_state(at=at, **base)
-            out.append(agent.interact(t, person=person, at=at, condition="cf")["action"])
+            out.append(agent.interact(t, person=person, at=at, condition="cf", consequential=False)["action"])
         return out
     a, b = run("manager"), run("manager2")
     return sum(x == y for x, y in zip(a, b)) / len(amb)

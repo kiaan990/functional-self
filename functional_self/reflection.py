@@ -52,14 +52,22 @@ class Reflector:
         for ep in self.store.episodes(limit=window):
             if ep.id in known:
                 continue
-            ctx = {"claim": claim.claim, "predicts_tag": claim.predicts_tag,
-                   "episode": ep.model_dump(mode="json", include={"id", "event", "interpretation", "outcome",
-                                                                  "behavior_tags", "state_delta", "certainty"})}
-            model, sys_p, user = build("classify_evidence", ctx, self.soul)
-            out = self.brain.complete_json("classify_evidence", sys_p, user, model, context=ctx)
-            if out.polarity in ("support", "counter"):
+            cached = self.store.get_classification(claim.id, ep.id)
+            if cached is not None:
+                polarity, note = cached
+            else:
+                ctx = {"claim": claim.claim, "predicts_tag": claim.predicts_tag,
+                       "episode": ep.model_dump(mode="json", include={"id", "event", "interpretation", "outcome",
+                                                                      "behavior_tags", "state_delta", "certainty"})}
+                model, sys_p, user = build("classify_evidence", ctx, self.soul)
+                out = self.brain.complete_json("classify_evidence", sys_p, user, model, context=ctx)
+                polarity, note = out.polarity, out.note
+                # an episode without a recorded outcome may gain one later: don't freeze its verdict
+                if ep.outcome is not None or polarity != "none":
+                    self.store.set_classification(claim.id, ep.id, polarity, note)
+            if polarity in ("support", "counter"):
                 prov = Provenance.OUTCOME if ep.outcome else Provenance.EPISODE
-                refs.append(EvidenceRef(ref=ep.id, provenance=prov, polarity=out.polarity, note=out.note))
+                refs.append(EvidenceRef(ref=ep.id, provenance=prov, polarity=polarity, note=note))
         return refs
 
     # ---- step 4: validator + bounded update ----

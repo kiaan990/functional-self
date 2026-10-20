@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS reflections (id TEXT PRIMARY KEY, ts TEXT, doc TEXT);
 CREATE TABLE IF NOT EXISTS kv (k TEXT PRIMARY KEY, v TEXT);
 CREATE TABLE IF NOT EXISTS audit (seq INTEGER PRIMARY KEY AUTOINCREMENT, ts TEXT, kind TEXT, doc TEXT);
 CREATE TABLE IF NOT EXISTS snapshots (name TEXT PRIMARY KEY, ts TEXT, doc TEXT);
+CREATE TABLE IF NOT EXISTS evidence_class (claim_id TEXT, episode_id TEXT, polarity TEXT, note TEXT, PRIMARY KEY (claim_id, episode_id));
 """
 
 
@@ -37,7 +38,7 @@ def _dump(model) -> str:
 class Store:
     def __init__(self, path: Path):
         self.path = path
-        self.conn = sqlite3.connect(str(path))
+        self.conn = sqlite3.connect(str(path), check_same_thread=False)  # one writer thread per home; lives run in parallel threads
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(DDL)
         self.conn.execute("INSERT OR IGNORE INTO meta VALUES ('schema_version', ?)", (str(SCHEMA_VERSION),))
@@ -168,6 +169,16 @@ class Store:
         if inc:
             self._kv_set(f"ctr:{k}", str(v))
         return v
+
+    # ---- evidence classification cache: each (claim, episode) pair is judged once ----
+    def get_classification(self, claim_id: str, episode_id: str):
+        r = self.conn.execute("SELECT polarity, note FROM evidence_class WHERE claim_id=? AND episode_id=?",
+                              (claim_id, episode_id)).fetchone()
+        return (r["polarity"], r["note"]) if r else None
+
+    def set_classification(self, claim_id: str, episode_id: str, polarity: str, note: str) -> None:
+        self.conn.execute("INSERT OR REPLACE INTO evidence_class VALUES (?,?,?,?)", (claim_id, episode_id, polarity, note))
+        self.conn.commit()
 
     # ---- snapshots (for clone experiments) ----
     def snapshot(self, name: str) -> dict:
