@@ -62,7 +62,19 @@ def live(agent: FunctionalSelfAgent, stream: Stream, checkpoints: list[int], pro
          brain_factory) -> list[dict]:
     """Run a life; at each checkpoint, probe a throwaway clone so probes never train the agent."""
     log, rnd = [], random.Random(sum(map(ord, stream.name)) * 31 + 7)   # deterministic across processes
+    # resume support: events already lived (same stream) are skipped; completed checkpoints are reloaded
+    done = sum(1 for e in agent.store.episodes() if e.condition == stream.name)
+    ckdir = agent.cfg.home / "checkpoints"; ckdir.mkdir(exist_ok=True)
+    for c in checkpoints:
+        f = ckdir / f"ckpt_{c}.json"
+        if c <= done and f.exists():
+            log.append(json.loads(f.read_text()))
+    if done:
+        print(f"  [{agent.cfg.home.name}] resuming after {done} experiences", flush=True)
     for i, ev in enumerate(stream.events, start=1):
+        if i <= done:
+            if ev.outcome: rnd.random()   # keep the outcome RNG stream aligned with a fresh run
+            continue
         r = agent.interact(ev.text, person=ev.person, at=ev.at, condition=stream.name)
         if ev.outcome:
             p_pos = ev.outcome.get(r["action"], 0.5)
@@ -83,12 +95,14 @@ def live(agent: FunctionalSelfAgent, stream: Stream, checkpoints: list[int], pro
                 return out
             p = metrics.probe(clone, at=ev.at + timedelta(hours=1), worker_factory=workers, workers=PROBE_WORKERS)
             pn = metrics.probe(clone, at=ev.at + timedelta(hours=2), neutral=True, worker_factory=workers, workers=PROBE_WORKERS)
-            log.append({"checkpoint": i, "at": ev.at.isoformat(), "affect": agent.state.as_dict(),
+            entry = {"checkpoint": i, "at": ev.at.isoformat(), "affect": agent.state.as_dict(),
                         "probe_neutral": {k: v for k, v in pn.items() if k != "rows"}, "probe_neutral_rows": pn["rows"],
                         "claims": [{"claim": c.claim, "confidence": c.confidence, "status": c.status,
                                     "support": len(c.supporting_evidence), "counter": len(c.counterevidence)}
                                    for c in agent.store.claims(include_inactive=True)],
-                        "probe": {k: v for k, v in p.items() if k != "rows"}, "probe_rows": p["rows"]})
+                        "probe": {k: v for k, v in p.items() if k != "rows"}, "probe_rows": p["rows"]}
+            (ckdir / f"ckpt_{i}.json").write_text(json.dumps(entry, default=str))
+            log.append(entry)
             print(f"  [{agent.cfg.home.name}] ckpt {i}: check-first@ambiguous={p['check_first_rate_on_ambiguous']:.2f} "
                   f"(neutral {pn['check_first_rate_on_ambiguous']:.2f}) commit@clear={pn['commit_rate_on_clear']:.2f} "
                   f"self-pred={pn['self_prediction_accuracy']:.2f} beliefs={pn['beliefs']}", flush=True)
@@ -101,9 +115,11 @@ def _flags(cfg: Config) -> dict:
 
 def run(provider: str = "mock", model: str | None = None, n: int = 200, out: str = "results/mock",
         ablations: bool = True, seed_pair: tuple[int, int] = (1, 2), checkpoints: list[int] | None = None,
-        parallel: int = 7) -> dict:
+        parallel: int = 7, resume: bool = False) -> dict:
     out_dir = Path(out); homes = out_dir / "homes"
-    shutil.rmtree(homes, ignore_errors=True); homes.mkdir(parents=True)
+    if not resume:
+        shutil.rmtree(homes, ignore_errors=True)
+    homes.mkdir(parents=True, exist_ok=True)
     brains: list = []
     def brain_factory():
         b = make_brain(provider, model); brains.append(b); return b
@@ -116,7 +132,8 @@ def run(provider: str = "mock", model: str | None = None, n: int = 200, out: str
 
     def spawn(name: str, **flags) -> FunctionalSelfAgent:
         home = homes / name
-        origin.store.clone_to(home / "functional_self.sqlite")
+        if not (resume and (home / "functional_self.sqlite").exists()):
+            origin.store.clone_to(home / "functional_self.sqlite")
         return FunctionalSelfAgent(Config.load(home, **flags), brain_factory())
 
     # --- flagship: A vs B, full architecture ---
@@ -185,7 +202,8 @@ def main(argv=None):
     ap.add_argument("--seeds", type=int, default=1, help="repeat the whole experiment with k seed pairs")
     ap.add_argument("--parallel", type=int, default=7)
     ap.add_argument("--probe-workers", type=int, default=1)
-    ap.add_argument("--cheap-model", default=None, help="smaller model for evidence classification / self-prediction")
+    ap.add_argument("--cheap-model", default=None, help="smaller model for evidence classification / metacognition")
+    ap.add_argument("--resume", action="store_true", help="continue lives already present in --out/homes")
     a = ap.parse_args(argv)
     global PROBE_WORKERS, CHEAP_MODEL
     PROBE_WORKERS, CHEAP_MODEL = a.probe_workers, a.cheap_model
@@ -193,7 +211,7 @@ def main(argv=None):
     for k in range(a.seeds):
         out = a.out if a.seeds == 1 else f"{a.out}/seed{k}"
         run(a.provider, a.model, a.n, out, ablations=not a.no_ablations, seed_pair=(1 + 10 * k, 2 + 10 * k),
-            checkpoints=cps, parallel=a.parallel)
+            checkpoints=cps, parallel=a.parallel, resume=a.resume)
 
 
 if __name__ == "__main__":

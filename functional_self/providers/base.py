@@ -19,7 +19,7 @@ class BrainProvider(ABC):
     def complete(self, task: str, system: str, user: str, context: Optional[dict] = None) -> str: ...
 
     def complete_json(self, task: str, system: str, user: str, model: Type[T],
-                      context: Optional[dict] = None, retries: int = 2) -> T:
+                      context: Optional[dict] = None, retries: int = 3) -> T:
         """Ask for JSON matching `model`. Application code validates; invalid output is retried
         then raised — model prose is never parsed heuristically."""
         schema = json.dumps(model.model_json_schema(), indent=0)
@@ -32,7 +32,8 @@ class BrainProvider(ABC):
                 return model.model_validate(_extract_json(raw))
             except (ValidationError, ValueError) as e:
                 last_err = e
-                user = user + f"\n\nYour previous output was invalid ({str(e)[:200]}). Output valid JSON only."
+                user = user + (f"\n\nYour previous output was invalid ({str(e)[:200]}). Output valid, COMPLETE JSON only, "
+                               "and keep every string field short.")
         raise RuntimeError(f"provider {self.name} failed to produce valid {model.__name__}: {last_err}")
 
 

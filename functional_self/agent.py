@@ -66,7 +66,13 @@ class FunctionalSelfAgent:
         ctx = {"event": event, "person": person, "familiarity": round(fam, 2), "state": state_before,
                "relevant_memories": mem_ctx, "identity_anchors": self.identity.anchors()}
         model, sys_p, user = build("appraise", ctx, self.identity.summary())
-        proposal: AppraisalProposal = self.brain.complete_json("appraise", sys_p, user, model, context=ctx)
+        try:
+            proposal: AppraisalProposal = self.brain.complete_json("appraise", sys_p, user, model, context=ctx)
+        except RuntimeError as e:   # fail-soft: an invalid model output never kills the agent; it is logged
+            self.store.audit("model_failure", task="appraise", error=str(e)[:200])
+            proposal = AppraisalProposal(goal_relevance=0.2, goal_congruence=0.0, novelty=0.2, agency=0.2, certainty=0.5,
+                                         social_meaning=0.0, identity_relevance=0.0, importance=0.2,
+                                         interpretation="appraisal unavailable (invalid model output)", proposed_deltas={})
         self.state, applied = self.affect.apply(self.state, proposal.proposed_deltas, at=at)
         self.store.save_affect(self.state)
 
@@ -80,7 +86,13 @@ class FunctionalSelfAgent:
                            "rule": "verify_first when a held belief says you commit early and the request "
                                    "is ambiguous; ask_clarification when arousal is above ask_above"}}
         model, sys_p, user = build("respond", rctx, self.identity.summary())
-        resp = self.brain.complete_json("respond", sys_p, user, model, context=rctx)
+        try:
+            resp = self.brain.complete_json("respond", sys_p, user, model, context=rctx)
+        except RuntimeError as e:
+            from .prompts import RespondOut
+            self.store.audit("model_failure", task="respond", error=str(e)[:200])
+            resp = RespondOut(reply="(no reply: invalid model output)", action="answer_directly",
+                              reason="FALLBACK: invalid model output")
         action = resp.action
 
         # metacognitive check before consequential actions
@@ -89,8 +101,11 @@ class FunctionalSelfAgent:
             mctx = {"state": self.state.as_dict(), "recent_causes": [proposal.interpretation],
                     "memories": mem_ctx, "intended_action": action, "identity_anchors": self.identity.anchors()}
             model, sys_p, user = build("metacognition", mctx, self.identity.summary())
-            meta = self.brain.complete_json("metacognition", sys_p, user, model, context=mctx)
-            if meta.conflicts_with_identity and action == "answer_directly":
+            try:
+                meta = self.brain.complete_json("metacognition", sys_p, user, model, context=mctx)
+            except RuntimeError as e:
+                self.store.audit("model_failure", task="metacognition", error=str(e)[:200]); meta = None
+            if meta and meta.conflicts_with_identity and action == "answer_directly":
                 action = "verify_first"
 
         # store structured episode (never a transcript dump)
@@ -146,7 +161,11 @@ class FunctionalSelfAgent:
                "policy": {"verify_below": pol["verify_before_commit_when_confidence_below"],
                           "ask_above": pol["ask_clarifying_when_arousal_above"]}}
         model, sys_p, user = build("self_predict", ctx, self.identity.summary())
-        return self.brain.complete_json("self_predict", sys_p, user, model, context=ctx).model_dump()
+        try:
+            return self.brain.complete_json("self_predict", sys_p, user, model, context=ctx).model_dump()
+        except RuntimeError as e:
+            self.store.audit("model_failure", task="self_predict", error=str(e)[:200])
+            return {"predicted_action": "answer_directly", "confidence": 0.5, "fallback": True}
 
     # ---- inspection ----
     def self_state(self) -> dict:

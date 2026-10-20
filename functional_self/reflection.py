@@ -29,7 +29,10 @@ class Reflector:
                             for e in eps],
                "existing_claims": [{"claim": c.claim} for c in self.store.claims(include_inactive=True)]}
         model, sys_p, user = build("hypothesize", ctx, self.soul)
-        out = self.brain.complete_json("hypothesize", sys_p, user, model, context=ctx)
+        try:
+            out = self.brain.complete_json("hypothesize", sys_p, user, model, context=ctx)
+        except RuntimeError as e:
+            self.store.audit("model_failure", task="hypothesize", error=str(e)[:200]); return None
         if not out.hypothesis:
             return None
         existing = self.sm.find(out.hypothesis)
@@ -60,8 +63,12 @@ class Reflector:
                        "episode": ep.model_dump(mode="json", include={"id", "event", "interpretation", "outcome",
                                                                       "behavior_tags", "state_delta", "certainty"})}
                 model, sys_p, user = build("classify_evidence", ctx, self.soul)
-                out = self.brain.complete_json("classify_evidence", sys_p, user, model, context=ctx)
-                polarity, note = out.polarity, out.note
+                try:
+                    out = self.brain.complete_json("classify_evidence", sys_p, user, model, context=ctx)
+                    polarity, note = out.polarity, out.note
+                except RuntimeError as e:
+                    self.store.audit("model_failure", task="classify_evidence", error=str(e)[:200])
+                    continue   # not cached: will be judged again next time
                 # an episode without a recorded outcome may gain one later: don't freeze its verdict
                 if ep.outcome is not None or polarity != "none":
                     self.store.set_classification(claim.id, ep.id, polarity, note)

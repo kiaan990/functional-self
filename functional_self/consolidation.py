@@ -25,7 +25,12 @@ class Consolidator:
                                                                  "behavior_tags", "lesson_candidate", "importance"})
                             for e in selected]}
         model, sys_p, user = build("consolidate", ctx, self.soul)
-        out = self.brain.complete_json("consolidate", sys_p, user, model, context=ctx)
+        try:
+            out = self.brain.complete_json("consolidate", sys_p, user, model, context=ctx)
+        except RuntimeError as e:
+            from .prompts import ConsolidateOut
+            self.store.audit("model_failure", task="consolidate", error=str(e)[:200])
+            out = ConsolidateOut(summary="consolidation skipped: invalid model output")
         # 2. patterns -> hypotheses (if new) -> evidence search incl. counterexamples -> bounded update
         changes = []
         for p in out.patterns:

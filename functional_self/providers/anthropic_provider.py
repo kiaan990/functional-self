@@ -20,7 +20,8 @@ class AnthropicProvider(BrainProvider):
 
     def complete(self, task: str, system: str, user: str, context: Optional[dict] = None) -> str:
         self.calls += 1
-        kwargs = dict(model=self.model, max_tokens=self.max_tokens, system=system,
+        max_tokens = 3000 if task in ("consolidate", "hypothesize") else self.max_tokens
+        kwargs = dict(model=self.model, max_tokens=max_tokens, system=system,
                       messages=[{"role": "user", "content": user}])
         try:
             msg = self.client.messages.create(temperature=self.temperature, **kwargs)
