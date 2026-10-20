@@ -1,0 +1,48 @@
+# Bounded-dynamics policy. All limits are enforced by application code, not the LLM.
+
+affect:
+  # name: [min, max, baseline, half_life_hours]
+  valence:     [-1.0, 1.0, 0.0, 6.0]
+  arousal:     [0.0, 1.0, 0.3, 3.0]
+  curiosity:   [0.0, 1.0, 0.4, 12.0]
+  confidence:  [0.0, 1.0, 0.6, 12.0]
+  frustration: [0.0, 1.0, 0.1, 4.0]
+  connection:  [0.0, 1.0, 0.3, 24.0]
+  max_delta_per_event: 0.25
+
+self_model:
+  max_confidence_change_per_update: 0.2
+  min_evidence_to_promote: 3          # hypothesis -> belief needs >= 3 net supporting items
+  promote_threshold: 0.75
+  demote_threshold: 0.35
+  # evidential weight by provenance class (Doc 1 §10)
+  evidence_weights:
+    outcome: 1.0
+    episode: 1.0
+    external: 0.8
+    inference: 0.5
+    reflection: 0.2
+    imagination: 0.0
+
+retrieval:
+  k: 6
+  weights:
+    relevance: 0.45
+    importance: 0.2
+    recency: 0.15
+    affect_congruence: 0.2
+
+scheduler:
+  tick_seconds: 300
+  max_reflections_per_day: 12
+  triggers:
+    curiosity_min: 0.7
+    frustration_jump: 0.2
+    confidence_jump: 0.2
+    min_new_evidence_for_question: 2
+    inactive_goal_hours: 48
+
+behavior:
+  # How internal state is allowed to modulate behavior (never permissions).
+  verify_before_commit_when_confidence_below: 0.45
+  ask_clarifying_when_arousal_above: 0.7

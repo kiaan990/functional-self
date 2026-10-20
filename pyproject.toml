@@ -1,0 +1,19 @@
+[project]
+name = "functional-self"
+version = "0.1.0"
+description = "Persistent, evidence-grounded self-modeling for LLM agents: bounded affect, provenance-tracked self-beliefs, reflection, consolidation and a longitudinal evaluation harness."
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2", "pyyaml", "anthropic>=0.40", "numpy", "matplotlib"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+fself = "functional_self.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["functional_self*"]
