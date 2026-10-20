@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: functional-self
+Version: 0.1.0
+Summary: Persistent, evidence-grounded self-modeling for LLM agents: bounded affect, provenance-tracked self-beliefs, reflection, consolidation and a longitudinal evaluation harness.
+Requires-Python: >=3.11
+Requires-Dist: pydantic>=2
+Requires-Dist: pyyaml
+Requires-Dist: anthropic>=0.40
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"

@@ -1,0 +1,2 @@
+[console_scripts]
+fself = functional_self.cli:main

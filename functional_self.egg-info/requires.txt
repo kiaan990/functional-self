@@ -1,0 +1,8 @@
+pydantic>=2
+pyyaml
+anthropic>=0.40
+numpy
+matplotlib
+
+[dev]
+pytest

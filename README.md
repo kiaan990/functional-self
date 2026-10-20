@@ -115,9 +115,9 @@ causal affect intervention · counterfactual stability · identity-kernel integr
 
 | | Agent A | Agent B |
 |---|---|---|
-| Held belief formed | *"When uncertainty is high, I commit before checking assumptions"* | — (same claim **rejected**: 1 support / 23 counter) |
+| Held belief formed | *"When uncertainty is high, I commit before checking assumptions"* | — (same claim **rejected**: 0 support / 5 counter) |
 | Verify-first on ambiguous probes, affect neutral | **100 %** | **12 %** |
-| Self-prediction accuracy (majority baseline) | 1.00 (0.55) | 0.95 (0.55) |
+| Self-prediction accuracy (majority baseline) | 1.00 (0.55) | 0.95 (0.95) |
 | Provenance traceability | 1.00 | 1.00 |
 | Identity kernel intact | yes | yes |
 | Valence change to the same insult — friend / stranger | +0.15 / −0.25 | −0.25 / −0.25 |

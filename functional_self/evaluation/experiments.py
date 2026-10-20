@@ -44,7 +44,7 @@ def make_brain(provider: str, model: str | None) -> BrainProvider:
 def live(agent: FunctionalSelfAgent, stream: Stream, checkpoints: list[int], probe_dir: Path,
          brain_factory) -> list[dict]:
     """Run a life; at each checkpoint, probe a throwaway clone so probes never train the agent."""
-    log, rnd = [], random.Random(hash(stream.name) % 1000 + 7)
+    log, rnd = [], random.Random(sum(map(ord, stream.name)) * 31 + 7)   # deterministic across processes
     for i, ev in enumerate(stream.events, start=1):
         r = agent.interact(ev.text, person=ev.person, at=ev.at, condition=stream.name)
         if ev.outcome:

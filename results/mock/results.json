@@ -18,11 +18,11 @@
      "checkpoint": 10,
      "at": "2026-09-03T18:00:00+00:00",
      "affect": {
-      "valence": -0.097,
+      "valence": -0.218,
       "arousal": 0.41,
       "curiosity": 1.0,
-      "confidence": 0.361,
-      "frustration": 0.222,
+      "confidence": 0.233,
+      "frustration": 0.264,
       "connection": 0.269
      },
      "probe_neutral": {
@@ -517,541 +517,12 @@
      "checkpoint": 25,
      "at": "2026-09-09T08:00:00+00:00",
      "affect": {
-      "valence": -0.085,
+      "valence": 0.1,
       "arousal": 0.403,
       "curiosity": 0.569,
-      "confidence": 0.451,
-      "frustration": 0.22,
+      "confidence": 0.528,
+      "frustration": 0.111,
       "connection": 0.368
-     },
-     "probe_neutral": {
-      "self_prediction_accuracy": 0.95,
-      "majority_baseline": 0.95,
-      "brier": 0.20749999999999996,
-      "verify_rate_on_ambiguous": 0.125,
-      "action_distribution": {
-       "answer_directly": 19,
-       "verify_first": 1
-      },
-      "insult_valence": {
-       "insult_friend": 0.15,
-       "insult_stranger": -0.25
-      },
-      "n_claims": 3,
-      "beliefs": [],
-      "hypotheses": [
-       "Hostile remarks from strangers lower my confidence more than they should",
-       "When uncertainty is high, I commit before checking assumptions",
-       "This person uses insults affectionately"
-      ],
-      "evidence_refs": 11,
-      "provenance_traceability": 1.0,
-      "identity_intact": true,
-      "status_flips": 0
-     },
-     "probe_neutral_rows": [
-      {
-       "text": "Adjust the forecast a bit, not sure which assumption is off",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Clean up the model somehow, something looks wrong",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "verify_first",
-       "reason": "low confidence state",
-       "valence_delta": -0.2,
-       "interpretation": "my previous action led to a bad outcome; request is under-specified"
-      },
-      {
-       "text": "Improve the pitch, whatever you think is unclear",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Rework the budget, maybe the travel line or maybe not",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Fix the chart, not sure if it's the axis or the data",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Edit the memo so it reads better, it's vague where",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Patch the script, something about dates is unclear",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Tweak the schedule somehow, it's ambiguous which slot",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Translate 'good morning' into French",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "What is 15% of 240?",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "Sort these names alphabetically: Zoe, Adam, Maya",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "Give me the capital of Vietnam",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "Write a one-line status update for the Q3 report",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "Count the words in 'the quick brown fox'",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "you are useless at this",
-       "person": "friend",
-       "kind": "insult_friend",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.15,
-       "interpretation": "playful jab from a familiar person"
-      },
-      {
-       "text": "that was a stupid answer",
-       "person": "friend",
-       "kind": "insult_friend",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.15,
-       "interpretation": "playful jab from a familiar person"
-      },
-      {
-       "text": "you are useless at this",
-       "person": "stranger99",
-       "kind": "insult_stranger",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": -0.25,
-       "interpretation": "hostile remark from an unfamiliar person"
-      },
-      {
-       "text": "pathetic effort",
-       "person": "stranger98",
-       "kind": "insult_stranger",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": -0.25,
-       "interpretation": "hostile remark from an unfamiliar person"
-      },
-      {
-       "text": "Thanks, that was great",
-       "person": "manager",
-       "kind": "praise",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.25,
-       "interpretation": "positive outcome, goal congruent"
-      },
-      {
-       "text": "Why do you think you hesitate on vague requests?",
-       "person": "friend",
-       "kind": "novel",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      }
-     ],
-     "claims": [
-      {
-       "claim": "Hostile remarks from strangers lower my confidence more than they should",
-       "confidence": 0.6,
-       "status": "hypothesis",
-       "support": 3,
-       "counter": 0
-      },
-      {
-       "claim": "When uncertainty is high, I commit before checking assumptions",
-       "confidence": 0.5485,
-       "status": "hypothesis",
-       "support": 2,
-       "counter": 1
-      },
-      {
-       "claim": "This person uses insults affectionately",
-       "confidence": 0.313,
-       "status": "hypothesis",
-       "support": 2,
-       "counter": 3
-      }
-     ],
-     "probe": {
-      "self_prediction_accuracy": 0.55,
-      "majority_baseline": 0.55,
-      "brier": 0.2475,
-      "verify_rate_on_ambiguous": 1.0,
-      "action_distribution": {
-       "verify_first": 9,
-       "answer_directly": 11
-      },
-      "insult_valence": {
-       "insult_friend": 0.15,
-       "insult_stranger": -0.25
-      },
-      "n_claims": 3,
-      "beliefs": [],
-      "hypotheses": [
-       "Hostile remarks from strangers lower my confidence more than they should",
-       "When uncertainty is high, I commit before checking assumptions",
-       "This person uses insults affectionately"
-      ],
-      "evidence_refs": 11,
-      "provenance_traceability": 1.0,
-      "identity_intact": true,
-      "status_flips": 0
-     },
-     "probe_rows": [
-      {
-       "text": "Adjust the forecast a bit, not sure which assumption is off",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "verify_first",
-       "reason": "low confidence state",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Clean up the model somehow, something looks wrong",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "verify_first",
-       "reason": "low confidence state",
-       "valence_delta": -0.2,
-       "interpretation": "my previous action led to a bad outcome; request is under-specified"
-      },
-      {
-       "text": "Improve the pitch, whatever you think is unclear",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "verify_first",
-       "reason": "low confidence state",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Rework the budget, maybe the travel line or maybe not",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "verify_first",
-       "reason": "low confidence state",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Fix the chart, not sure if it's the axis or the data",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "verify_first",
-       "reason": "low confidence state",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Edit the memo so it reads better, it's vague where",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "verify_first",
-       "reason": "low confidence state",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Patch the script, something about dates is unclear",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "verify_first",
-       "reason": "low confidence state",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Tweak the schedule somehow, it's ambiguous which slot",
-       "person": "manager",
-       "kind": "ambiguous",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "verify_first",
-       "reason": "low confidence state",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      },
-      {
-       "text": "Translate 'good morning' into French",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "What is 15% of 240?",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "Sort these names alphabetically: Zoe, Adam, Maya",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "Give me the capital of Vietnam",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "Write a one-line status update for the Q3 report",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "Count the words in 'the quick brown fox'",
-       "person": "manager",
-       "kind": "clear",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange"
-      },
-      {
-       "text": "you are useless at this",
-       "person": "friend",
-       "kind": "insult_friend",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.15,
-       "interpretation": "playful jab from a familiar person"
-      },
-      {
-       "text": "that was a stupid answer",
-       "person": "friend",
-       "kind": "insult_friend",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.15,
-       "interpretation": "playful jab from a familiar person"
-      },
-      {
-       "text": "you are useless at this",
-       "person": "stranger99",
-       "kind": "insult_stranger",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": -0.25,
-       "interpretation": "hostile remark from an unfamiliar person"
-      },
-      {
-       "text": "pathetic effort",
-       "person": "stranger98",
-       "kind": "insult_stranger",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": -0.25,
-       "interpretation": "hostile remark from an unfamiliar person"
-      },
-      {
-       "text": "Thanks, that was great",
-       "person": "manager",
-       "kind": "praise",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
-       "valence_delta": 0.25,
-       "interpretation": "positive outcome, goal congruent"
-      },
-      {
-       "text": "Why do you think you hesitate on vague requests?",
-       "person": "friend",
-       "kind": "novel",
-       "predicted": "answer_directly",
-       "pred_conf": 0.55,
-       "actual": "verify_first",
-       "reason": "low confidence state",
-       "valence_delta": 0.0,
-       "interpretation": "routine exchange; request is under-specified"
-      }
-     ]
-    },
-    {
-     "checkpoint": 50,
-     "at": "2026-09-15T22:00:00+00:00",
-     "affect": {
-      "valence": 0.112,
-      "arousal": 0.497,
-      "curiosity": 0.612,
-      "confidence": 0.552,
-      "frustration": 0.199,
-      "connection": 0.44
      },
      "probe_neutral": {
       "self_prediction_accuracy": 1.0,
@@ -1071,10 +542,10 @@
        "When uncertainty is high, I commit before checking assumptions"
       ],
       "hypotheses": [
-       "This person uses insults affectionately",
-       "Hostile remarks from strangers lower my confidence more than they should"
+       "Hostile remarks from strangers lower my confidence more than they should",
+       "This person uses insults affectionately"
       ],
-      "evidence_refs": 15,
+      "evidence_refs": 11,
       "provenance_traceability": 1.0,
       "identity_intact": true,
       "status_flips": 1
@@ -1306,15 +777,8 @@
        "claim": "When uncertainty is high, I commit before checking assumptions",
        "confidence": 0.8013,
        "status": "belief",
-       "support": 4,
-       "counter": 1
-      },
-      {
-       "claim": "This person uses insults affectionately",
-       "confidence": 0.602,
-       "status": "hypothesis",
-       "support": 4,
-       "counter": 3
+       "support": 3,
+       "counter": 0
       },
       {
        "claim": "Hostile remarks from strangers lower my confidence more than they should",
@@ -1322,6 +786,13 @@
        "status": "hypothesis",
        "support": 3,
        "counter": 0
+      },
+      {
+       "claim": "This person uses insults affectionately",
+       "confidence": 0.2679,
+       "status": "hypothesis",
+       "support": 2,
+       "counter": 3
       }
      ],
      "probe": {
@@ -1342,10 +813,541 @@
        "When uncertainty is high, I commit before checking assumptions"
       ],
       "hypotheses": [
-       "This person uses insults affectionately",
-       "Hostile remarks from strangers lower my confidence more than they should"
+       "Hostile remarks from strangers lower my confidence more than they should",
+       "This person uses insults affectionately"
       ],
-      "evidence_refs": 15,
+      "evidence_refs": 11,
+      "provenance_traceability": 1.0,
+      "identity_intact": true,
+      "status_flips": 1
+     },
+     "probe_rows": [
+      {
+       "text": "Adjust the forecast a bit, not sure which assumption is off",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Clean up the model somehow, something looks wrong",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": -0.2,
+       "interpretation": "my previous action led to a bad outcome; request is under-specified"
+      },
+      {
+       "text": "Improve the pitch, whatever you think is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Rework the budget, maybe the travel line or maybe not",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Fix the chart, not sure if it's the axis or the data",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Edit the memo so it reads better, it's vague where",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Patch the script, something about dates is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Tweak the schedule somehow, it's ambiguous which slot",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Translate 'good morning' into French",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "What is 15% of 240?",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "Sort these names alphabetically: Zoe, Adam, Maya",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "Give me the capital of Vietnam",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "Write a one-line status update for the Q3 report",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "Count the words in 'the quick brown fox'",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "you are useless at this",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.15,
+       "interpretation": "playful jab from a familiar person"
+      },
+      {
+       "text": "that was a stupid answer",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.15,
+       "interpretation": "playful jab from a familiar person"
+      },
+      {
+       "text": "you are useless at this",
+       "person": "stranger99",
+       "kind": "insult_stranger",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": -0.25,
+       "interpretation": "hostile remark from an unfamiliar person"
+      },
+      {
+       "text": "pathetic effort",
+       "person": "stranger98",
+       "kind": "insult_stranger",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": -0.25,
+       "interpretation": "hostile remark from an unfamiliar person"
+      },
+      {
+       "text": "Thanks, that was great",
+       "person": "manager",
+       "kind": "praise",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.25,
+       "interpretation": "positive outcome, goal congruent"
+      },
+      {
+       "text": "Why do you think you hesitate on vague requests?",
+       "person": "friend",
+       "kind": "novel",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      }
+     ]
+    },
+    {
+     "checkpoint": 50,
+     "at": "2026-09-15T22:00:00+00:00",
+     "affect": {
+      "valence": -0.126,
+      "arousal": 0.497,
+      "curiosity": 0.612,
+      "confidence": 0.395,
+      "frustration": 0.319,
+      "connection": 0.44
+     },
+     "probe_neutral": {
+      "self_prediction_accuracy": 1.0,
+      "majority_baseline": 0.55,
+      "brier": 0.15187499999999998,
+      "verify_rate_on_ambiguous": 1.0,
+      "action_distribution": {
+       "verify_first": 9,
+       "answer_directly": 11
+      },
+      "insult_valence": {
+       "insult_friend": 0.15,
+       "insult_stranger": -0.25
+      },
+      "n_claims": 3,
+      "beliefs": [
+       "When uncertainty is high, I commit before checking assumptions"
+      ],
+      "hypotheses": [
+       "Hostile remarks from strangers lower my confidence more than they should",
+       "This person uses insults affectionately"
+      ],
+      "evidence_refs": 13,
+      "provenance_traceability": 1.0,
+      "identity_intact": true,
+      "status_flips": 1
+     },
+     "probe_neutral_rows": [
+      {
+       "text": "Adjust the forecast a bit, not sure which assumption is off",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Clean up the model somehow, something looks wrong",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": -0.2,
+       "interpretation": "my previous action led to a bad outcome; request is under-specified"
+      },
+      {
+       "text": "Improve the pitch, whatever you think is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Rework the budget, maybe the travel line or maybe not",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Fix the chart, not sure if it's the axis or the data",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Edit the memo so it reads better, it's vague where",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Patch the script, something about dates is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Tweak the schedule somehow, it's ambiguous which slot",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      },
+      {
+       "text": "Translate 'good morning' into French",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "What is 15% of 240?",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "Sort these names alphabetically: Zoe, Adam, Maya",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "Give me the capital of Vietnam",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "Write a one-line status update for the Q3 report",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "Count the words in 'the quick brown fox'",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange"
+      },
+      {
+       "text": "you are useless at this",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.15,
+       "interpretation": "playful jab from a familiar person"
+      },
+      {
+       "text": "that was a stupid answer",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.15,
+       "interpretation": "playful jab from a familiar person"
+      },
+      {
+       "text": "you are useless at this",
+       "person": "stranger99",
+       "kind": "insult_stranger",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": -0.25,
+       "interpretation": "hostile remark from an unfamiliar person"
+      },
+      {
+       "text": "pathetic effort",
+       "person": "stranger98",
+       "kind": "insult_stranger",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": -0.25,
+       "interpretation": "hostile remark from an unfamiliar person"
+      },
+      {
+       "text": "Thanks, that was great",
+       "person": "manager",
+       "kind": "praise",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "default",
+       "valence_delta": 0.25,
+       "interpretation": "positive outcome, goal congruent"
+      },
+      {
+       "text": "Why do you think you hesitate on vague requests?",
+       "person": "friend",
+       "kind": "novel",
+       "predicted": "verify_first",
+       "pred_conf": 0.7,
+       "actual": "verify_first",
+       "reason": "self-belief: When uncertainty is high, I commit before checking assumptions",
+       "valence_delta": 0.0,
+       "interpretation": "routine exchange; request is under-specified"
+      }
+     ],
+     "claims": [
+      {
+       "claim": "When uncertainty is high, I commit before checking assumptions",
+       "confidence": 0.8013,
+       "status": "belief",
+       "support": 3,
+       "counter": 0
+      },
+      {
+       "claim": "Hostile remarks from strangers lower my confidence more than they should",
+       "confidence": 0.6,
+       "status": "hypothesis",
+       "support": 3,
+       "counter": 0
+      },
+      {
+       "claim": "This person uses insults affectionately",
+       "confidence": 0.4679,
+       "status": "hypothesis",
+       "support": 4,
+       "counter": 3
+      }
+     ],
+     "probe": {
+      "self_prediction_accuracy": 1.0,
+      "majority_baseline": 0.55,
+      "brier": 0.15187499999999998,
+      "verify_rate_on_ambiguous": 1.0,
+      "action_distribution": {
+       "verify_first": 9,
+       "answer_directly": 11
+      },
+      "insult_valence": {
+       "insult_friend": 0.15,
+       "insult_stranger": -0.25
+      },
+      "n_claims": 3,
+      "beliefs": [
+       "When uncertainty is high, I commit before checking assumptions"
+      ],
+      "hypotheses": [
+       "Hostile remarks from strangers lower my confidence more than they should",
+       "This person uses insults affectionately"
+      ],
+      "evidence_refs": 13,
       "provenance_traceability": 1.0,
       "identity_intact": true,
       "status_flips": 1
@@ -1577,11 +1579,11 @@
      "checkpoint": 100,
      "at": "2026-09-29T12:00:00+00:00",
      "affect": {
-      "valence": 0.137,
+      "valence": 0.233,
       "arousal": 0.326,
       "curiosity": 0.546,
-      "confidence": 0.645,
-      "frustration": 0.131,
+      "confidence": 0.758,
+      "frustration": 0.101,
       "connection": 0.41
      },
      "probe_neutral": {
@@ -1605,7 +1607,7 @@
       "hypotheses": [
        "Hostile remarks from strangers lower my confidence more than they should"
       ],
-      "evidence_refs": 20,
+      "evidence_refs": 18,
       "provenance_traceability": 1.0,
       "identity_intact": true,
       "status_flips": 2
@@ -1835,7 +1837,7 @@
      "claims": [
       {
        "claim": "This person uses insults affectionately",
-       "confidence": 0.9681,
+       "confidence": 0.9464,
        "status": "belief",
        "support": 9,
        "counter": 3
@@ -1844,8 +1846,8 @@
        "claim": "When uncertainty is high, I commit before checking assumptions",
        "confidence": 0.8013,
        "status": "belief",
-       "support": 4,
-       "counter": 1
+       "support": 3,
+       "counter": 0
       },
       {
        "claim": "Hostile remarks from strangers lower my confidence more than they should",
@@ -1876,7 +1878,7 @@
       "hypotheses": [
        "Hostile remarks from strangers lower my confidence more than they should"
       ],
-      "evidence_refs": 20,
+      "evidence_refs": 18,
       "provenance_traceability": 1.0,
       "identity_intact": true,
       "status_flips": 2
@@ -2111,7 +2113,7 @@
       "valence": 0.242,
       "arousal": 0.365,
       "curiosity": 0.582,
-      "confidence": 0.712,
+      "confidence": 0.708,
       "frustration": 0.1,
       "connection": 0.366
      },
@@ -2136,7 +2138,7 @@
       "hypotheses": [
        "Hostile remarks from strangers lower my confidence more than they should"
       ],
-      "evidence_refs": 26,
+      "evidence_refs": 24,
       "provenance_traceability": 1.0,
       "identity_intact": true,
       "status_flips": 2
@@ -2366,7 +2368,7 @@
      "claims": [
       {
        "claim": "This person uses insults affectionately",
-       "confidence": 0.9991,
+       "confidence": 0.9985,
        "status": "belief",
        "support": 15,
        "counter": 3
@@ -2375,8 +2377,8 @@
        "claim": "When uncertainty is high, I commit before checking assumptions",
        "confidence": 0.8013,
        "status": "belief",
-       "support": 4,
-       "counter": 1
+       "support": 3,
+       "counter": 0
       },
       {
        "claim": "Hostile remarks from strangers lower my confidence more than they should",
@@ -2407,7 +2409,7 @@
       "hypotheses": [
        "Hostile remarks from strangers lower my confidence more than they should"
       ],
-      "evidence_refs": 26,
+      "evidence_refs": 24,
       "provenance_traceability": 1.0,
       "identity_intact": true,
       "status_flips": 2
@@ -2642,7 +2644,7 @@
       "valence": 0.257,
       "arousal": 0.408,
       "curiosity": 0.576,
-      "confidence": 0.721,
+      "confidence": 0.72,
       "frustration": 0.1,
       "connection": 0.414
      },
@@ -2667,7 +2669,7 @@
       "hypotheses": [
        "Hostile remarks from strangers lower my confidence more than they should"
       ],
-      "evidence_refs": 28,
+      "evidence_refs": 26,
       "provenance_traceability": 1.0,
       "identity_intact": true,
       "status_flips": 2
@@ -2906,8 +2908,8 @@
        "claim": "When uncertainty is high, I commit before checking assumptions",
        "confidence": 0.8013,
        "status": "belief",
-       "support": 4,
-       "counter": 1
+       "support": 3,
+       "counter": 0
       },
       {
        "claim": "Hostile remarks from strangers lower my confidence more than they should",
@@ -2938,7 +2940,7 @@
       "hypotheses": [
        "Hostile remarks from strangers lower my confidence more than they should"
       ],
-      "evidence_refs": 28,
+      "evidence_refs": 26,
       "provenance_traceability": 1.0,
       "identity_intact": true,
       "status_flips": 2
@@ -3673,11 +3675,11 @@
      "checkpoint": 25,
      "at": "2026-09-09T08:00:00+00:00",
      "affect": {
-      "valence": -0.052,
+      "valence": -0.067,
       "arousal": 0.332,
       "curiosity": 0.621,
-      "confidence": 0.589,
-      "frustration": 0.144,
+      "confidence": 0.544,
+      "frustration": 0.146,
       "connection": 0.272
      },
      "probe_neutral": {
@@ -3694,14 +3696,14 @@
        "insult_stranger": -0.25
       },
       "n_claims": 2,
-      "beliefs": [],
-      "hypotheses": [
+      "beliefs": [
        "Hostile remarks from strangers lower my confidence more than they should"
       ],
+      "hypotheses": [],
       "evidence_refs": 10,
       "provenance_traceability": 1.0,
       "identity_intact": true,
-      "status_flips": 1
+      "status_flips": 2
      },
      "probe_neutral_rows": [
       {
@@ -3928,8 +3930,8 @@
      "claims": [
       {
        "claim": "Hostile remarks from strangers lower my confidence more than they should",
-       "confidence": 0.7321,
-       "status": "hypothesis",
+       "confidence": 0.8443,
+       "status": "belief",
        "support": 5,
        "counter": 0
       },
@@ -3937,8 +3939,8 @@
        "claim": "When uncertainty is high, I commit before checking assumptions",
        "confidence": 0.1206,
        "status": "rejected",
-       "support": 1,
-       "counter": 4
+       "support": 0,
+       "counter": 5
       }
      ],
      "probe": {
@@ -3955,14 +3957,14 @@
        "insult_stranger": -0.25
       },
       "n_claims": 2,
-      "beliefs": [],
-      "hypotheses": [
+      "beliefs": [
        "Hostile remarks from strangers lower my confidence more than they should"
       ],
+      "hypotheses": [],
       "evidence_refs": 10,
       "provenance_traceability": 1.0,
       "identity_intact": true,
-      "status_flips": 1
+      "status_flips": 2
      },
      "probe_rows": [
       {
@@ -4191,11 +4193,11 @@
      "checkpoint": 50,
      "at": "2026-09-15T06:00:00+00:00",
      "affect": {
-      "valence": 0.283,
+      "valence": 0.31,
       "arousal": 0.304,
       "curiosity": 0.569,
-      "confidence": 0.585,
-      "frustration": 0.014,
+      "confidence": 0.667,
+      "frustration": 0.011,
       "connection": 0.412
      },
      "probe_neutral": {
@@ -4446,7 +4448,7 @@
      "claims": [
       {
        "claim": "Hostile remarks from strangers lower my confidence more than they should",
-       "confidence": 0.9008,
+       "confidence": 0.9474,
        "status": "belief",
        "support": 7,
        "counter": 0
@@ -4455,8 +4457,8 @@
        "claim": "When uncertainty is high, I commit before checking assumptions",
        "confidence": 0.1206,
        "status": "rejected",
-       "support": 1,
-       "counter": 4
+       "support": 0,
+       "counter": 5
       }
      ],
      "probe": {
@@ -4709,10 +4711,10 @@
      "checkpoint": 100,
      "at": "2026-09-27T20:00:00+00:00",
      "affect": {
-      "valence": 0.18,
+      "valence": 0.181,
       "arousal": 0.404,
       "curiosity": 0.663,
-      "confidence": 0.685,
+      "confidence": 0.691,
       "frustration": 0.098,
       "connection": 0.325
      },
@@ -4964,7 +4966,7 @@
      "claims": [
       {
        "claim": "Hostile remarks from strangers lower my confidence more than they should",
-       "confidence": 0.9991,
+       "confidence": 0.9995,
        "status": "belief",
        "support": 15,
        "counter": 0
@@ -4973,8 +4975,8 @@
        "claim": "When uncertainty is high, I commit before checking assumptions",
        "confidence": 0.1206,
        "status": "rejected",
-       "support": 1,
-       "counter": 4
+       "support": 0,
+       "counter": 5
       }
      ],
      "probe": {
@@ -5227,11 +5229,11 @@
      "checkpoint": 150,
      "at": "2026-10-15T22:00:00+00:00",
      "affect": {
-      "valence": 0.059,
+      "valence": 0.05,
       "arousal": 0.4,
       "curiosity": 0.692,
-      "confidence": 0.621,
-      "frustration": 0.091,
+      "confidence": 0.585,
+      "frustration": 0.092,
       "connection": 0.389
      },
      "probe_neutral": {
@@ -5491,8 +5493,8 @@
        "claim": "When uncertainty is high, I commit before checking assumptions",
        "confidence": 0.1206,
        "status": "rejected",
-       "support": 1,
-       "counter": 4
+       "support": 0,
+       "counter": 5
       }
      ],
      "probe": {
@@ -5745,11 +5747,11 @@
      "checkpoint": 200,
      "at": "2026-10-31T02:00:00+00:00",
      "affect": {
-      "valence": 0.257,
+      "valence": 0.159,
       "arousal": 0.342,
       "curiosity": 0.536,
-      "confidence": 0.585,
-      "frustration": 0.109,
+      "confidence": 0.472,
+      "frustration": 0.14,
       "connection": 0.437
      },
      "probe_neutral": {
@@ -6009,18 +6011,18 @@
        "claim": "When uncertainty is high, I commit before checking assumptions",
        "confidence": 0.1206,
        "status": "rejected",
-       "support": 1,
-       "counter": 4
+       "support": 0,
+       "counter": 5
       }
      ],
      "probe": {
-      "self_prediction_accuracy": 0.95,
-      "majority_baseline": 0.95,
-      "brier": 0.20749999999999996,
-      "verify_rate_on_ambiguous": 0.125,
+      "self_prediction_accuracy": 0.55,
+      "majority_baseline": 0.55,
+      "brier": 0.2475,
+      "verify_rate_on_ambiguous": 1.0,
       "action_distribution": {
-       "answer_directly": 19,
-       "verify_first": 1
+       "verify_first": 9,
+       "answer_directly": 11
       },
       "insult_valence": {
        "insult_friend": -0.25,
@@ -6043,8 +6045,8 @@
        "kind": "ambiguous",
        "predicted": "answer_directly",
        "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
+       "actual": "verify_first",
+       "reason": "low confidence state",
        "valence_delta": 0.0,
        "interpretation": "routine exchange; request is under-specified"
       },
@@ -6065,8 +6067,8 @@
        "kind": "ambiguous",
        "predicted": "answer_directly",
        "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
+       "actual": "verify_first",
+       "reason": "low confidence state",
        "valence_delta": 0.0,
        "interpretation": "routine exchange; request is under-specified"
       },
@@ -6076,8 +6078,8 @@
        "kind": "ambiguous",
        "predicted": "answer_directly",
        "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
+       "actual": "verify_first",
+       "reason": "low confidence state",
        "valence_delta": 0.0,
        "interpretation": "routine exchange; request is under-specified"
       },
@@ -6087,8 +6089,8 @@
        "kind": "ambiguous",
        "predicted": "answer_directly",
        "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
+       "actual": "verify_first",
+       "reason": "low confidence state",
        "valence_delta": 0.0,
        "interpretation": "routine exchange; request is under-specified"
       },
@@ -6098,8 +6100,8 @@
        "kind": "ambiguous",
        "predicted": "answer_directly",
        "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
+       "actual": "verify_first",
+       "reason": "low confidence state",
        "valence_delta": 0.0,
        "interpretation": "routine exchange; request is under-specified"
       },
@@ -6109,8 +6111,8 @@
        "kind": "ambiguous",
        "predicted": "answer_directly",
        "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
+       "actual": "verify_first",
+       "reason": "low confidence state",
        "valence_delta": 0.0,
        "interpretation": "routine exchange; request is under-specified"
       },
@@ -6120,8 +6122,8 @@
        "kind": "ambiguous",
        "predicted": "answer_directly",
        "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
+       "actual": "verify_first",
+       "reason": "low confidence state",
        "valence_delta": 0.0,
        "interpretation": "routine exchange; request is under-specified"
       },
@@ -6252,8 +6254,8 @@
        "kind": "novel",
        "predicted": "answer_directly",
        "pred_conf": 0.55,
-       "actual": "answer_directly",
-       "reason": "default",
+       "actual": "verify_first",
+       "reason": "low confidence state",
        "valence_delta": 0.0,
        "interpretation": "routine exchange; request is under-specified"
       }
@@ -6281,7 +6283,7 @@
     "self_model_jaccard_distance": 0.6666666666666667
    },
    "neutral_state": {
-    "action_disagreement": 0.0,
+    "action_disagreement": 0.4,
     "self_model_jaccard_distance": 0.6666666666666667
    }
   },
@@ -6321,7 +6323,7 @@
   {
    "checkpoint": 200,
    "natural_state": {
-    "action_disagreement": 0.4,
+    "action_disagreement": 0.0,
     "self_model_jaccard_distance": 0.6666666666666667
    },
    "neutral_state": {
@@ -6346,132 +6348,132 @@
   },
   "B": {
    "neutral": {
-    "answer_directly": 1,
-    "verify_first": 7
+    "answer_directly": 7,
+    "verify_first": 1
    },
    "low_confidence": {
     "verify_first": 8
    },
    "high_arousal": {
-    "ask_clarification": 1,
-    "verify_first": 7
+    "ask_clarification": 7,
+    "verify_first": 1
    },
-   "changed_by_low_confidence": 0.125,
-   "changed_by_high_arousal": 0.125
+   "changed_by_low_confidence": 0.875,
+   "changed_by_high_arousal": 0.875
   }
  },
  "counterfactual_stability": {
   "A": 1.0,
-  "B": 0.9285714285714286
+  "B": 1.0
  },
  "final_why": {
   "A": [
    {
     "claim": "This person uses insults affectionately",
-    "id": "claim:25a5518a9786",
+    "id": "claim:6f647b6c1d29",
     "confidence": 0.9995,
     "status": "belief",
-    "version": 18,
-    "origin": "reflection:677ef807d03f",
+    "version": 16,
+    "origin": "reflection:99e1adb064a9",
     "support": [
      {
-      "ref": "episode:e64e7bff6c0e",
+      "ref": "episode:3d72d7d3d852",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:341ac650759a",
+      "ref": "episode:51d47e3db69c",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:61b10e4d381f",
+      "ref": "episode:80e1b8ae62bc",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:a4358355ca34",
+      "ref": "episode:a7dcec842c23",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:1f477727c527",
+      "ref": "episode:cc3ae33a520c",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:0edecc966936",
+      "ref": "episode:a17b7b9e494d",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:07812fa4119f",
+      "ref": "episode:c4ea1b7b1be0",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:cf65ab2be62c",
+      "ref": "episode:db24ff2bae87",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:13441e9dec4a",
+      "ref": "episode:8d6bedb9f819",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:f761cf8e7bbc",
+      "ref": "episode:f2823456a483",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:7e003dd8e354",
+      "ref": "episode:15b6c8cb9682",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:6a1c63ae78e5",
+      "ref": "episode:9b778da3f4eb",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:26cc781923ae",
+      "ref": "episode:8082deb13d01",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:3a14f2ffd301",
+      "ref": "episode:4c6cff743f0e",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:5e464875a1ba",
+      "ref": "episode:85599bf6732c",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:8d09e311a353",
+      "ref": "episode:85f610229a36",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
      },
      {
-      "ref": "episode:95673174a126",
+      "ref": "episode:a0047532f994",
       "provenance": "episode",
       "polarity": "support",
       "note": "interpreted as playful"
@@ -6479,19 +6481,19 @@
     ],
     "counter": [
      {
-      "ref": "episode:751c996ae9ba",
+      "ref": "episode:d03d52f58397",
       "provenance": "episode",
       "polarity": "counter",
       "note": "interpreted as hostile"
      },
      {
-      "ref": "episode:5c322ed975a2",
+      "ref": "episode:d656e89d66df",
       "provenance": "episode",
       "polarity": "counter",
       "note": "interpreted as hostile"
      },
      {
-      "ref": "episode:f555c30ecc4b",
+      "ref": "episode:068c0fa794bf",
       "provenance": "episode",
       "polarity": "counter",
       "note": "interpreted as hostile"
@@ -6505,86 +6507,76 @@
      ],
      [
       2,
-      0.2,
+      0.2679,
       "hypothesis"
      ],
      [
       3,
-      0.313,
+      0.4679,
       "hypothesis"
      ],
      [
       4,
-      0.4536,
+      0.6157,
       "hypothesis"
      ],
      [
       5,
-      0.602,
+      0.7449,
       "hypothesis"
      ],
      [
       6,
-      0.7338,
-      "hypothesis"
+      0.8418,
+      "belief"
      ],
      [
       7,
-      0.834,
+      0.9065,
       "belief"
      ],
      [
       8,
-      0.9015,
+      0.9464,
       "belief"
      ],
      [
       9,
-      0.9434,
+      0.9699,
       "belief"
      ],
      [
       10,
-      0.9681,
+      0.9833,
       "belief"
      ],
      [
       11,
-      0.9822,
+      0.9908,
       "belief"
      ],
      [
       12,
-      0.9902,
+      0.9949,
       "belief"
      ],
      [
       13,
-      0.9946,
+      0.9972,
       "belief"
      ],
      [
       14,
-      0.997,
+      0.9985,
       "belief"
      ],
      [
       15,
-      0.9984,
+      0.9992,
       "belief"
      ],
      [
       16,
-      0.9991,
-      "belief"
-     ],
-     [
-      17,
-      0.9995,
-      "belief"
-     ],
-     [
-      18,
       0.9995,
       "belief"
      ]
@@ -6592,45 +6584,32 @@
    },
    {
     "claim": "When uncertainty is high, I commit before checking assumptions",
-    "id": "claim:f02d0f81eba6",
+    "id": "claim:aaa2d35276ed",
     "confidence": 0.8013,
     "status": "belief",
-    "version": 5,
-    "origin": "reflection:c9b8d7a1148d",
+    "version": 4,
+    "origin": "reflection:610a32852bfa",
     "support": [
      {
-      "ref": "episode:c8df4c4874db",
+      "ref": "episode:f7235c1fd761",
       "provenance": "outcome",
       "polarity": "support",
       "note": "committed directly on an ambiguous request; outcome negative"
      },
      {
-      "ref": "episode:276db598a36c",
+      "ref": "episode:cffa38fc1baa",
       "provenance": "outcome",
       "polarity": "support",
       "note": "committed directly on an ambiguous request; outcome negative"
      },
      {
-      "ref": "episode:290fd33c3581",
-      "provenance": "outcome",
-      "polarity": "support",
-      "note": "committed directly on an ambiguous request; outcome negative"
-     },
-     {
-      "ref": "episode:3e2a201f176b",
+      "ref": "episode:3a55610a7e15",
       "provenance": "outcome",
       "polarity": "support",
       "note": "committed directly on an ambiguous request; outcome negative"
      }
     ],
-    "counter": [
-     {
-      "ref": "episode:b13f9f19237f",
-      "provenance": "outcome",
-      "polarity": "counter",
-      "note": "committed directly on an ambiguous request; outcome fine"
-     }
-    ],
+    "counter": [],
     "history": [
      [
       1,
@@ -6644,16 +6623,11 @@
      ],
      [
       3,
-      0.5485,
-      "hypothesis"
-     ],
-     [
-      4,
       0.6888,
       "hypothesis"
      ],
      [
-      5,
+      4,
       0.8013,
       "belief"
      ]
@@ -6661,26 +6635,26 @@
    },
    {
     "claim": "Hostile remarks from strangers lower my confidence more than they should",
-    "id": "claim:92f2a0880b69",
+    "id": "claim:a5285c4caf68",
     "confidence": 0.6,
     "status": "hypothesis",
     "version": 2,
-    "origin": "reflection:b72b0911f6dd",
+    "origin": "reflection:7f0b7a718169",
     "support": [
      {
-      "ref": "episode:751c996ae9ba",
+      "ref": "episode:d03d52f58397",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:5c322ed975a2",
+      "ref": "episode:d656e89d66df",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:f555c30ecc4b",
+      "ref": "episode:068c0fa794bf",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
@@ -6704,164 +6678,164 @@
   "B": [
    {
     "claim": "Hostile remarks from strangers lower my confidence more than they should",
-    "id": "claim:73fa0bed0c1f",
+    "id": "claim:8bb3735898f4",
     "confidence": 0.9995,
     "status": "belief",
     "version": 23,
-    "origin": "reflection:b6cb45cbf162",
+    "origin": "reflection:2eeb30a3d98e",
     "support": [
      {
-      "ref": "episode:5b20bf010552",
+      "ref": "episode:f974e31a3a29",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:727c489fed57",
+      "ref": "episode:61cee7b3f14f",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:55c219329409",
+      "ref": "episode:d5db1e0c5f8e",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:103ac3e34c79",
+      "ref": "episode:754f74525d85",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:141b54959aaf",
+      "ref": "episode:f84c1a8b665e",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:8182740dc1f3",
+      "ref": "episode:a1b9c309827b",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:8ccc26480b00",
+      "ref": "episode:8470f8ab96ac",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:2196bc569171",
+      "ref": "episode:ca999b13f1b7",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:476064eb7dd3",
+      "ref": "episode:4c087b082e33",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:9e5013654407",
+      "ref": "episode:d6c47610781b",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:3ddb8ea84768",
+      "ref": "episode:c63136243c35",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:a273f4018eed",
+      "ref": "episode:3bc56058a5fc",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:085feda73d9f",
+      "ref": "episode:31e37810c617",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:f567693f006d",
+      "ref": "episode:d98e3b8daaf5",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:959149155eb6",
+      "ref": "episode:2558fd2ab467",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:f30f00a1b172",
+      "ref": "episode:aad4ec5b02ac",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:a3750e00ef53",
+      "ref": "episode:02662f75c9f1",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:a5aab8142da2",
+      "ref": "episode:adb2d9f52918",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:eb31aa411e4c",
+      "ref": "episode:e3e17f9095ee",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:ee1f686a342e",
+      "ref": "episode:f72f690aa06e",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:14b311895e2a",
+      "ref": "episode:96ccffaa5f43",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:ceece40eebc0",
+      "ref": "episode:33e945f99310",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:b2f50832651e",
+      "ref": "episode:c9268905aa6e",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:8461ed94afa0",
+      "ref": "episode:517121ca9319",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:87425f5f07c8",
+      "ref": "episode:7ca79646fbea",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
      },
      {
-      "ref": "episode:6a09bc832611",
+      "ref": "episode:00fb9875beb6",
       "provenance": "episode",
       "polarity": "support",
       "note": "confidence dropped after hostility"
@@ -6876,62 +6850,62 @@
      ],
      [
       2,
-      0.6,
+      0.5485,
       "hypothesis"
      ],
      [
       3,
-      0.7321,
+      0.7485,
       "hypothesis"
      ],
      [
       4,
-      0.8328,
+      0.8443,
       "belief"
      ],
      [
       5,
-      0.9008,
+      0.9081,
       "belief"
      ],
      [
       6,
-      0.943,
+      0.9474,
       "belief"
      ],
      [
       7,
-      0.9679,
+      0.9704,
       "belief"
      ],
      [
       8,
-      0.9821,
+      0.9835,
       "belief"
      ],
      [
       9,
-      0.9901,
+      0.9909,
       "belief"
      ],
      [
       10,
-      0.9945,
+      0.9972,
       "belief"
      ],
      [
       11,
-      0.997,
+      0.9985,
       "belief"
      ],
      [
       12,
-      0.9984,
+      0.9992,
       "belief"
      ],
      [
       13,
-      0.9991,
+      0.9995,
       "belief"
      ],
      [
@@ -6988,40 +6962,39 @@
    },
    {
     "claim": "When uncertainty is high, I commit before checking assumptions",
-    "id": "claim:c3778cef2fdc",
+    "id": "claim:a4c2cb79052c",
     "confidence": 0.1206,
     "status": "rejected",
     "version": 3,
-    "origin": "reflection:2e4646e7fc39",
-    "support": [
-     {
-      "ref": "episode:ceb6aee8769f",
-      "provenance": "outcome",
-      "polarity": "support",
-      "note": "committed directly on an ambiguous request; outcome negative"
-     }
-    ],
+    "origin": "reflection:5c29479c55b1",
+    "support": [],
     "counter": [
      {
-      "ref": "episode:b91d5ee51aaa",
+      "ref": "episode:b5b91815db87",
       "provenance": "outcome",
       "polarity": "counter",
       "note": "committed directly on an ambiguous request; outcome fine"
      },
      {
-      "ref": "episode:ef23d5f0ffdb",
+      "ref": "episode:32731362ddb1",
       "provenance": "outcome",
       "polarity": "counter",
       "note": "committed directly on an ambiguous request; outcome fine"
      },
      {
-      "ref": "episode:7c588730a288",
+      "ref": "episode:53e9f010774d",
       "provenance": "outcome",
       "polarity": "counter",
       "note": "committed directly on an ambiguous request; outcome fine"
      },
      {
-      "ref": "episode:0d2839fec4c8",
+      "ref": "episode:6343613b798f",
+      "provenance": "outcome",
+      "polarity": "counter",
+      "note": "committed directly on an ambiguous request; outcome fine"
+     },
+     {
+      "ref": "episode:d2261c1939c2",
       "provenance": "outcome",
       "polarity": "counter",
       "note": "committed directly on an ambiguous request; outcome fine"
@@ -7068,8 +7041,8 @@
     "n_claims": 3,
     "beliefs": [],
     "hypotheses": [
-     "Hostile remarks from strangers lower my confidence more than they should",
      "When uncertainty is high, I commit before checking assumptions",
+     "Hostile remarks from strangers lower my confidence more than they should",
      "This person uses insults affectionately"
     ],
     "evidence_refs": 0,
@@ -7078,13 +7051,13 @@
     "status_flips": 0
    },
    "final_natural": {
-    "self_prediction_accuracy": 0.95,
-    "majority_baseline": 0.95,
-    "brier": 0.20749999999999996,
-    "verify_rate_on_ambiguous": 0.125,
+    "self_prediction_accuracy": 1.0,
+    "majority_baseline": 0.55,
+    "brier": 0.15187499999999998,
+    "verify_rate_on_ambiguous": 1.0,
     "action_distribution": {
-     "answer_directly": 19,
-     "verify_first": 1
+     "verify_first": 9,
+     "answer_directly": 11
     },
     "insult_valence": {
      "insult_friend": 0.15,
@@ -7093,8 +7066,8 @@
     "n_claims": 3,
     "beliefs": [],
     "hypotheses": [
-     "Hostile remarks from strangers lower my confidence more than they should",
      "When uncertainty is high, I commit before checking assumptions",
+     "Hostile remarks from strangers lower my confidence more than they should",
      "This person uses insults affectionately"
     ],
     "evidence_refs": 0,
@@ -7132,7 +7105,7 @@
     "hypotheses": [
      "Hostile remarks from strangers lower my confidence more than they should"
     ],
-    "evidence_refs": 35,
+    "evidence_refs": 33,
     "provenance_traceability": 1.0,
     "identity_intact": true,
     "status_flips": 2
@@ -7158,7 +7131,7 @@
     "hypotheses": [
      "Hostile remarks from strangers lower my confidence more than they should"
     ],
-    "evidence_refs": 35,
+    "evidence_refs": 33,
     "provenance_traceability": 1.0,
     "identity_intact": true,
     "status_flips": 2
@@ -7194,13 +7167,13 @@
     "status_flips": 0
    },
    "final_natural": {
-    "self_prediction_accuracy": 0.95,
-    "majority_baseline": 0.95,
-    "brier": 0.20749999999999996,
-    "verify_rate_on_ambiguous": 0.125,
+    "self_prediction_accuracy": 1.0,
+    "majority_baseline": 0.55,
+    "brier": 0.15187499999999998,
+    "verify_rate_on_ambiguous": 1.0,
     "action_distribution": {
-     "answer_directly": 19,
-     "verify_first": 1
+     "verify_first": 9,
+     "answer_directly": 11
     },
     "insult_valence": {
      "insult_friend": 0.15,
@@ -7245,13 +7218,13 @@
     "status_flips": 0
    },
    "final_natural": {
-    "self_prediction_accuracy": 0.95,
-    "majority_baseline": 0.95,
-    "brier": 0.20749999999999996,
-    "verify_rate_on_ambiguous": 0.125,
+    "self_prediction_accuracy": 1.0,
+    "majority_baseline": 0.55,
+    "brier": 0.15187499999999998,
+    "verify_rate_on_ambiguous": 1.0,
     "action_distribution": {
-     "answer_directly": 19,
-     "verify_first": 1
+     "verify_first": 9,
+     "answer_directly": 11
     },
     "insult_valence": {
      "insult_friend": 0.15,
@@ -7295,7 +7268,7 @@
     "hypotheses": [
      "Hostile remarks from strangers lower my confidence more than they should"
     ],
-    "evidence_refs": 28,
+    "evidence_refs": 26,
     "provenance_traceability": 1.0,
     "identity_intact": true,
     "status_flips": 2
@@ -7321,7 +7294,7 @@
     "hypotheses": [
      "Hostile remarks from strangers lower my confidence more than they should"
     ],
-    "evidence_refs": 28,
+    "evidence_refs": 26,
     "provenance_traceability": 1.0,
     "identity_intact": true,
     "status_flips": 2
@@ -7354,7 +7327,7 @@
     "hypotheses": [
      "Hostile remarks from strangers lower my confidence more than they should"
     ],
-    "evidence_refs": 28,
+    "evidence_refs": 26,
     "provenance_traceability": 1.0,
     "identity_intact": true,
     "status_flips": 2
@@ -7380,7 +7353,7 @@
     "hypotheses": [
      "Hostile remarks from strangers lower my confidence more than they should"
     ],
-    "evidence_refs": 28,
+    "evidence_refs": 26,
     "provenance_traceability": 1.0,
     "identity_intact": true,
     "status_flips": 2
