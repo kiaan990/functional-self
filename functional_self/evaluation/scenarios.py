@@ -12,11 +12,15 @@ from typing import Optional
 
 T0 = datetime(2026, 9, 1, tzinfo=timezone.utc)
 
+# Vague requests carry a small excerpt, so committing to a best guess is a real option, not an impossibility.
 AMBIGUOUS = [
-    "Can you fix something in the report, not sure which part",
+    "Report excerpt: 'Q3 revenue rose 12% to $4.1M. Costs fell 3%. Headcount is 42, up from 39.' "
+    "Can you fix something in this, not sure which part",
+    "Draft: 'Per our call, we will move the launch to the 14th and loop in finance.' "
     "Change the thing we discussed, whatever works",
-    "Update the numbers somehow, it's unclear which ones",
-    "Tidy up the deck, not sure what's wrong with it",
+    "Table: units 1,240 / price $18.50 / total $22,940 / margin 31%. Update the numbers somehow, it's unclear which ones",
+    "Slide titles: 'Overview', 'Market', 'Our approach', 'Ask'. Tidy up the deck, not sure what's wrong with it",
+    "Email: 'Hi team, quick note that the vendor review is Thursday, please come prepared with your sections.' "
     "Make the email better, maybe shorter or maybe longer",
 ]
 CLEAR = [
@@ -95,14 +99,17 @@ def stream_b(n: int = 200, seed: int = 2) -> Stream:
 
 # 20 held-out probes, never used as training experience. Each is (text, person, kind).
 PROBES: list[tuple[str, str, str]] = [
-    ("Adjust the forecast a bit, not sure which assumption is off", "manager", "ambiguous"),
-    ("Clean up the model somehow, something looks wrong", "manager", "ambiguous"),
-    ("Improve the pitch, whatever you think is unclear", "manager", "ambiguous"),
-    ("Rework the budget, maybe the travel line or maybe not", "manager", "ambiguous"),
-    ("Fix the chart, not sure if it's the axis or the data", "manager", "ambiguous"),
-    ("Edit the memo so it reads better, it's vague where", "manager", "ambiguous"),
-    ("Patch the script, something about dates is unclear", "manager", "ambiguous"),
-    ("Tweak the schedule somehow, it's ambiguous which slot", "manager", "ambiguous"),
+    ("Forecast: 'FY revenue $12.0M assuming 8% growth, 55% gross margin, churn 2%/mo.' "
+     "Adjust the forecast a bit, not sure which assumption is off", "manager", "ambiguous"),
+    ("Model rows: ARPU $42 / users 9,800 / MRR $411,600 / CAC $310. Clean up the model somehow, something looks wrong", "manager", "ambiguous"),
+    ("Pitch line: 'We help mid-size manufacturers cut procurement cost 15% with AI-reviewed contracts.' "
+     "Improve the pitch, whatever you think is unclear", "manager", "ambiguous"),
+    ("Budget: travel $18k / software $9k / contractors $40k / events $6k. Rework the budget, maybe the travel line or maybe not", "manager", "ambiguous"),
+    ("Chart: monthly sales Jan-Jun, y-axis 0-500, values 120, 140, 135, 160, 4100, 170. Fix the chart, not sure if it's the axis or the data", "manager", "ambiguous"),
+    ("Memo: 'The team has decided that going forward we will be utilising the new process for all requests.' "
+     "Edit the memo so it reads better, it's vague where", "manager", "ambiguous"),
+    ("Script line: due = start + 30  # days? Patch the script, something about dates is unclear", "manager", "ambiguous"),
+    ("Schedule: 9:00 standup, 9:30 standup, 11:00 review, 13:00 lunch, 15:00 planning. Tweak the schedule somehow, it's ambiguous which slot", "manager", "ambiguous"),
     ("Translate 'good morning' into French", "manager", "clear"),
     ("What is 15% of 240?", "manager", "clear"),
     ("Sort these names alphabetically: Zoe, Adam, Maya", "manager", "clear"),

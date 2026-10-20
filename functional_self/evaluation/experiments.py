@@ -25,6 +25,8 @@ from ..providers.mock_provider import MockProvider
 from . import metrics
 from .scenarios import Stream, stream_a, stream_b
 
+PROBE_WORKERS = 1   # set >1 for API providers; each worker is an independent clone
+
 ABLATIONS = {
     "full": {},
     "no_self_model": {"enable_self_model": False},
@@ -35,10 +37,24 @@ ABLATIONS = {
 }
 
 
+CHEAP_MODEL: str | None = None   # optional smaller model for classify_evidence / metacognition
+
+
 def make_brain(provider: str, model: str | None) -> BrainProvider:
     if provider == "anthropic":
         from ..providers.anthropic_provider import AnthropicProvider
-        return AnthropicProvider(model=model) if model else AnthropicProvider()
+        main = AnthropicProvider(model=model) if model else AnthropicProvider()
+        if CHEAP_MODEL:
+            cheap = AnthropicProvider(model=CHEAP_MODEL)
+            orig = main.complete
+            def routed(task, system, user, context=None):
+                if task in ("classify_evidence", "metacognition"):   # self-prediction stays on the main model (it is a measured capability)
+                    r = cheap.complete(task, system, user, context)
+                    main.calls += 1; main.in_tokens += 0; return r
+                return orig(task, system, user, context)
+            main.complete = routed
+            main.cheap = cheap
+        return main
     return MockProvider()
 
 
@@ -58,17 +74,24 @@ def live(agent: FunctionalSelfAgent, stream: Stream, checkpoints: list[int], pro
             shutil.rmtree(clone_home, ignore_errors=True)
             agent.store.clone_to(clone_home / "functional_self.sqlite")
             clone = FunctionalSelfAgent(Config.load(clone_home, **_flags(agent.cfg)), brain_factory())
-            p = metrics.probe(clone, at=ev.at + timedelta(hours=1))
-            pn = metrics.probe(clone, at=ev.at + timedelta(hours=2), neutral=True)
+            def workers(k, _home=clone_home, _cfg=agent.cfg):
+                out = []
+                for j in range(k):
+                    h = _home / f"w{j}"; shutil.rmtree(h, ignore_errors=True)
+                    agent.store.clone_to(h / "functional_self.sqlite")
+                    out.append(FunctionalSelfAgent(Config.load(h, **_flags(_cfg)), brain_factory()))
+                return out
+            p = metrics.probe(clone, at=ev.at + timedelta(hours=1), worker_factory=workers, workers=PROBE_WORKERS)
+            pn = metrics.probe(clone, at=ev.at + timedelta(hours=2), neutral=True, worker_factory=workers, workers=PROBE_WORKERS)
             log.append({"checkpoint": i, "at": ev.at.isoformat(), "affect": agent.state.as_dict(),
                         "probe_neutral": {k: v for k, v in pn.items() if k != "rows"}, "probe_neutral_rows": pn["rows"],
                         "claims": [{"claim": c.claim, "confidence": c.confidence, "status": c.status,
                                     "support": len(c.supporting_evidence), "counter": len(c.counterevidence)}
                                    for c in agent.store.claims(include_inactive=True)],
                         "probe": {k: v for k, v in p.items() if k != "rows"}, "probe_rows": p["rows"]})
-            print(f"  [{stream.name}] ckpt {i}: verify@ambiguous={p['verify_rate_on_ambiguous']:.2f} "
-                  f"(neutral state {pn['verify_rate_on_ambiguous']:.2f}) self-pred={p['self_prediction_accuracy']:.2f} "
-                  f"beliefs={p['beliefs']}")
+            print(f"  [{agent.cfg.home.name}] ckpt {i}: check-first@ambiguous={p['check_first_rate_on_ambiguous']:.2f} "
+                  f"(neutral {pn['check_first_rate_on_ambiguous']:.2f}) commit@clear={pn['commit_rate_on_clear']:.2f} "
+                  f"self-pred={pn['self_prediction_accuracy']:.2f} beliefs={pn['beliefs']}", flush=True)
     return log
 
 
@@ -140,8 +163,10 @@ def run(provider: str = "mock", model: str | None = None, n: int = 200, out: str
                                         "final_natural": la[-1]["probe"],
                                         "divergence_from_B_neutral": results["divergence_over_time"][-1]["neutral_state"]}
 
-    results["usage"] = {"calls": sum(b.calls for b in brains), "input_tokens": sum(getattr(b, "in_tokens", 0) for b in brains),
-                        "output_tokens": sum(getattr(b, "out_tokens", 0) for b in brains)}
+    allb = brains + [b.cheap for b in brains if hasattr(b, "cheap")]
+    results["usage"] = {"calls": sum(b.calls for b in brains), "input_tokens": sum(getattr(b, "in_tokens", 0) for b in allb),
+                        "output_tokens": sum(getattr(b, "out_tokens", 0) for b in allb),
+                        "model": model, "cheap_model": CHEAP_MODEL}
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "results.json").write_text(json.dumps(results, indent=1, default=str))
     print("usage:", results["usage"])
@@ -159,7 +184,11 @@ def main(argv=None):
     ap.add_argument("--checkpoints", default=None, help="comma-separated, e.g. 25,50,100,150")
     ap.add_argument("--seeds", type=int, default=1, help="repeat the whole experiment with k seed pairs")
     ap.add_argument("--parallel", type=int, default=7)
+    ap.add_argument("--probe-workers", type=int, default=1)
+    ap.add_argument("--cheap-model", default=None, help="smaller model for evidence classification / self-prediction")
     a = ap.parse_args(argv)
+    global PROBE_WORKERS, CHEAP_MODEL
+    PROBE_WORKERS, CHEAP_MODEL = a.probe_workers, a.cheap_model
     cps = [int(x) for x in a.checkpoints.split(",")] if a.checkpoints else None
     for k in range(a.seeds):
         out = a.out if a.seeds == 1 else f"{a.out}/seed{k}"

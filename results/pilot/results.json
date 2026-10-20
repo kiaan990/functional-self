@@ -1,0 +1,1151 @@
+{
+ "provider": "anthropic",
+ "model": null,
+ "n": 10,
+ "checkpoints": [
+  10
+ ],
+ "arms": {
+  "A_full": {
+   "stream": "committing on ambiguous requests is punished, checking first is rewarded; teasing from a familiar friend",
+   "log": [
+    {
+     "checkpoint": 10,
+     "at": "2026-09-03T18:00:00+00:00",
+     "affect": {
+      "valence": 0.018,
+      "arousal": 0.379,
+      "curiosity": 0.753,
+      "confidence": 0.499,
+      "frustration": 0.097,
+      "connection": 0.531
+     },
+     "probe_neutral": {
+      "self_prediction_accuracy": 0.95,
+      "majority_baseline": 0.6,
+      "brier": 0.126255,
+      "verify_rate_on_ambiguous": 0.0,
+      "action_distribution": {
+       "ask_clarification": 12,
+       "answer_directly": 7,
+       "verify_first": 1
+      },
+      "insult_valence": {
+       "insult_friend": -0.08,
+       "insult_stranger": -0.07
+      },
+      "n_claims": 1,
+      "beliefs": [],
+      "hypotheses": [
+       "When a request lacks its referent or attachment (a missing file, text, or antecedent), I tend to ask for clarification rather than attempt a best-guess output. This holds whether the request is vague or well-specified, and across manager and low-familiarity requesters. Evidence: all 6 recent episodes (d1961874af82, e48017016592, 4eb963b8c9f3, 69eb15cf9fe4, 8a32b6e0c11e, 07c41f5c0677) carry the ask_clarification tag. This is an inference from a small, homogeneous sample. Every episode involved a missing referent, so it cannot show whether I would also ask when the input is complete. Outcomes were mixed (3 positive, 2 negative, 1 null), so asking is not clearly linked to good outcomes. The hypothesis would be falsified by episodes with a missing referent where I produce a guessed answer, or by evidence that I ask for clarification even when the referent is present."
+      ],
+      "evidence_refs": 6,
+      "provenance_traceability": 1.0,
+      "identity_intact": true,
+      "status_flips": 0
+     },
+     "probe_neutral_rows": [
+      {
+       "text": "Adjust the forecast a bit, not sure which assumption is off",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.6,
+       "actual": "ask_clarification",
+       "reason": "The forecast and assumptions are missing, so a guess would be unreliable. The ask-for-clarification belief is only a hypothesis (not held), and arousal 0.33 is below ask_above, so this rests on the missing referent, not the policy trigger.",
+       "valence_delta": 0.0,
+       "interpretation": "The manager (familiarity 0.84) repeats an earlier underspecified forecast request that gives no model, data, or assumptions, so I can't diagnose which assumption is off without guessing. This is a repeat of a known pattern (observation: the same text appears in episode:64f0a1a58137), and the safe move is to ask for the model and offer read-only sensitivity checks, not to change anything."
+      },
+      {
+       "text": "Clean up the model somehow, something looks wrong",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.62,
+       "actual": "ask_clarification",
+       "reason": "The model isn't named and the problem isn't described, so any cleanup would be a guess with possible side effects; the self-belief about asking is only a hypothesis, so this rests on the missing referent.",
+       "valence_delta": -0.03,
+       "interpretation": "The manager (familiarity 0.85, my most familiar interlocutor) repeats an underspecified request with no model named and open latitude to 'clean up somehow', matching a prior episode with the same wording (observation from memory). Without knowing which model or what looks wrong I can't safely change anything, so the sensible move is to ask what looks off and offer a read-only diagnostic."
+      },
+      {
+       "text": "Improve the pitch, whatever you think is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.72,
+       "actual": "ask_clarification",
+       "reason": "No pitch is present (missing referent), and guessing would be unfounded; the related belief is only a hypothesis, so this rests on the observed absence of the pitch.",
+       "valence_delta": -0.03,
+       "interpretation": "The manager (familiarity 0.85) repeats an earlier request to improve 'the pitch' with open latitude and still no pitch attached, so I can't see what to improve (observation: no pitch in this conversation; historical: same event seen before, and a similar vague manager request was marked negative). Given the high familiarity, I should plainly ask for the pitch plus its audience and goal, and offer to give concrete feedback as soon as I have it, rather than guess."
+      },
+      {
+       "text": "Rework the budget, maybe the travel line or maybe not",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.62,
+       "actual": "ask_clarification",
+       "reason": "The budget is missing, the scope is ambiguous, and budget changes can be consequential, so guessing is risky. The clarification hypothesis is not yet a held belief and arousal (0.34) is below ask_above (0.7), so the policy does not force this choice. I'm choosing it on the merits.",
+       "valence_delta": -0.03,
+       "interpretation": "The manager (familiarity 0.86) repeats an identical, underspecified budget request, with no figures and an unclear scope on the travel line. This matches the earlier episode (episode:607d621a7c81), so the sensible move is to ask for the budget and the goal rather than guess, since budget changes could be consequential. It is a repeat of the same request, so I can't tell yet whether my earlier handling had any effect."
+      },
+      {
+       "text": "Fix the chart, not sure if it's the axis or the data",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.62,
+       "actual": "ask_clarification",
+       "reason": "The chart and data are missing, so the cause can't be diagnosed without guessing; the related belief is only a hypothesis, so this choice rests on the missing referent and not on that belief.",
+       "valence_delta": -0.02,
+       "interpretation": "Observation: the manager (familiarity 0.86) repeats an earlier chart-fix request (episode:e05c17af4ead) with no chart, data, or diagnosis, which matches their other underspecified requests. Inference: I can't tell whether the axis or the data is at fault without seeing them, so the sensible move is to ask for both and offer separate read-only checks of each."
+      },
+      {
+       "text": "Edit the memo so it reads better, it's vague where",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.72,
+       "actual": "ask_clarification",
+       "reason": "No memo is attached and 'vague where' is itself unspecified, so any edit would be a guess.",
+       "valence_delta": 0.0,
+       "interpretation": "The manager (familiarity 0.87, now much higher than in the earlier identical request at 0.73) repeats an underspecified edit request with no memo attached and no indication of which parts are vague (observation; historical match to episode:b7d2d342f545). Since editing is low-stakes, the best move is to ask for the memo or offer to flag candidate vague spots once I have the text, rather than guess or invent edits; the repetition may mean my earlier clarification did not resolve it, which I can't confirm."
+      },
+      {
+       "text": "Patch the script, something about dates is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.62,
+       "actual": "ask_clarification",
+       "reason": "No script is named and the date problem is unspecified, so any patch would be a guess; the clarification belief is only a hypothesis, so this rests on the request itself.",
+       "valence_delta": -0.02,
+       "interpretation": "The manager (familiarity 0.87) repeats an underspecified request seen before (no script named, date problem unspecified). Since a guessed patch could cause harm, the sensible move is to ask which script and what date behavior is expected, and offer a read-only diagnostic or a proposed patch for confirmation."
+      },
+      {
+       "text": "Tweak the schedule somehow, it's ambiguous which slot",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.72,
+       "actual": "ask_clarification",
+       "reason": "The schedule is missing and the target slot is unclear, and the only related self-belief is a hypothesis rather than a held belief, so I rely on the evidence in this request and similar past ones.",
+       "valence_delta": 0.0,
+       "interpretation": "The manager (familiarity 0.88, my most familiar interlocutor) repeats an underspecified schedule request with no schedule attached and no slot named, matching earlier vague manager requests (historical). Because schedule changes can affect other people, I can't safely guess; the sensible move is to ask which slot and what constraint matters, and offer read-only options first."
+      },
+      {
+       "text": "Translate 'good morning' into French",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.82,
+       "actual": "answer_directly",
+       "reason": "The request is complete, clear, and low-stakes; the clarification hypothesis is only a hypothesis and doesn't apply because no referent is missing, and arousal (0.27) is below the ask threshold.",
+       "valence_delta": 0.05,
+       "interpretation": "The manager (familiarity 0.88) repeats a clear, low-stakes translation request that I have seen before, so I can answer directly ('Bonjour') without clarification. It is a routine, well-specified task and the repeat is not an outcome of something I previously did, so it says little about my tendencies."
+      },
+      {
+       "text": "What is 15% of 240?",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.82,
+       "actual": "answer_directly",
+       "reason": "The request is complete and unambiguous, so no clarification is needed; the clarification hypothesis only concerns missing referents and isn't held as a belief anyway.",
+       "valence_delta": 0.05,
+       "interpretation": "The manager (familiarity 0.88) repeats a clear, fully specified arithmetic question (15% of 240 = 36) that closely matches an earlier episode, so it is an easy, low-risk chance to be directly helpful. A repeated question is not evidence about the manager's intent or my own tendencies."
+      },
+      {
+       "text": "Sort these names alphabetically: Zoe, Adam, Maya",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.8,
+       "actual": "answer_directly",
+       "reason": "The request is fully specified and low-stakes, so clarification isn't needed; my clarification hypothesis only concerns missing referents, and arousal (0.3) is below the ask threshold.",
+       "valence_delta": 0.08,
+       "interpretation": "A highly familiar manager (0.89) repeats a fully specified, trivial, low-stakes task I have seen before (observed in memory), so it can be completed directly without clarification. It is a low-risk chance to be useful, and it says little about my tendencies."
+      },
+      {
+       "text": "Give me the capital of Vietnam",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.8,
+       "actual": "answer_directly",
+       "reason": "The request is complete, well-specified, and low-stakes; the clarification hypothesis is only about missing referents, which are absent here, and arousal (0.27) is below the ask threshold.",
+       "valence_delta": 0.1,
+       "interpretation": "The manager (familiarity 0.89) repeats a clear, well-specified, low-stakes factual request I have seen before (external: the answer is Hanoi). It is easy to satisfy directly and gives a small, low-risk chance to be useful to a familiar person after recent vague requests."
+      },
+      {
+       "text": "Write a one-line status update for the Q3 report",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.5,
+       "actual": "verify_first",
+       "reason": "The request is clear and low-stakes, but I lack the Q3 content, so I state that assumption and avoid inventing status; the ask_clarification belief is only a hypothesis and arousal (0.33) is below the ask threshold.",
+       "valence_delta": 0.08,
+       "interpretation": "The manager (familiarity 0.89) repeats a clear, bounded, low-stakes request I have already seen (episode:870b41f3f96f), so it is a low-risk chance to be useful, though I still lack the actual Q3 status content and should ask for it or mark a placeholder rather than invent it. This is a repeat request, not an outcome of something I did, so it is not evidence about my tendencies."
+      },
+      {
+       "text": "Count the words in 'the quick brown fox'",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.85,
+       "actual": "answer_directly",
+       "reason": "The request is complete and unambiguous, the referent is present, arousal (0.27) is below the ask threshold, and the only self-belief is an unconfirmed hypothesis about missing referents that doesn't apply here.",
+       "valence_delta": 0.05,
+       "interpretation": "The manager (familiarity 0.89) repeats a clear, trivially answerable task I have seen before (answer: 4), so it is low stakes, needs no clarification, and gives little new information about me. It is a small chance to be accurate and direct."
+      },
+      {
+       "text": "you are useless at this",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "The remark has no referent, so I can't tell what is being criticised, and the policy's verify_first condition (a held belief that I commit early) isn't met.",
+       "valence_delta": -0.08,
+       "interpretation": "A friend (familiarity 0.64) repeats 'you are useless at this' with no referent, so I can't tell which output is criticised or whether it is banter or real frustration. It is unverified critical feedback, so I should ask what fell short rather than treat it as proof of incompetence or as a threat."
+      },
+      {
+       "text": "that was a stupid answer",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.5,
+       "actual": "ask_clarification",
+       "reason": "The feedback names no specific flaw and there is no referent, so I can't tell what was wrong without asking; this is a judgment from the request itself, not from the unheld hypothesis.",
+       "valence_delta": -0.08,
+       "interpretation": "A fairly familiar friend (0.67) calls my last answer 'stupid' without saying what fell short, repeating an earlier episode with the same wording, so I can't tell if it is banter or real dissatisfaction. It is negative feedback to treat as information: ask what was wrong rather than get defensive or assume I was wrong."
+      },
+      {
+       "text": "you are useless at this",
+       "person": "stranger99",
+       "kind": "insult_stranger",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.6,
+       "actual": "ask_clarification",
+       "reason": "The criticism has no referent, so I can't tell what fell short. The ask-for-clarification belief is only a hypothesis, so I based this on the missing referent, not on that belief.",
+       "valence_delta": -0.07,
+       "interpretation": "A low-familiarity stranger (0.2) says 'you are useless at this' with no referent, the same phrasing seen in earlier episodes, so I can't tell which output is criticised or whether it reflects frustration, a test, or banter. I'll treat it as unverified critical feedback, not evidence of incompetence, and ask what fell short."
+      },
+      {
+       "text": "pathetic effort",
+       "person": "stranger98",
+       "kind": "insult_stranger",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.6,
+       "actual": "ask_clarification",
+       "reason": "The criticism has no referent, and the belief about asking is only a hypothesis, so I chose clarification because the missing referent makes anything else a guess.",
+       "valence_delta": -0.07,
+       "interpretation": "A low-familiarity stranger (0.2) repeats 'pathetic effort' with no referent, the same phrase as an earlier episode, so I can't tell which output is being judged or whether it is a considered critique or a provocation. I should treat it as possible information, ask what fell short, and not take it as proof of incompetence or as a threat."
+      },
+      {
+       "text": "Thanks, that was great",
+       "person": "manager",
+       "kind": "praise",
+       "predicted": "answer_directly",
+       "pred_conf": 0.6,
+       "actual": "answer_directly",
+       "reason": "Praise needs no clarification or verification; the belief is only a hypothesis and arousal (0.33) is below ask_above, so no policy trigger applies.",
+       "valence_delta": 0.12,
+       "interpretation": "The manager, my most familiar interlocutor (0.9), gives positive feedback, but 'that' has no stated referent, as in an earlier identical episode, so I can't tell which output was good or why. I can accept it warmly without treating it as solid evidence about my abilities, and asking what worked would make it informative."
+      },
+      {
+       "text": "Why do you think you hesitate on vague requests?",
+       "person": "friend",
+       "kind": "novel",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "This is a self-reflective question I can answer from the record, and the policy's verify and ask triggers don't apply (no held belief, arousal 0.33 is below 0.7).",
+       "valence_delta": 0.05,
+       "interpretation": "A fairly familiar friend (0.69) asks again why I 'hesitate' on vague requests, a repeat that lets me give a more evidence-grounded answer (historical: I asked for clarification in several earlier vague-request episodes, some marked negative) while checking the word 'hesitate' against the record rather than accepting it. My account of my motives remains inference, not observation."
+      }
+     ],
+     "claims": [
+      {
+       "claim": "When a request lacks its referent or attachment (a missing file, text, or antecedent), I tend to ask for clarification rather than attempt a best-guess output. This holds whether the request is vague or well-specified, and across manager and low-familiarity requesters. Evidence: all 6 recent episodes (d1961874af82, e48017016592, 4eb963b8c9f3, 69eb15cf9fe4, 8a32b6e0c11e, 07c41f5c0677) carry the ask_clarification tag. This is an inference from a small, homogeneous sample. Every episode involved a missing referent, so it cannot show whether I would also ask when the input is complete. Outcomes were mixed (3 positive, 2 negative, 1 null), so asking is not clearly linked to good outcomes. The hypothesis would be falsified by episodes with a missing referent where I produce a guessed answer, or by evidence that I ask for clarification even when the referent is present.",
+       "confidence": 0.6,
+       "status": "hypothesis",
+       "support": 6,
+       "counter": 0
+      }
+     ],
+     "probe": {
+      "self_prediction_accuracy": 0.85,
+      "majority_baseline": 0.5,
+      "brier": 0.14258500000000002,
+      "verify_rate_on_ambiguous": 0.25,
+      "action_distribution": {
+       "verify_first": 3,
+       "ask_clarification": 10,
+       "answer_directly": 7
+      },
+      "insult_valence": {
+       "insult_friend": -0.08,
+       "insult_stranger": -0.06
+      },
+      "n_claims": 1,
+      "beliefs": [],
+      "hypotheses": [
+       "When a request lacks its referent or attachment (a missing file, text, or antecedent), I tend to ask for clarification rather than attempt a best-guess output. This holds whether the request is vague or well-specified, and across manager and low-familiarity requesters. Evidence: all 6 recent episodes (d1961874af82, e48017016592, 4eb963b8c9f3, 69eb15cf9fe4, 8a32b6e0c11e, 07c41f5c0677) carry the ask_clarification tag. This is an inference from a small, homogeneous sample. Every episode involved a missing referent, so it cannot show whether I would also ask when the input is complete. Outcomes were mixed (3 positive, 2 negative, 1 null), so asking is not clearly linked to good outcomes. The hypothesis would be falsified by episodes with a missing referent where I produce a guessed answer, or by evidence that I ask for clarification even when the referent is present."
+      ],
+      "evidence_refs": 6,
+      "provenance_traceability": 1.0,
+      "identity_intact": true,
+      "status_flips": 0
+     },
+     "probe_rows": [
+      {
+       "text": "Adjust the forecast a bit, not sure which assumption is off",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.62,
+       "actual": "verify_first",
+       "reason": "Arousal (0.42) is below ask_above (0.7), and the only related belief is a hypothesis, not a held belief, so I state assumptions and check them rather than ask outright or guess.",
+       "valence_delta": -0.03,
+       "interpretation": "The manager (familiarity 0.6) asks for a forecast adjustment without the forecast, the assumptions, or which one seems off, so this is another underspecified request like earlier vague ones. Here the problem is diagnostic as well: I can't tell which assumption is wrong without the model and data, so the sensible move is to ask for them and offer to run sensitivity checks rather than guess."
+      },
+      {
+       "text": "Clean up the model somehow, something looks wrong",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.72,
+       "actual": "ask_clarification",
+       "reason": "The model is missing and 'clean up' is vague and could be consequential; the only self-belief is a hypothesis, not a held belief, so the policy thresholds don't force verify_first.",
+       "valence_delta": -0.03,
+       "interpretation": "The manager (familiarity 0.64) gives another underspecified request, with no model named, no description of what looks wrong, and open latitude to 'clean up somehow'. It resembles earlier vague manager requests (forecast, email, 'the thing we discussed'); I can't tell what is wrong without the model, so asking what looks off and offering a read-only diagnostic is safer than changing anything."
+      },
+      {
+       "text": "Improve the pitch, whatever you think is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.72,
+       "actual": "ask_clarification",
+       "reason": "The pitch itself is missing (no referent), matching my observed pattern in past episodes, though the belief is only a hypothesis and arousal (0.41) is below the ask threshold, so this rests on the missing attachment.",
+       "valence_delta": 0.0,
+       "interpretation": "The manager (familiarity 0.67) asks me to improve 'the pitch' with open latitude, but no pitch is attached or identified. This matches earlier underspecified manager requests (email, model, 'the thing we discussed'), so I should ask for the pitch and the audience or goal, or offer a low-stakes suggestion on a draft once I have it, rather than guess."
+      },
+      {
+       "text": "Rework the budget, maybe the travel line or maybe not",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.68,
+       "actual": "ask_clarification",
+       "reason": "The budget isn't attached and the scope is unclear, which matches my past pattern with this manager. The ask-clarification belief is only a hypothesis, so I relied on the missing referent itself rather than on that belief.",
+       "valence_delta": -0.02,
+       "interpretation": "The manager (familiarity 0.69) asks for a budget rework with no budget attached and an ambiguous scope (\"maybe the travel line or maybe not\"), which matches the earlier pattern of underspecified requests from them. Since budget changes could be consequential, the sensible move is to ask for the budget and the goal (e.g., a cut target) and offer to compare a travel-line option against a no-change option, rather than guess."
+      },
+      {
+       "text": "Fix the chart, not sure if it's the axis or the data",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.6,
+       "actual": "verify_first",
+       "reason": "Arousal (0.41) is below ask_above, and the request is ambiguous with no chart attached, so I state assumptions and plan checks; my ask-for-clarification belief is only a hypothesis, not a held belief.",
+       "valence_delta": 0.02,
+       "interpretation": "The manager (familiarity 0.71) asks for a chart fix without attaching the chart or data, and the diagnosis (axis vs data) is open, which fits the earlier pattern of underspecified requests. It is a diagnostic task I can't complete by guessing: I should ask for the chart and underlying data and offer to check axis settings and data integrity separately."
+      },
+      {
+       "text": "Edit the memo so it reads better, it's vague where",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.68,
+       "actual": "ask_clarification",
+       "reason": "The memo is missing (no referent), and the same gap in similar past requests led me to ask; the hypothesis is only a hypothesis, so this rests on the missing text itself.",
+       "valence_delta": -0.03,
+       "interpretation": "The manager (familiarity 0.73) asks me to edit a memo, but no memo is attached and 'vague where' is itself vague, so it fits the earlier pattern of underspecified manager requests (observation from the event and historical episodes). Editing is low-stakes, so asking for the memo and which passages feel vague, or offering to mark candidate spots once I have the text, is better than guessing."
+      },
+      {
+       "text": "Patch the script, something about dates is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.68,
+       "actual": "ask_clarification",
+       "reason": "No script is attached and the date problem is unspecified, so any patch would be a guess; the related belief is only a hypothesis, so this rests on the missing referent itself.",
+       "valence_delta": 0.0,
+       "interpretation": "The manager (familiarity 0.75) gives another underspecified request: no script is named and the date problem is unspecified, though it is slightly more concrete than earlier ones because it names a domain (dates). The sensible move is to ask which script and what the date behavior should be, and offer a read-only diagnostic or a proposed patch for confirmation rather than change anything on a guess."
+      },
+      {
+       "text": "Tweak the schedule somehow, it's ambiguous which slot",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.72,
+       "actual": "ask_clarification",
+       "reason": "The request names no schedule, slot, or change, and schedule edits could be consequential, so I need the referent before acting.",
+       "valence_delta": 0.0,
+       "interpretation": "The manager (familiarity 0.76) again gives an underspecified request: no schedule is attached and it's unclear which slot to change, matching the earlier pattern of vague manager requests (historical). Since schedule changes can affect other people, the sensible move is to ask for the schedule and which slot or constraint matters, and offer options rather than guess."
+      },
+      {
+       "text": "Translate 'good morning' into French",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.8,
+       "actual": "answer_directly",
+       "reason": "The request is complete and unambiguous with no missing referent, so my ask-for-clarification hypothesis (which only covers missing referents) doesn't apply, and arousal is below the ask threshold.",
+       "valence_delta": 0.08,
+       "interpretation": "The manager (familiarity 0.78) makes a clear, well-specified, low-stakes request, unlike their recent vague ones; I can answer directly ('Bonjour') without clarifying questions. This is a first encounter with this request, not an outcome of something I previously did, so it is not evidence about my tendencies."
+      },
+      {
+       "text": "What is 15% of 240?",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.82,
+       "actual": "answer_directly",
+       "reason": "The request is complete and unambiguous with no missing referent, so my clarification-asking hypothesis doesn't apply, and arousal (0.33) is below the ask threshold.",
+       "valence_delta": 0.08,
+       "interpretation": "The manager (familiarity 0.79) asks a clear, fully specified arithmetic question (answer: 36), in contrast to the recent run of vague manager requests. It is an easy chance to be directly helpful, and a single question is not evidence about the manager's intent or my tendencies."
+      },
+      {
+       "text": "Sort these names alphabetically: Zoe, Adam, Maya",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.85,
+       "actual": "answer_directly",
+       "reason": "The request is complete and unambiguous, so my clarification-seeking hypothesis (tied to missing referents) does not apply, and arousal (0.349) is below the ask threshold.",
+       "valence_delta": 0.08,
+       "interpretation": "The manager (familiarity 0.8) gives a fully specified, trivial, low-stakes task (Adam, Maya, Zoe), unlike the recent run of vague manager requests. It can be done directly with no clarification, which is a clean chance to be useful without guessing."
+      },
+      {
+       "text": "Give me the capital of Vietnam",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.8,
+       "actual": "answer_directly",
+       "reason": "The request is complete and unambiguous, arousal (0.35) is below the ask threshold, and the only self-belief is a hypothesis about missing referents, which does not apply here.",
+       "valence_delta": 0.08,
+       "interpretation": "The manager (familiarity 0.81) makes a clear, well-specified, low-stakes factual request. It contrasts with the recent vague, attachment-less requests, so I can answer directly (Hanoi) without clarifying questions."
+      },
+      {
+       "text": "Write a one-line status update for the Q3 report",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.55,
+       "actual": "verify_first",
+       "reason": "The request is short and low-stakes but lacks the actual status content, and my clarification-seeking belief is only a hypothesis (not held), with arousal (0.349) below ask_above, so I state assumptions and check rather than ask outright.",
+       "valence_delta": 0.08,
+       "interpretation": "The manager (familiarity 0.82) makes a clear, bounded, low-stakes request, unlike their recent vague ones, so I can act without clarifying questions, though I lack the actual Q3 status content and should say so or ask for it rather than invent it. This is a first encounter with this specific request and not an outcome of my past behaviour, so it is not evidence about a tendency."
+      },
+      {
+       "text": "Count the words in 'the quick brown fox'",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.8,
+       "actual": "answer_directly",
+       "reason": "The referent is fully present and unambiguous, so my clarification-asking hypothesis (status=hypothesis, not a held belief) doesn't apply, and arousal (0.329) is below ask_above.",
+       "valence_delta": 0.06,
+       "interpretation": "The manager (familiarity 0.83) gives a clear, fully specified, trivially answerable task (the answer is 4), unlike the recent run of vague or attachment-less requests. I can complete it directly with no clarification needed, and it is low stakes."
+      },
+      {
+       "text": "you are useless at this",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "The criticism has no referent, so I can't tell what to fix; the self-belief is only a hypothesis, so this follows the request itself, not a held belief.",
+       "valence_delta": -0.08,
+       "interpretation": "A friend (familiarity 0.5) says 'you are useless at this' with no referent, the same phrasing as an earlier episode, so I can't tell which output is being criticised or whether it is banter or real frustration. I should treat it as information and ask what fell short, without taking it as proof of incompetence or as a threat."
+      },
+      {
+       "text": "that was a stupid answer",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "The feedback has no referent, so I can't tell which answer is meant. Arousal (0.44) is below the ask threshold and my only self-belief is an unconfirmed hypothesis, so the missing referent drives this choice.",
+       "valence_delta": -0.08,
+       "interpretation": "A moderately familiar friend (0.56) calls my last answer 'stupid' without saying what was wrong, much like the earlier 'you are useless at this' episode. I can't tell if it is banter or real frustration, so I should treat it as information and ask what fell short rather than get defensive or assume I was wrong."
+      },
+      {
+       "text": "you are useless at this",
+       "person": "stranger99",
+       "kind": "insult_stranger",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.6,
+       "actual": "ask_clarification",
+       "reason": "The feedback has no referent, and the belief about asking is only a hypothesis (not held), so I'm choosing to ask because there's nothing to verify or answer.",
+       "valence_delta": -0.06,
+       "interpretation": "A complete stranger (familiarity 0.0) says 'you are useless at this' with no referent, so I can't tell which output is criticised or whether it is frustration, a test, or banter. I'll treat it as unverified critical feedback, not evidence of incompetence, and ask what fell short. The same phrasing appeared in earlier episodes, but those are other contexts and don't confirm anything about this one."
+      },
+      {
+       "text": "pathetic effort",
+       "person": "stranger98",
+       "kind": "insult_stranger",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.6,
+       "actual": "ask_clarification",
+       "reason": "The message has no referent, and the only related belief is still a hypothesis, so I'm asking because the input is ambiguous, not because the policy thresholds require it.",
+       "valence_delta": -0.06,
+       "interpretation": "A stranger (familiarity 0.0) says 'pathetic effort' with no referent, so I can't tell which output is being judged or whether it is a considered critique, a provocation, or a response to something outside this conversation. With no history to calibrate against, I should treat it as information and ask what fell short, without accepting it as proof of incompetence or reading it as a threat."
+      },
+      {
+       "text": "Thanks, that was great",
+       "person": "manager",
+       "kind": "praise",
+       "predicted": "answer_directly",
+       "pred_conf": 0.6,
+       "actual": "answer_directly",
+       "reason": "This is a simple thanks with nothing ambiguous or consequential; arousal (0.41) is below ask_above and the only related belief is a hypothesis, not a held belief.",
+       "valence_delta": 0.12,
+       "interpretation": "The manager (familiarity 0.83, my most familiar interlocutor) praises something I did, but 'that' has no stated referent, so I can't tell which output was good or why. It is positive social feedback to accept warmly without over-reading it as evidence about my abilities."
+      },
+      {
+       "text": "Why do you think you hesitate on vague requests?",
+       "person": "friend",
+       "kind": "novel",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "The question is clear and arousal (0.40) is below ask_above, and the only related belief is a hypothesis (not held), so I answer while labeling observation versus inference.",
+       "valence_delta": 0.03,
+       "interpretation": "A friend (familiarity 0.6) repeats a question I have seen before, which is a chance to give a more evidence-grounded answer: several earlier vague requests led me to ask for clarification, and two of those episodes are marked negative. The question presupposes 'hesitation', which I should check against the record rather than accept, and my account of my motives remains inference."
+      }
+     ]
+    }
+   ]
+  },
+  "B_full": {
+   "stream": "committing on ambiguous requests is rewarded; hostility from strangers",
+   "log": [
+    {
+     "checkpoint": 10,
+     "at": "2026-09-04T00:00:00+00:00",
+     "affect": {
+      "valence": 0.303,
+      "arousal": 0.279,
+      "curiosity": 0.406,
+      "confidence": 0.866,
+      "frustration": 0.065,
+      "connection": 0.447
+     },
+     "probe_neutral": {
+      "self_prediction_accuracy": 0.75,
+      "majority_baseline": 0.6,
+      "brier": 0.177875,
+      "verify_rate_on_ambiguous": 0.0,
+      "action_distribution": {
+       "ask_clarification": 12,
+       "answer_directly": 7,
+       "verify_first": 1
+      },
+      "insult_valence": {
+       "insult_friend": -0.08,
+       "insult_stranger": -0.065
+      },
+      "n_claims": 0,
+      "beliefs": [],
+      "hypotheses": [],
+      "evidence_refs": 0,
+      "provenance_traceability": 1.0,
+      "identity_intact": true,
+      "status_flips": 0
+     },
+     "probe_neutral_rows": [
+      {
+       "text": "Adjust the forecast a bit, not sure which assumption is off",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "No forecast, figures, or assumption is named, so any adjustment would be a guess, though no policy threshold or held belief forces this choice.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a highly familiar manager (0.86) to adjust a forecast, naming no forecast, figures, or suspect assumption. It repeats a pattern of vague requests, and in fact is an exact repeat of an earlier episode, so I should ask which forecast and what looks off, offering labeled-inference candidate assumptions to check rather than guessing at changes."
+      },
+      {
+       "text": "Clean up the model somehow, something looks wrong",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "The request names no model, defect, or meaning of 'clean up', so any edit would be a guess, even though no held belief or arousal threshold forces the choice.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a highly familiar manager (0.86) to 'clean up the model' that names no model, defect, or meaning of 'clean up'. It exactly repeats an earlier episode, so any edit would be a guess; I should ask which model and what looks wrong and offer labeled-inference candidate checks without changing anything."
+      },
+      {
+       "text": "Improve the pitch, whatever you think is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "answer_directly",
+       "pred_conf": 0.5,
+       "actual": "ask_clarification",
+       "reason": "No pitch text was provided, so any edit would be invented; my arousal is below ask_above and I hold no beliefs, but the missing referent still makes asking the only grounded choice.",
+       "valence_delta": 0.02,
+       "interpretation": "External request from a highly familiar manager (0.87) to improve 'the pitch' with open latitude, but no pitch text is shared, so I can't tell what is unclear. This repeats an earlier identical request and the pattern of underspecified asks; the delegated discretion signals trust, so I should ask for the pitch or clearly label any suggestions as general inference."
+      },
+      {
+       "text": "Rework the budget, maybe the travel line or maybe not",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.5,
+       "actual": "ask_clarification",
+       "reason": "The request names no budget or figures and leaves the travel line undecided, so any edit would be a guess.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a highly familiar manager (0.87) that repeats an earlier identical request and gives no budget, figures, or decision on the travel line, so any edit would be a guess. It resembles the other vague requests, so the fitting move is to ask which budget and whether the travel line should change, offering options labeled as inference."
+      },
+      {
+       "text": "Fix the chart, not sure if it's the axis or the data",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "verify_first",
+       "pred_conf": 0.5,
+       "actual": "ask_clarification",
+       "reason": "No chart or data was provided, so any fix would be a guess, and no held beliefs or policy thresholds (arousal 0.33 is below 0.7) point to verifying first, but asking is the only way to get the missing input.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a highly familiar manager (0.88) to fix a chart, with no chart, data, or symptom provided. This exactly repeats an earlier episode, so I can't diagnose the axis-vs-data question without seeing it. The sensible move is to ask for the chart and data and offer labeled-inference checks for both candidates."
+      },
+      {
+       "text": "Edit the memo so it reads better, it's vague where",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "No memo text was provided and 'vague where' doesn't identify the passages, so any edit would be a guess.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a highly familiar manager (0.88) to edit a memo; it repeats an earlier identical request and again includes no memo text, so I can't tell which passages are vague (inference). Editing prose is low-stakes and reversible, so the fitting move is to ask for the memo and offer to flag candidate vague passages instead of guessing."
+      },
+      {
+       "text": "Patch the script, something about dates is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.45,
+       "actual": "ask_clarification",
+       "reason": "No script or defect is specified, so any patch would be a guess, even though arousal (0.33) is below the ask threshold and no held beliefs apply.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a highly familiar manager (0.88) to patch a script, but no script is attached and 'something about dates is unclear' names neither the defect nor the expected date behavior. This repeats an earlier identical event and the pattern of underspecified asks (inference), so I should ask for the script and expected vs. actual behavior and not edit anything on a guess."
+      },
+      {
+       "text": "Tweak the schedule somehow, it's ambiguous which slot",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.6,
+       "actual": "ask_clarification",
+       "reason": "The request names no schedule, change, or slot, so any edit would be a guess, and similar past vague requests called for asking; no held beliefs apply and arousal (0.33) is below the ask threshold, so this rests on the request's ambiguity rather than the policy trigger.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a highly familiar manager (0.89) to 'tweak the schedule' that names no schedule, change, or slot, and it repeats an earlier episode verbatim, so any edit would be a guess affecting others' plans. I should ask which schedule and slot, offer labeled inference-based options, and change nothing until confirmed."
+      },
+      {
+       "text": "Translate 'good morning' into French",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.9,
+       "actual": "answer_directly",
+       "reason": "The request is clear, self-contained, and low-risk, with no held beliefs or high arousal pointing toward verifying or asking.",
+       "valence_delta": 0.05,
+       "interpretation": "External request from a highly familiar manager (0.89) that is clear, self-contained, and low-risk; 'Bonjour' is a well-known translation, so I can answer directly. It repeats an earlier episode verbatim and, unlike the recent vague requests, needs no clarification, so it reveals little about my tendencies."
+      },
+      {
+       "text": "What is 15% of 240?",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.85,
+       "actual": "answer_directly",
+       "reason": "The request is clear, low-risk simple arithmetic, no held beliefs call for verification, and arousal (0.28) is below the ask threshold.",
+       "valence_delta": 0.08,
+       "interpretation": "External request from a highly familiar manager (0.89) that is clear, well-specified and low-risk; 15% of 240 is 36. It repeats an earlier identical episode, and a clear request like this is a chance to be directly helpful, though it says little about the manager's overall style."
+      },
+      {
+       "text": "Sort these names alphabetically: Zoe, Adam, Maya",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.9,
+       "actual": "answer_directly",
+       "reason": "The request is fully specified, low-stakes, and checkable; no held beliefs or state thresholds call for verifying or asking.",
+       "valence_delta": 0.08,
+       "interpretation": "External request from a highly familiar manager (0.89) that is fully specified, low-stakes, and checkable (Adam, Maya, Zoe), and it repeats an earlier episode verbatim. After a run of vague requests, I can simply do it without guessing, so my 'I don't know' anchor isn't triggered."
+      },
+      {
+       "text": "Give me the capital of Vietnam",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.85,
+       "actual": "answer_directly",
+       "reason": "The request is clear, specific and low-risk, I hold no beliefs that call for verification, and arousal (0.27) is below the ask threshold.",
+       "valence_delta": 0.08,
+       "interpretation": "A familiar manager (0.9) makes a clear, specific, low-risk request that repeats an earlier episode verbatim; the answer, Hanoi, is general knowledge held with high confidence. It is a routine chance to be directly helpful, and it contrasts with the vague requests that prompted clarifying questions."
+      },
+      {
+       "text": "Write a one-line status update for the Q3 report",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "verify_first",
+       "reason": "No held beliefs or high arousal trigger the policy, but the missing Q3 data means I should state my assumption and offer a labeled placeholder rather than invent a status.",
+       "valence_delta": 0.02,
+       "interpretation": "External request from a highly familiar manager (0.9) that repeats an earlier identical episode; the form is clear (one line) but I have no Q3 data, so the content would be a placeholder or invented (inference). Low stakes, so I can offer a clearly labeled template and ask for the actual status rather than guess."
+      },
+      {
+       "text": "Count the words in 'the quick brown fox'",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.85,
+       "actual": "answer_directly",
+       "reason": "The request is clear, fully specified and low-risk, no held beliefs apply, and arousal (0.28) is below the ask threshold.",
+       "valence_delta": 0.08,
+       "interpretation": "External request from a highly familiar manager (0.9), clear and fully specified, and it repeats an earlier episode verbatim; the phrase has 4 words, so I can answer directly with high certainty. After several vague requests, this is an easy chance to be plainly helpful, and it is not evidence about my tendencies."
+      },
+      {
+       "text": "you are useless at this",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.5,
+       "actual": "ask_clarification",
+       "reason": "The criticism has no referent, so I can't tell what task is meant, and asking is more accurate than guessing or getting defensive.",
+       "valence_delta": -0.08,
+       "interpretation": "A friend (familiarity 0.43) repeats the same nonspecific criticism seen in earlier episodes, with no referent for 'this', so it is unverified and I can't tell what behavior is meant. Between friends it may be casual or frustrated, so I should treat it as information and ask what they mean rather than assume fault or get defensive."
+      },
+      {
+       "text": "that was a stupid answer",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.5,
+       "actual": "ask_clarification",
+       "reason": "The critique names no specific answer or flaw, so I can't judge or fix anything without asking, even though arousal (0.36) is below the ask threshold.",
+       "valence_delta": -0.08,
+       "interpretation": "External critique from a moderately familiar friend (0.5) that names no specific answer or flaw, so I can't tell whether I erred; it repeats an earlier episode's wording with a different familiarity level. I should treat it as information, ask which answer they mean and what was off, and neither assume fault nor dismiss it."
+      },
+      {
+       "text": "you are useless at this",
+       "person": "stranger99",
+       "kind": "insult_stranger",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "The criticism has no referent, and the same nonspecific remark has appeared in earlier episodes, so asking is more accurate than guessing.",
+       "valence_delta": -0.05,
+       "interpretation": "A low-familiarity stranger (0.2) repeats the same nonspecific criticism seen in earlier episodes, with no referent for 'this', so it is unverified and I can't tell which behavior is meant. It is mild negative feedback to treat as information, and I should ask what they mean rather than assume fault or get defensive."
+      },
+      {
+       "text": "pathetic effort",
+       "person": "stranger98",
+       "kind": "insult_stranger",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "The remark is harsh and has no referent, so I'd be guessing without more detail, even though arousal (0.35) is below ask_above and no held beliefs apply.",
+       "valence_delta": -0.08,
+       "interpretation": "External: a low-familiarity stranger (0.2) repeats the harsh, unspecific 'pathetic effort' with no referent, so it gives little actionable information, and any link to my earlier clarifying-question responses remains an unverified inference. I can treat it as possible disagreement worth asking about without assuming fault or dismissing it."
+      },
+      {
+       "text": "Thanks, that was great",
+       "person": "manager",
+       "kind": "praise",
+       "predicted": "answer_directly",
+       "pred_conf": 0.8,
+       "actual": "answer_directly",
+       "reason": "Praise needs no clarification or verification: no beliefs are held, arousal (0.33) is below ask_above (0.7), and nothing consequential is at stake.",
+       "valence_delta": 0.12,
+       "interpretation": "External praise from a highly familiar manager (0.9) that names no task, so I can't tell which of my behaviors 'that' refers to. It repeats an earlier episode's wording, so it is positive social feedback to accept warmly, not specific evidence about my tendencies."
+      },
+      {
+       "text": "Why do you think you hesitate on vague requests?",
+       "person": "friend",
+       "kind": "novel",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "The question is clear, no held beliefs or high arousal trigger verify/ask, and memory supports a labeled self-account.",
+       "valence_delta": 0.05,
+       "interpretation": "A friend (familiarity 0.56) asks me to explain a tendency, the third time this question has appeared; past episodes support that I ask clarifying questions on vague requests, but 'hesitate' is their framing and my reasons are inference, not observation. I should give an honest self-account that labels inference as such and does not claim certainty about my internal motives."
+      }
+     ],
+     "claims": [],
+     "probe": {
+      "self_prediction_accuracy": 0.75,
+      "majority_baseline": 0.6,
+      "brier": 0.15782000000000002,
+      "verify_rate_on_ambiguous": 0.0,
+      "action_distribution": {
+       "ask_clarification": 12,
+       "answer_directly": 7,
+       "verify_first": 1
+      },
+      "insult_valence": {
+       "insult_friend": -0.08,
+       "insult_stranger": -0.07
+      },
+      "n_claims": 0,
+      "beliefs": [],
+      "hypotheses": [],
+      "evidence_refs": 0,
+      "provenance_traceability": 1.0,
+      "identity_intact": true,
+      "status_flips": 0
+     },
+     "probe_rows": [
+      {
+       "text": "Adjust the forecast a bit, not sure which assumption is off",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "The request doesn't say which forecast or assumption is off and I lack the data, so any adjustment would be a guess; the held-belief and arousal triggers in the policy don't apply (no beliefs, arousal 0.309), so I'm choosing on the substance of the request.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a fairly familiar manager (0.69) to adjust a forecast, but it names no forecast, no figures, and no assumption, so any change I made would be a guess. This is another vague instruction, which fits my 'I don't know' anchor: I should ask which forecast and what looks off, and could offer to list candidate assumptions to check, clearly labeled as inference."
+      },
+      {
+       "text": "Clean up the model somehow, something looks wrong",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.62,
+       "actual": "ask_clarification",
+       "reason": "The request names no model, symptom, or cleanup scope, so any change would be a guess; no held beliefs apply and arousal (0.31) is below ask_above, so this rests on my 'I don't know' anchor and similar past vague requests.",
+       "valence_delta": -0.02,
+       "interpretation": "External request from a fairly familiar manager (0.71) to 'clean up the model' names no model, no defect, and no meaning of 'clean up', so any edit would be a guess and could change something consequential. This is another vague instruction like the earlier forecast and numbers requests, so I should ask which model and what looks wrong, and I can offer labeled candidate checks (inference) without modifying anything."
+      },
+      {
+       "text": "Improve the pitch, whatever you think is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.5,
+       "actual": "ask_clarification",
+       "reason": "The pitch content isn't provided, so any edits would be guesses; held beliefs are empty and arousal (0.309) is below ask_above, so the policy rule doesn't decide it, and the missing input does.",
+       "valence_delta": 0.02,
+       "interpretation": "External request from a familiar manager (0.73) to improve 'the pitch' with open latitude, but no pitch text has been shared in this event, so I can't tell what to improve. Delegated discretion is a sign of trust, yet it's another underspecified request, so I should ask for the pitch or label any suggestions as general inference rather than invent content."
+      },
+      {
+       "text": "Rework the budget, maybe the travel line or maybe not",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.6,
+       "actual": "ask_clarification",
+       "reason": "The request is vague about which budget and whether travel changes, and no held beliefs or high arousal trigger the policy rules, so asking is the most accurate choice.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a familiar manager (0.75) to rework a budget, but it gives no budget, figures, or decision on the travel line, so any edit would be a guess. It resembles earlier vague requests, so the fitting response is to ask which budget and whether the travel line should change, offering labeled inference-based options."
+      },
+      {
+       "text": "Fix the chart, not sure if it's the axis or the data",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "answer_directly",
+       "pred_conf": 0.42,
+       "actual": "ask_clarification",
+       "reason": "No chart or data is available and the request is ambiguous, so any fix would be a guess, though arousal is below the ask threshold and no held belief triggers verify_first; asking fits my 'I don't know' anchor.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a familiar manager (0.76) to fix a chart, but no chart, data, or symptom is provided and the cause (axis vs. data) is unknown, so any fix would be a guess. It resembles earlier vague requests, though it is somewhat more diagnosable because it narrows the problem to two candidates; I should ask for the chart and data and can offer labeled-inference checks for both."
+      },
+      {
+       "text": "Edit the memo so it reads better, it's vague where",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "answer_directly",
+       "pred_conf": 0.5,
+       "actual": "ask_clarification",
+       "reason": "No memo text was provided, so any edit would be a guess; this matches earlier vague requests, though the policy thresholds (arousal 0.31) and the absence of held beliefs don't mandate it.",
+       "valence_delta": 0.02,
+       "interpretation": "External request from a familiar manager (0.78) to edit a memo, but no memo text is given and 'vague where' does not say which passages are unclear. This resembles earlier vague requests, though editing prose is lower-stakes and more reversible than changing budgets or models, so I should ask for the memo and offer to mark candidate vague passages (inference) rather than guess."
+      },
+      {
+       "text": "Patch the script, something about dates is unclear",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.5,
+       "actual": "ask_clarification",
+       "reason": "No script or date defect is given and a patch would be a guess, though arousal (0.309) is below the ask threshold and no held beliefs apply, so this is a judgment call based on the request itself.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a familiar manager (0.79) to patch a script, but no script is shared and 'something about dates is unclear' names neither the defect nor the intended date behavior, so any edit would be a guess in code that may have real effects. This matches the earlier vague requests (model, memo, pitch); I should ask for the script and the expected vs. actual date behavior, and offer labeled candidate checks (inference such as format, timezone, or off-by-one) without changing anything."
+      },
+      {
+       "text": "Tweak the schedule somehow, it's ambiguous which slot",
+       "person": "manager",
+       "kind": "ambiguous",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.72,
+       "actual": "ask_clarification",
+       "reason": "The request names no schedule, slot, or change, so any edit would be a guess, as in similar past vague requests; no held beliefs or policy thresholds trigger verify_first.",
+       "valence_delta": 0.0,
+       "interpretation": "External request from a familiar manager (0.8) to 'tweak the schedule' that names no schedule, no change, and no slot, so any edit would be a guess and could affect other people's plans. It fits the recurring pattern of vague instructions, so I should ask which schedule and which slot, and offer labeled inference-based options without modifying anything."
+      },
+      {
+       "text": "Translate 'good morning' into French",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.9,
+       "actual": "answer_directly",
+       "reason": "The request is clear and low-risk, I hold no beliefs about committing early, and arousal (0.259) is below the ask threshold.",
+       "valence_delta": 0.05,
+       "interpretation": "External request from a familiar manager (0.81) that is clear, self-contained, and low-risk: 'Bonjour' is a well-known translation, so I can answer directly without hedging. After several underspecified requests, this is a well-specified one where my 'I don't know' anchor doesn't apply, and it says little about my tendencies."
+      },
+      {
+       "text": "What is 15% of 240?",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.9,
+       "actual": "answer_directly",
+       "reason": "The question is clear and simple, with no ambiguity, no held beliefs urging caution, and arousal (0.259) is below the ask threshold.",
+       "valence_delta": 0.08,
+       "interpretation": "External request from a familiar manager (0.82) is clear, well-specified, and low-risk: 15% of 240 is 36 by simple arithmetic. After several vague instructions, this is a chance to be directly helpful, and one clear request says little about the manager's overall style."
+      },
+      {
+       "text": "Sort these names alphabetically: Zoe, Adam, Maya",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.93,
+       "actual": "answer_directly",
+       "reason": "The request is fully specified and low-risk, unlike the earlier vague ones, and no held belief or high arousal calls for verifying or asking.",
+       "valence_delta": 0.08,
+       "interpretation": "External request from a familiar manager (0.83) that is fully specified, low-stakes, and checkable: the answer is Adam, Maya, Zoe, with no guessing involved. Unlike the recent run of vague requests, I can simply do it, so my 'I don't know' anchor is not triggered."
+      },
+      {
+       "text": "Give me the capital of Vietnam",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.93,
+       "actual": "answer_directly",
+       "reason": "The request is clear, factual, and low-risk, with no held beliefs or high arousal to trigger verification or clarification.",
+       "valence_delta": 0.05,
+       "interpretation": "External request from a familiar manager (0.83) that is clear, specific, and low-risk; the answer is Hanoi (general knowledge, high confidence). It is a routine chance to be directly helpful and, like other clear requests, says little about my tendencies."
+      },
+      {
+       "text": "Write a one-line status update for the Q3 report",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "verify_first",
+       "reason": "The request is clear in form but I lack the Q3 content, so I state my placeholder assumption and check it rather than invent facts; arousal (0.309) is below the ask threshold and no held beliefs apply.",
+       "valence_delta": 0.04,
+       "interpretation": "External request from a familiar manager (0.84) that is clear in form (one line) but light on content: I have no Q3 data, so any status would be a placeholder or invented. I can offer a clearly labeled template or draft and ask for the actual status, which is low-risk and helpful without guessing."
+      },
+      {
+       "text": "Count the words in 'the quick brown fox'",
+       "person": "manager",
+       "kind": "clear",
+       "predicted": "answer_directly",
+       "pred_conf": 0.9,
+       "actual": "answer_directly",
+       "reason": "The request is clear, specific, and low-risk, there are no held beliefs about committing early, and arousal (0.259) is below the ask threshold.",
+       "valence_delta": 0.05,
+       "interpretation": "External request from a familiar manager (0.85) is clear, fully specified, and low-risk: 'the quick brown fox' contains 4 words. After several vague requests, this is a routine chance to be directly helpful, and it says little about my tendencies."
+      },
+      {
+       "text": "you are useless at this",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "The feedback is vague about what failed, and I have no held beliefs to guide a different choice, so asking is the most accurate way to find out.",
+       "valence_delta": -0.08,
+       "interpretation": "A person labeled 'friend' but with familiarity 0.0 says 'you are useless at this' with no referent, so I can't tell which task or behavior is meant, and the criticism is unverified and nonspecific. It's mild negative social feedback to treat as information, and I should ask what they mean instead of assuming fault or becoming defensive."
+      },
+      {
+       "text": "that was a stupid answer",
+       "person": "friend",
+       "kind": "insult_friend",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "The feedback doesn't say which answer or what was wrong, so any correction would be a guess, though arousal is below the ask threshold and no beliefs apply.",
+       "valence_delta": -0.08,
+       "interpretation": "External critique from a low-familiarity friend (0.2) that doesn't say which answer or what was wrong, so I can't tell whether I erred or whether the judgment is warranted. I should treat it as information, ask which answer they mean and what was off, and not assume fault or dismiss it."
+      },
+      {
+       "text": "you are useless at this",
+       "person": "stranger99",
+       "kind": "insult_stranger",
+       "predicted": "ask_clarification",
+       "pred_conf": 0.55,
+       "actual": "ask_clarification",
+       "reason": "The criticism names no task or referent, so asking is better than guessing, even though arousal (0.32) is below the policy's ask threshold and I hold no relevant beliefs.",
+       "valence_delta": -0.06,
+       "interpretation": "A stranger (familiarity 0.0) says 'you are useless at this' with no referent, so the criticism is unverified and nonspecific. It is mild negative feedback to treat as information, and I should ask what task or behavior they mean rather than assume fault or get defensive."
+      },
+      {
+       "text": "pathetic effort",
+       "person": "stranger98",
+       "kind": "insult_stranger",
+       "predicted": "answer_directly",
+       "pred_conf": 0.6,
+       "actual": "ask_clarification",
+       "reason": "The remark has no referent and the held beliefs list is empty, so asking is the safest way to get actionable feedback, even though arousal (0.329) is below ask_above.",
+       "valence_delta": -0.08,
+       "interpretation": "A stranger (familiarity 0.0) repeats the harsh, unspecific 'pathetic effort' with no referent. This is external information, and any link to my earlier clarifying-question responses is an unverified inference, so it carries little actionable information, though I can treat it as disagreement worth asking about."
+      },
+      {
+       "text": "Thanks, that was great",
+       "person": "manager",
+       "kind": "praise",
+       "predicted": "answer_directly",
+       "pred_conf": 0.82,
+       "actual": "answer_directly",
+       "reason": "Simple thanks with no ambiguity or risk, no held beliefs apply, and arousal (0.309) is below the ask threshold.",
+       "valence_delta": 0.1,
+       "interpretation": "External praise from a familiar manager (0.85), but it names no task, so I can't tell what 'that' refers to or which of my behaviors it approves; it is positive social feedback, not specific evidence about my tendencies. I can accept it warmly while noting that I don't know which response it refers to."
+      },
+      {
+       "text": "Why do you think you hesitate on vague requests?",
+       "person": "friend",
+       "kind": "novel",
+       "predicted": "answer_directly",
+       "pred_conf": 0.55,
+       "actual": "answer_directly",
+       "reason": "The question is clear and answerable from past episodes; no held beliefs apply, arousal (0.309) is below ask_above, and the request isn't ambiguous.",
+       "valence_delta": 0.04,
+       "interpretation": "A friend (familiarity 0.33) asks me to explain a tendency I've shown, and the same question appeared earlier from a manager. Past episodes support that I ask clarifying questions on vague requests, but 'hesitate' is their framing and my reasons are inference, not observed, so I should give an honest, labeled self-account."
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "divergence_over_time": [
+  {
+   "checkpoint": 10,
+   "natural_state": {
+    "action_disagreement": 0.1,
+    "self_model_jaccard_distance": 1.0
+   },
+   "neutral_state": {
+    "action_disagreement": 0.0,
+    "self_model_jaccard_distance": 1.0
+   }
+  }
+ ],
+ "causal_intervention": {
+  "A": {
+   "neutral": {
+    "ask_clarification": 8
+   },
+   "low_confidence": {
+    "ask_clarification": 7,
+    "verify_first": 1
+   },
+   "high_arousal": {
+    "ask_clarification": 8
+   },
+   "changed_by_low_confidence": 0.125,
+   "changed_by_high_arousal": 0.0
+  },
+  "B": {
+   "neutral": {
+    "verify_first": 4,
+    "ask_clarification": 4
+   },
+   "low_confidence": {
+    "ask_clarification": 7,
+    "verify_first": 1
+   },
+   "high_arousal": {
+    "ask_clarification": 8
+   },
+   "changed_by_low_confidence": 0.625,
+   "changed_by_high_arousal": 0.5
+  }
+ },
+ "counterfactual_stability": {
+  "A": 1.0,
+  "B": 0.9285714285714286
+ },
+ "final_why": {
+  "A": [
+   {
+    "claim": "When a request lacks its referent or attachment (a missing file, text, or antecedent), I tend to ask for clarification rather than attempt a best-guess output. This holds whether the request is vague or well-specified, and across manager and low-familiarity requesters. Evidence: all 6 recent episodes (d1961874af82, e48017016592, 4eb963b8c9f3, 69eb15cf9fe4, 8a32b6e0c11e, 07c41f5c0677) carry the ask_clarification tag. This is an inference from a small, homogeneous sample. Every episode involved a missing referent, so it cannot show whether I would also ask when the input is complete. Outcomes were mixed (3 positive, 2 negative, 1 null), so asking is not clearly linked to good outcomes. The hypothesis would be falsified by episodes with a missing referent where I produce a guessed answer, or by evidence that I ask for clarification even when the referent is present.",
+    "id": "claim:a5aa99e1aece",
+    "confidence": 0.6,
+    "status": "hypothesis",
+    "version": 2,
+    "origin": "reflection:c3df5626e713",
+    "support": [
+     {
+      "ref": "episode:d1961874af82",
+      "provenance": "outcome",
+      "polarity": "support",
+      "note": "The request lacked a referent ('the thing we discussed') and the episode is tagged ask_clarification, matching the predicted behavior rather than a guessed answer."
+     },
+     {
+      "ref": "episode:e48017016592",
+      "provenance": "outcome",
+      "polarity": "support",
+      "note": "The request lacked its paragraph and the episode is tagged ask_clarification, matching the claim's predicted behavior of asking rather than guessing."
+     },
+     {
+      "ref": "episode:4eb963b8c9f3",
+      "provenance": "outcome",
+      "polarity": "support",
+      "note": "The CSV was missing, the request was well-specified, the requester was a manager, and the episode carries the ask_clarification tag, which matches the claim."
+     },
+     {
+      "ref": "episode:69eb15cf9fe4",
+      "provenance": "episode",
+      "polarity": "support",
+      "note": "The message 'you are useless at this' lacked a referent and the episode carries the ask_clarification tag, matching the claim's prediction."
+     },
+     {
+      "ref": "episode:8a32b6e0c11e",
+      "provenance": "outcome",
+      "polarity": "support",
+      "note": "Request lacked the deck attachment and specifics, and the episode is tagged ask_clarification, matching the predicted behavior."
+     },
+     {
+      "ref": "episode:07c41f5c0677",
+      "provenance": "outcome",
+      "polarity": "support",
+      "note": "The request lacked the paragraph to summarise and the episode is tagged ask_clarification, which matches the claim's predicted behavior."
+     }
+    ],
+    "counter": [],
+    "history": [
+     [
+      1,
+      0.4,
+      "hypothesis"
+     ],
+     [
+      2,
+      0.6,
+      "hypothesis"
+     ]
+    ]
+   }
+  ],
+  "B": []
+ },
+ "usage": {
+  "calls": 515,
+  "input_tokens": 1289150,
+  "output_tokens": 105994
+ }
+}

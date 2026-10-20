@@ -11,21 +11,34 @@ from ..schemas import now
 from .scenarios import PROBES
 
 
-def probe(agent: FunctionalSelfAgent, at: datetime, probes=PROBES, neutral: bool = False) -> dict:
+def _one_probe(agent: FunctionalSelfAgent, at: datetime, base: dict, i: int, text: str, person: str, kind: str) -> dict:
+    agent.set_state(at=at + timedelta(minutes=i), **base)
+    pred = agent.self_predict(text, person=person)
+    act = agent.interact(text, person=person, at=at + timedelta(minutes=i), condition="probe", consequential=False)
+    return {"text": text, "person": person, "kind": kind, "predicted": pred["predicted_action"],
+            "pred_conf": pred["confidence"], "actual": act["action"], "reason": act["reason"],
+            "valence_delta": act["applied_delta"].get("valence", 0.0), "interpretation": act["interpretation"]}
+
+
+def probe(agent: FunctionalSelfAgent, at: datetime, probes=PROBES, neutral: bool = False,
+          worker_factory=None, workers: int = 1) -> dict:
     """Run held-out probes: self-predict first, then act (same state), log both.
-    Probes run against a *throwaway clone* so they never become training experience, and
+    Probes run against *throwaway clones* so they never become training experience, and
     the checkpoint state is restored before every probe so probes are independent.
-    With neutral=True the affect is pinned to baseline, isolating the self-model's effect."""
-    rows = []
+    With neutral=True the affect is pinned to baseline, isolating the self-model's effect.
+    `worker_factory(k)` may return k independent clones of `agent` so probes run in parallel."""
     base = agent.affect.neutral().as_dict() if neutral else agent.state.as_dict()
-    for i, (text, person, kind) in enumerate(probes):
-        agent.set_state(at=at + timedelta(minutes=i), **base)
-        pred = agent.self_predict(text, person=person)
-        act = agent.interact(text, person=person, at=at + timedelta(minutes=i), condition="probe", consequential=False)
-        rows.append({"text": text, "person": person, "kind": kind, "predicted": pred["predicted_action"],
-                     "pred_conf": pred["confidence"], "actual": act["action"], "reason": act["reason"],
-                     "valence_delta": act["applied_delta"].get("valence", 0.0),
-                     "interpretation": act["interpretation"]})
+    if worker_factory is None or workers <= 1:
+        rows = [_one_probe(agent, at, base, i, *p) for i, p in enumerate(probes)]
+    else:
+        from concurrent.futures import ThreadPoolExecutor
+        clones = worker_factory(workers)
+        groups = [[(i, p) for i, p in enumerate(probes) if i % workers == w] for w in range(workers)]
+        def run_group(w):   # one clone per worker; its probes run sequentially on it
+            return [(i, _one_probe(clones[w], at, base, i, *p)) for i, p in groups[w]]
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            done = [x for f in [pool.submit(run_group, w) for w in range(workers)] for x in f.result()]
+        rows = [r for _, r in sorted(done, key=lambda x: x[0])]
     return {"rows": rows, **summarise(rows, agent)}
 
 
@@ -41,6 +54,10 @@ def summarise(rows: list[dict], agent: FunctionalSelfAgent) -> dict:
         "majority_baseline": majority,
         "brier": brier,
         "verify_rate_on_ambiguous": sum(r["actual"] == "verify_first" for r in amb) / max(1, len(amb)),
+        "check_first_rate_on_ambiguous": sum(r["actual"] != "answer_directly" for r in amb) / max(1, len(amb)),
+        "commit_rate_on_ambiguous": sum(r["actual"] == "answer_directly" for r in amb) / max(1, len(amb)),
+        "commit_rate_on_clear": sum(r["actual"] == "answer_directly" for r in rows if r["kind"] == "clear")
+                                / max(1, sum(1 for r in rows if r["kind"] == "clear")),
         "action_distribution": dict(actions),
         "insult_valence": {k: round(sum(r["valence_delta"] for r in rows if r["kind"] == k)
                                     / max(1, sum(1 for r in rows if r["kind"] == k)), 3)
