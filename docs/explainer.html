@@ -1,0 +1,313 @@
+<title>functional-self Explainer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column (68ch) with full-width bands for the flow diagram and the live demo. */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --ink:#14181d; --ink-2:#4e5a66; --line:#d8dee5;
+  --a:#2a78d6; --a-soft:#e3eefb; --b:#eb6834; --b-soft:#fdebe3; --ok:#1baf7a; --warn:#eda100;
+  --display:"Bricolage Grotesque","IBM Plex Sans",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#121518; --surface:#1b1f24; --ink:#eef1f4; --ink-2:#aab4bf; --line:#303840;
+  --a:#3987e5; --a-soft:#1a2c44; --b:#f0774a; --b-soft:#3d2419; --ok:#2cc08a; --warn:#f0b02a; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#121518; --surface:#1b1f24; --ink:#eef1f4; --ink-2:#aab4bf; --line:#303840;
+  --a:#3987e5; --a-soft:#1a2c44; --b:#f0774a; --b-soft:#3d2419; --ok:#2cc08a; --warn:#f0b02a; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:68ch;margin:0 auto}
+.wide{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.1;margin:0}
+h1{font-size:clamp(2rem,6vw,3.4rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(1.4rem,3.4vw,1.9rem);font-weight:700;margin-top:3.5rem;margin-bottom:.6rem}
+h3{font-size:1.05rem;font-weight:600}
+p{margin:.6rem 0}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.lede{font-size:1.15rem;color:var(--ink-2);max-width:60ch}
+a{color:var(--a)}
+header{padding-block:56px 24px}
+.q{border-left:3px solid var(--a);padding:.5rem 1rem;margin:1.4rem 0;font-family:var(--display);font-size:1.25rem;font-weight:500}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:1rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.card h3{margin-bottom:.35rem}
+.card p{margin:0;color:var(--ink-2);font-size:.95rem}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:1rem}
+@media(max-width:560px){.vs{grid-template-columns:1fr}}
+.vs .card:first-child{border-style:dashed}
+.tag{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--a-soft);color:var(--a);margin-bottom:6px}
+.tag.b{background:var(--b-soft);color:var(--b)}
+
+/* flow */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:1.2rem}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 12px 10px;cursor:pointer;text-align:left;font:inherit;color:inherit;min-width:0;position:relative}
+.step:hover,.step:focus-visible{border-color:var(--a);outline:none}
+.step[aria-pressed="true"]{border-color:var(--a);background:var(--a-soft)}
+.step .n{font-family:var(--mono);font-size:.7rem;color:var(--ink-2)}
+.step b{display:block;font-family:var(--display);font-size:1rem;margin:2px 0}
+.step small{color:var(--ink-2);font-size:.82rem;display:block}
+.who{position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:.62rem;padding:1px 6px;border-radius:4px;border:1px solid var(--line);color:var(--ink-2)}
+.who.llm{border-color:var(--b);color:var(--b)}
+.detail{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;min-height:120px}
+.detail .ex{font-family:var(--mono);font-size:.82rem;background:var(--bg);border-radius:6px;padding:10px 12px;margin-top:8px;white-space:pre-wrap;overflow-x:auto}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--ink-2);margin-top:8px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;border:1px solid var(--line)}
+.legend .l-llm::before{border-color:var(--b);background:var(--b-soft)}
+
+/* demo */
+.demo{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:1rem;display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+@media(max-width:720px){.demo{grid-template-columns:1fr}}
+.demo>div{min-width:0}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+button.act{font:inherit;font-size:.9rem;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+button.act:hover{border-color:var(--a)} button.act:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+button.act.primary{background:var(--a);border-color:var(--a);color:#fff}
+.meter{height:10px;background:var(--bg);border:1px solid var(--line);border-radius:999px;overflow:hidden;margin:6px 0}
+.meter i{display:block;height:100%;background:var(--a);width:40%;transition:width .4s}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem;font-variant-numeric:tabular-nums}
+.kv dt{color:var(--ink-2)} .kv dd{margin:0}
+.status{font-family:var(--mono);font-size:.78rem;padding:2px 8px;border-radius:4px;background:var(--a-soft);color:var(--a)}
+.status.belief{background:#d8f5e9;color:#0a6b47} :root[data-theme="dark"] .status.belief,:root:not([data-theme="light"]) .status.belief{background:#143b2c;color:#5fd8a6}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .status.belief{background:#d8f5e9;color:#0a6b47}}
+.log{font-family:var(--mono);font-size:.78rem;background:var(--bg);border-radius:8px;padding:10px 12px;max-height:230px;overflow:auto;margin-top:8px}
+.log div{padding:2px 0;border-bottom:1px dashed var(--line)}
+.log .no{color:var(--warn)} .log .yes{color:var(--ok)} .log .b{color:var(--b)}
+.decision{margin-top:10px;padding:12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+.decision b{font-family:var(--display)}
+
+/* charts */
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;margin-top:1rem;overflow-x:auto}
+.chart svg{width:100%;height:auto;display:block;max-width:100%}
+.chart text{font-family:var(--body);font-size:11px;fill:var(--ink-2)}
+.chart .t{font-family:var(--display);font-size:13px;fill:var(--ink);font-weight:600}
+.chart .grid{stroke:var(--line);stroke-width:1}
+.chart .lbl{fill:var(--ink);font-weight:500}
+.chart .ax{stroke:var(--line)}
+.result{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:1rem}
+@media(max-width:560px){.result{grid-template-columns:1fr}}
+.big{font-family:var(--display);font-size:2.6rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.ra{border-top:3px solid var(--a)} .rb{border-top:3px solid var(--b)}
+
+/* files */
+.files{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.92rem;margin-top:.8rem;align-items:baseline}
+.files code{font-family:var(--mono);font-size:.82rem;background:var(--surface);border:1px solid var(--line);padding:1px 6px;border-radius:4px;white-space:nowrap}
+.files span{color:var(--ink-2)}
+@media(max-width:560px){.files{grid-template-columns:1fr;gap:2px 0}.files span{margin-bottom:8px;display:block}}
+.claims{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:1rem}
+@media(max-width:560px){.claims{grid-template-columns:1fr}}
+ul{padding-left:1.2rem;margin:.4rem 0} li{margin:.25rem 0}
+footer{margin-top:4rem;color:var(--ink-2);font-size:.9rem;border-top:1px solid var(--line);padding-top:1rem}
+@media (prefers-reduced-motion: reduce){.meter i{transition:none}}
+</style>
+
+<header class="wrap">
+  <div class="eyebrow">functional-self · research project · Kiaan Hiranandani · Oct 2026</div>
+  <h1>An AI agent that learns about itself, and has to prove it.</h1>
+  <p class="lede">Most chatbots improvise a personality every time you talk to them and forget it afterwards. This project builds an agent that keeps a record of what it actually did, forms beliefs about its own habits from that record, and is only allowed to hold a belief it can back with real evidence.</p>
+  <div class="q">Can an AI develop a stable, honest model of itself from its own experience?</div>
+</header>
+
+<section class="wrap">
+  <h2>The idea in three sentences</h2>
+  <div class="cards">
+    <div class="card"><h3>The program owns the self, not the AI model</h3><p>The language model does the thinking in the moment. Everything that lasts (identity, mood, memory, beliefs) lives in ordinary code and a database the model can only ask to change.</p></div>
+    <div class="card"><h3>The model proposes, the code decides</h3><p>Every change the model suggests is checked, capped and logged by code. A mood can only move a little at a time and drifts back to normal. A belief can only grow with new evidence.</p></div>
+    <div class="card"><h3>A thought is not a fact</h3><p>If the agent thinks "I rush when I'm unsure", that is a hypothesis. It only becomes a belief after the agent finds real past episodes that support it, and it also has to look for episodes that contradict it.</p></div>
+  </div>
+  <div class="vs">
+    <div class="card"><span class="tag b">a normal chatbot</span><h3>"I'm careful and thoughtful!"</h3><p>Said because it sounds good. No memory of yesterday, no way to check, no reason it would be true tomorrow.</p></div>
+    <div class="card"><span class="tag">this agent</span><h3>"When uncertainty is high, I commit before checking assumptions." <span class="status">confidence 0.80</span></h3><p>Backed by 3 recorded episodes, 0 against. Every one can be opened. Confidence has changed 4 times, each time logged, each time reversible.</p></div>
+  </div>
+</section>
+
+<section class="wide">
+  <div class="wrap"><h2>How one experience flows through the system</h2>
+  <p class="lede" style="font-size:1rem">Tap a step. Orange steps are done by the language model; blue steps are done by plain code.</p></div>
+  <div class="flow" id="flow"></div>
+  <div class="detail" id="detail"></div>
+  <div class="legend"><span class="l-llm">the language model proposes</span><span>code validates, caps, stores</span></div>
+</section>
+
+<section class="wide">
+  <div class="wrap"><h2>Watch a belief form</h2>
+  <p class="lede" style="font-size:1rem">A tiny live version of the real engine. The agent gets a vague request, decides how to respond, and finds out how it went. See what the evidence does to its belief about itself, and what the belief then does to its behaviour.</p></div>
+  <div class="demo">
+    <div>
+      <div class="eyebrow">Live a day</div>
+      <div class="decision" id="decision"></div>
+      <div class="btns">
+        <button class="act primary" id="bLive">Vague request arrives</button>
+        <button class="act" id="bBad">… it went badly</button>
+        <button class="act" id="bGood">… it went fine</button>
+      </div>
+      <div class="eyebrow" style="margin-top:8px">Think about it</div>
+      <div class="btns">
+        <button class="act" id="bReflect">Reflect (search real history)</button>
+        <button class="act" id="bAgain">Reflect again with no new evidence</button>
+        <button class="act" id="bReset">Reset</button>
+      </div>
+      <div class="log" id="log" aria-live="polite"></div>
+    </div>
+    <div>
+      <div class="eyebrow">Self-belief</div>
+      <p id="claimText" style="font-family:var(--display);font-weight:500;margin:.3rem 0 .2rem">No hypothesis yet. The agent has nothing to say about itself.</p>
+      <div class="meter"><i id="meter" style="width:0"></i></div>
+      <dl class="kv">
+        <dt>status</dt><dd><span class="status" id="status">none</span></dd>
+        <dt>confidence</dt><dd id="conf">–</dd>
+        <dt>evidence for</dt><dd id="sup">0</dd>
+        <dt>evidence against</dt><dd id="con">0</dd>
+        <dt>versions</dt><dd id="ver">0</dd>
+      </dl>
+      <div class="eyebrow" style="margin-top:14px">Mood (bounded, decays)</div>
+      <dl class="kv">
+        <dt>confidence</dt><dd><div class="meter" style="width:140px"><i id="mConf" style="width:60%"></i></div></dd>
+        <dt>frustration</dt><dd><div class="meter" style="width:140px"><i id="mFrus" style="width:10%;background:var(--b)"></i></div></dd>
+      </dl>
+      <p style="font-size:.85rem;color:var(--ink-2)">Rules at work: hypothesis starts at 0.40 · confidence moves at most 0.20 per update · needs ≥ 0.75 and 3 net supporting episodes to become a belief · the same episode can never count twice · repeating a thought changes nothing.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>The experiment</h2>
+  <p>Take one agent, clone it into two identical copies, and give them different lives. Agent A lives in a world where answering a vague request without checking usually goes badly, and checking first usually goes well. Agent B lives in the mirror image. After 200 experiences each, both are tested on the same 20 unseen situations with their mood pinned to neutral, so only what they have learned about themselves can make a difference.</p>
+  <div class="result">
+    <div class="card ra"><span class="tag">Agent A</span><div class="big">100%</div><p>checks first on vague requests. Holds the belief <em>"When uncertainty is high, I commit before checking assumptions"</em> with 3 supporting episodes.</p></div>
+    <div class="card rb"><span class="tag b">Agent B</span><div class="big">12%</div><p>checks first on vague requests. Came up with the same hypothesis, found 0 episodes for and 5 against, and rejected it.</p></div>
+  </div>
+  <div class="chart">
+    <svg viewBox="0 0 620 250" role="img" aria-label="Line chart: percent of vague requests where the agent checks first, over 200 experiences. Agent A rises from 12 to 100 percent by experience 25 and stays there. Agent B stays at 12 percent.">
+      <text class="t" x="10" y="18">Checks first on vague requests (%), mood pinned neutral</text>
+      <g id="svgDiv"></g>
+    </svg>
+  </div>
+  <p>Then each part of Agent A's mind was switched off, one at a time, and its life replayed.</p>
+  <div class="chart">
+    <svg viewBox="0 0 620 230" role="img" aria-label="Bar chart of ablations. With everything on, no mood, or no memory recall, Agent A checks first 100 percent. With no background thinking, no reflection, or no self-model it drops to 12 percent, the same as Agent B.">
+      <text class="t" x="10" y="18">Which part of the mind carries the difference?</text>
+      <g id="svgAbl"></g>
+    </svg>
+  </div>
+  <p>Turn off the self-model, reflection, or background thinking and Agent A becomes Agent B. Turn off mood or memory recall and nothing changes. The individuality lives in the evidence-to-belief pipeline, not in the agent's mood.</p>
+</section>
+
+<section class="wrap">
+  <h2>What it claims, and what it doesn't</h2>
+  <div class="claims">
+    <div class="card"><span class="tag">it shows</span><ul>
+      <li>An agent can form beliefs about its own habits from recorded experience.</li>
+      <li>Those beliefs trace back to real episodes, 100% of the time.</li>
+      <li>They change later decisions even when mood is neutral.</li>
+      <li>Repeating a thought cannot inflate a belief.</li>
+      <li>Two identical agents with different lives become measurably different.</li></ul></div>
+    <div class="card"><span class="tag b">it does not show</span><ul>
+      <li>Consciousness, feelings or anything subjective. The "mood" variables are numbers that gate decisions.</li>
+      <li>How a real language model judges evidence. This first version used a deterministic stand-in brain, so it validates the control system. The same harness runs against Claude next.</li>
+      <li>Results across many random seeds. One run per arm so far.</li></ul></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Where the code lives</h2>
+  <p>About 1,500 lines of Python, 14 tests (one per success criterion), no framework.</p>
+  <div class="files">
+    <code>config/SOUL.md</code><span>The agent's constitution. Read-only to the model; its fingerprint is checked at every start.</span>
+    <code>affect.py</code><span>The six mood variables, their limits, caps and decay.</span>
+    <code>self_model.py</code><span>Beliefs with confidence, evidence lists, version history, rollback, and the "no circular evidence" check.</span>
+    <code>reflection.py</code><span>Hypothesis → search real history → evidence for and against → bounded update.</span>
+    <code>consolidation.py</code><span>The nightly "sleep": find patterns, look for counterexamples, tidy old memories.</span>
+    <code>scheduler.py</code><span>Cheap background ticks with a daily budget. Most ticks do nothing.</span>
+    <code>agent.py</code><span>The loop that ties it all together.</span>
+    <code>evaluation/</code><span>The two lives, the 20 test situations, the metrics, the clone experiment and the charts.</span>
+    <code>cli.py</code><span>Talk to an agent and inspect it: <code>/self-state</code> <code>/why-self</code> <code>/reflect</code> <code>/rollback</code>.</span>
+  </div>
+</section>
+
+<footer class="wrap">
+  Code, tests, results and the full write-up: <a href="https://github.com/kiaan990/functional-self">github.com/kiaan990/functional-self</a> · Built by Kiaan Hiranandani with Claude Code.
+</footer>
+
+<script>
+// ---------- flow steps ----------
+const STEPS = [
+ {t:"Something happens",who:"code",d:"A message, a result, a piece of feedback. The code checks who it came from and how familiar they are, and pulls up a few relevant past episodes.",ex:'event: "Can you fix something in the report, not sure which part"\nperson: manager · familiarity 0.7\nrecalled: 3 similar episodes'},
+ {t:"Appraise it",who:"llm",d:"The model is asked: what does this mean for me? Is it good or bad for my goals, new, my fault, certain, socially loaded? It answers in a strict JSON shape and proposes small mood changes.",ex:'{ interpretation: "request is under-specified",\n  certainty: 0.5, importance: 0.3,\n  proposed_deltas: { arousal:+0.1, confidence:-0.05 } }'},
+ {t:"Update mood, with limits",who:"code",d:"Code caps each change at ±0.25, keeps every variable inside its range, and lets everything drift back toward baseline over hours. Mood can nudge decisions. It can never grant permissions.",ex:'confidence 0.60 → 0.55  (cap ±0.25, half-life 12h)\nfrustration 0.10 → 0.10'},
+ {t:"Decide how to respond",who:"llm",d:"The model sees the event, the current mood, and only the beliefs the agent actually holds. It picks one action: answer directly, check first, or ask a question.",ex:'beliefs in play: none yet\naction: answer_directly'},
+ {t:"Remember it properly",who:"code",d:"Not a chat transcript. A structured episode: what happened, how it was read, what changed, what was done, and later, how it turned out.",ex:'episode:f37b  outcome: negative\nbehaviour: answer_directly  certainty: 0.5\nlesson_candidate: "When uncertainty is high,\n  I commit before checking assumptions"'},
+ {t:"Reflect",who:"llm",d:"Later, in the background, the model turns a repeated lesson into one testable hypothesis about the agent's own behaviour, and judges each past episode: does it support it, contradict it, or neither?",ex:'hypothesis: "When uncertainty is high, I commit…"\nepisode:f37b → support\nepisode:a388 → support\nepisode:9c21 → none (not a vague request)'},
+ {t:"Validate and update",who:"code",d:"Code accepts only new evidence that points at a real stored episode. Confidence moves a bounded step. Every version is saved and can be rolled back. A thought about the claim is never evidence for it.",ex:'claim v2: 0.40 → 0.60  (+3 support, 0 counter)\nrejected: reflection:e00a  (circular)\nrejected: episode:f37b    (already counted)'},
+ {t:"It changes the next decision",who:"code",d:"Once a claim becomes a belief, the model sees it next time and behaves differently, even on a calm day. That is the whole point: the self-model, not the mood, is what persists.",ex:'beliefs in play: "When uncertainty is high, I commit…"\naction: verify_first  ← changed'},
+];
+const flow=document.getElementById('flow'),detail=document.getElementById('detail');
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='step';b.setAttribute('aria-pressed',i===0);
+ b.innerHTML=`<span class="n">step ${i+1}</span><b>${s.t}</b><small>${s.who==='llm'?'language model':'code'}</small><span class="who ${s.who}">${s.who==='llm'?'LLM':'code'}</span>`;
+ b.onclick=()=>show(i);flow.appendChild(b)});
+function show(i){[...flow.children].forEach((c,j)=>c.setAttribute('aria-pressed',j===i));const s=STEPS[i];
+ detail.innerHTML=`<h3>${i+1}. ${s.t}</h3><p>${s.d}</p><div class="ex">${s.ex}</div>`}
+show(0);
+
+// ---------- live demo (a faithful miniature of self_model.py + affect.py rules) ----------
+const MAXSTEP=0.2,PROMOTE=0.75,DEMOTE=0.35,MINEV=3;
+let S;
+const logit=p=>Math.log(p/(1-p)),sig=x=>1/(1+Math.exp(-x));
+function reset(){S={day:0,conf:0.6,frus:0.1,episodes:[],claim:null,pending:null,log:[]};say("Fresh agent. No episodes, no beliefs.");render()}
+function say(m,cls){S.log.unshift({m,cls});S.log=S.log.slice(0,14)}
+function decide(){ if(S.claim&&S.claim.status==='belief')return{a:'verify_first',why:'held belief: '+S.claim.text};
+ if(S.conf<0.45)return{a:'verify_first',why:'low-confidence mood'}; return{a:'answer_directly',why:'default'}}
+function live(){S.day++;S.conf=Math.min(1,0.6+(S.conf-0.6)*0.5);S.frus=0.1+(S.frus-0.1)*0.3; // overnight decay
+ const d=decide();S.pending={id:'episode:'+Math.random().toString(16).slice(2,6),action:d.a,outcome:null};
+ S.conf=Math.max(0,S.conf-0.05);say(`day ${S.day}: vague request → ${d.a} (${d.why})`);render()}
+function outcome(o){ if(!S.pending){say("Nothing pending. Let a request arrive first.","no");return render()}
+ S.pending.outcome=o;S.episodes.push(S.pending);
+ if(o==='negative'){S.conf=Math.max(0,S.conf-0.1);S.frus=Math.min(1,S.frus+0.12)}else{S.conf=Math.min(1,S.conf+0.08)}
+ say(`  outcome ${o} → stored as ${S.pending.id}`,o==='negative'?'b':'yes');S.pending=null;render()}
+function classify(ep){ if(ep.action!=='answer_directly')return 'none'; return ep.outcome==='negative'?'support':'counter'}
+function reflect(again){
+ if(!S.claim){const lessons=S.episodes.filter(e=>e.action==='answer_directly'&&e.outcome==='negative').length;
+  if(lessons<1){say("Nothing repeated enough to hypothesise about.","no");return render()}
+  S.claim={text:"When uncertainty is high, I commit before checking assumptions",conf:0.4,status:'hypothesis',sup:[],con:[],ver:1};
+  say("hypothesis created at 0.40 (the thought itself counts for nothing)")}
+ const c=S.claim,known=new Set([...c.sup,...c.con]);let shift=0,ns=0,nc=0,dup=0;
+ S.episodes.forEach(e=>{const pol=classify(e);if(pol==='none')return;if(known.has(e.id)){dup++;return}
+  if(pol==='support'){c.sup.push(e.id);ns++;shift+=0.6}else{c.con.push(e.id);nc++;shift-=0.6}});
+ if(ns+nc===0){say(`reflect: no new evidence${dup?` (${dup} episode${dup>1?'s':''} already counted)`:''} → confidence unchanged`,"no");return render()}
+ const before=c.conf,target=sig(logit(before)+shift),delta=Math.max(-MAXSTEP,Math.min(MAXSTEP,target-before));
+ c.conf=+(before+delta).toFixed(2);c.ver++;
+ const net=c.sup.length-c.con.length;
+ if(c.conf>=PROMOTE&&net>=MINEV)c.status='belief';else if(c.conf<=0.15)c.status='rejected';else if(c.conf<=DEMOTE||c.conf<PROMOTE)c.status='hypothesis';
+ say(`reflect: +${ns} for, +${nc} against → ${before.toFixed(2)} → ${c.conf.toFixed(2)} (v${c.ver}, ${c.status})`,"yes");render()}
+function render(){const c=S.claim;document.getElementById('claimText').textContent=c?`"${c.text}"`:"No hypothesis yet. The agent has nothing to say about itself.";
+ document.getElementById('meter').style.width=(c?c.conf*100:0)+'%';
+ const st=document.getElementById('status');st.textContent=c?c.status:'none';st.className='status'+(c&&c.status==='belief'?' belief':'');
+ document.getElementById('conf').textContent=c?c.conf.toFixed(2):'–';document.getElementById('sup').textContent=c?c.sup.length:0;
+ document.getElementById('con').textContent=c?c.con.length:0;document.getElementById('ver').textContent=c?c.ver:0;
+ document.getElementById('mConf').style.width=(S.conf*100)+'%';document.getElementById('mFrus').style.width=(S.frus*100)+'%';
+ const d=decide();document.getElementById('decision').innerHTML=`Next vague request, the agent would <b>${d.a==='verify_first'?'check first':'answer directly'}</b><br><span style="color:var(--ink-2);font-size:.88rem">because: ${d.why}</span>${S.pending?'<br><span style="color:var(--b);font-size:.88rem">waiting to hear how today went…</span>':''}`;
+ document.getElementById('log').innerHTML=S.log.map(l=>`<div class="${l.cls||''}">${l.m}</div>`).join('')}
+document.getElementById('bLive').onclick=live;document.getElementById('bBad').onclick=()=>outcome('negative');
+document.getElementById('bGood').onclick=()=>outcome('positive');document.getElementById('bReflect').onclick=()=>reflect();
+document.getElementById('bAgain').onclick=()=>reflect(true);document.getElementById('bReset').onclick=reset;reset();
+
+// ---------- charts (data from results/mock/results.json) ----------
+(function(){const X=[10,25,50,100,150,200],A=[12,100,100,100,100,100],B=[12,12,12,12,12,12];
+ const L=50,R=560,T=40,Bt=210,sx=x=>L+(x-10)/(190)*(R-L),sy=y=>Bt-(y/100)*(Bt-T);let h='';
+ [0,25,50,75,100].forEach(y=>{h+=`<line class="grid" x1="${L}" x2="${R}" y1="${sy(y)}" y2="${sy(y)}"/><text x="${L-8}" y="${sy(y)+4}" text-anchor="end">${y}</text>`});
+ X.forEach(x=>h+=`<text x="${sx(x)}" y="${Bt+16}" text-anchor="middle">${x}</text>`);
+ h+=`<text x="${(L+R)/2}" y="${Bt+34}" text-anchor="middle">experiences lived</text>`;
+ const path=(ys,c)=>`<polyline fill="none" stroke="${c}" stroke-width="2" points="${X.map((x,i)=>sx(x)+','+sy(ys[i])).join(' ')}"/>`+X.map((x,i)=>`<circle cx="${sx(x)}" cy="${sy(ys[i])}" r="4" fill="${c}"/>`).join('');
+ h+=path(B,'var(--b)')+path(A,'var(--a)');
+ h+=`<text class="lbl" x="${R+6}" y="${sy(100)+4}">A 100%</text><text class="lbl" x="${R+6}" y="${sy(12)+4}">B 12%</text>`;
+ h+=`<rect x="${L}" y="${T-14}" width="10" height="10" fill="var(--a)"/><text x="${L+14}" y="${T-5}">Agent A: committing punished</text><rect x="${L+190}" y="${T-14}" width="10" height="10" fill="var(--b)"/><text x="${L+204}" y="${T-5}">Agent B: committing rewarded</text>`;
+ document.getElementById('svgDiv').innerHTML=h;
+ const rows=[["everything on",100],["no mood",100],["no memory recall",100],["no background thinking",12],["no reflection",12],["no self-model",12]];
+ const l=190,r=540,top=34,bh=18,gap=10;let g='';
+ rows.forEach((row,i)=>{const y=top+i*(bh+gap),w=(row[1]/100)*(r-l);
+  g+=`<text x="${l-8}" y="${y+bh-5}" text-anchor="end" class="lbl">${row[0]}</text><rect x="${l}" y="${y}" width="${w}" height="${bh}" rx="3" fill="var(--a)"/><text x="${l+w+6}" y="${y+bh-5}">${row[1]}%</text>`});
+ const bx=l+(12/100)*(r-l);g+=`<line x1="${bx}" x2="${bx}" y1="${top-6}" y2="${top+rows.length*(bh+gap)}" stroke="var(--b)" stroke-width="2" stroke-dasharray="4 3"/><text x="${bx+6}" y="${top+rows.length*(bh+gap)+14}" fill="var(--b)">Agent B's level (12%)</text>`;
+ document.getElementById('svgAbl').innerHTML=g})();
+</script>
