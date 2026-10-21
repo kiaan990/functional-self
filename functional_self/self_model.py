@@ -49,6 +49,27 @@ class SelfModel:
                 return c
         return None
 
+    def find_equivalent(self, text: str, brain, soul: str) -> Optional[SelfClaim]:
+        """Semantic match against active claims: a paraphrase of an existing claim IS that claim.
+        Exact match first (free); otherwise the model judges equivalence (one cheap call)."""
+        exact = self.find(text)
+        if exact:
+            return exact
+        active = self.store.claims()
+        if not active:
+            return None
+        from .prompts import build
+        ctx = {"candidate": text, "existing_claims": [{"index": i, "claim": c.claim} for i, c in enumerate(active)]}
+        model, sys_p, user = build("match_claim", ctx, soul)
+        try:
+            out = brain.complete_json("match_claim", sys_p, user, model, context=ctx)
+        except RuntimeError as e:
+            self.store.audit("model_failure", task="match_claim", error=str(e)[:200]); return None
+        if out.match_index is not None and 0 <= out.match_index < len(active):
+            self.store.audit("claim_matched", candidate=text[:120], matched=active[out.match_index].id, reason=out.reason[:120])
+            return active[out.match_index]
+        return None
+
     # ---- evidence ----
     def is_circular(self, claim: SelfClaim, ref: str) -> bool:
         """A reflection whose output *is* this claim cannot be evidence for it."""

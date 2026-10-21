@@ -153,6 +153,16 @@ class MockProvider(BrainProvider):
                 return {"polarity": "counter", "note": "hostility without confidence drop"}
         return {"polarity": "none", "note": "not relevant"}
 
+    def _t_match_claim(self, c: dict) -> dict:
+        import re
+        tok = lambda t: {w for w in re.findall(r"[a-z]+", t.lower()) if len(w) > 3}
+        cand = tok(c.get("candidate", ""))
+        for item in c.get("existing_claims", []):
+            e = tok(item["claim"])
+            if cand and len(cand & e) / len(cand | e) >= 0.6:
+                return {"match_index": item["index"], "reason": "paraphrase"}
+        return {"match_index": None, "reason": "new"}
+
     def _t_self_predict(self, c: dict) -> dict:
         """Predict own action in a scenario from self-model + state (no peeking at behaviour)."""
         r = self._t_respond(c)

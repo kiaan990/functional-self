@@ -32,7 +32,7 @@ class BackgroundScheduler:
             if q.curiosity >= self.t["curiosity_min"]:
                 reasons.append(f"curiosity:{q.id}")
             if q.hypothesis_claim_id:
-                new = self.store.episode_count() - len(q.evidence_seen)
+                new = sum(1 for e in self.store.episodes(limit=50) if e.ts > q.last_visited)
                 if new >= self.t["min_new_evidence_for_question"] and (at - q.last_visited) > timedelta(hours=1):
                     reasons.append(f"new_evidence:{q.id}")
         # contradiction: a held belief whose latest evidence is counter

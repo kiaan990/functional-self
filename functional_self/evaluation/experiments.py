@@ -48,7 +48,7 @@ def make_brain(provider: str, model: str | None) -> BrainProvider:
             cheap = AnthropicProvider(model=CHEAP_MODEL)
             orig = main.complete
             def routed(task, system, user, context=None):
-                if task in ("classify_evidence", "metacognition"):   # self-prediction stays on the main model (it is a measured capability)
+                if task in ("classify_evidence", "metacognition", "match_claim"):   # self-prediction stays on the main model (it is a measured capability)
                     r = cheap.complete(task, system, user, context)
                     main.calls += 1; main.in_tokens += 0; return r
                 return orig(task, system, user, context)

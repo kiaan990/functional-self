@@ -8,3 +8,4 @@ paper/build.*
 paper/pg-*.png
 paper/p[0-9]*.png
 results/pilot/
+results/claude_v0_flawed/homes/

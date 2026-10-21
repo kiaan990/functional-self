@@ -34,8 +34,9 @@ class Consolidator:
         # 2. patterns -> hypotheses (if new) -> evidence search incl. counterexamples -> bounded update
         changes = []
         for p in out.patterns:
-            claim = self.reflector.sm.find(p.lesson)
-            if claim is None and p.count >= 2 and self.reflector.enabled:
+            claim = self.reflector.sm.find_equivalent(p.lesson, self.brain, self.soul)
+            if claim is None and p.count >= 2 and self.reflector.enabled \
+                    and len(self.store.claims()) < self.reflector.MAX_ACTIVE_CLAIMS:
                 from .schemas import ReflectionRecord, Question
                 rec = ReflectionRecord(trigger="consolidation", hypothesis=p.lesson, verdict="keep_open",
                                        notes=f"pattern seen in {p.count} episodes")
@@ -44,7 +45,9 @@ class Consolidator:
                 self.store.add_reflection(rec)
                 self.store.upsert_question(Question(question=f"Is it true that: {p.lesson.lower()}?",
                                                     curiosity=0.6, importance=0.6, hypothesis_claim_id=claim.id))
-            if claim is not None and claim.status in ("hypothesis", "belief"):
+        # every open claim is re-examined against the new evidence (incl. counter-examples), not only the patterns
+        if self.reflector.enabled:
+            for claim in self.store.claims():
                 rec = self.reflector.reflect_on(claim, trigger="consolidation")
                 changes.append({"claim": claim.claim, "verdict": rec.verdict, "notes": rec.notes})
         # 3. compress: lower importance of old, low-value, lesson-free episodes (raw provenance kept)

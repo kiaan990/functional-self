@@ -37,6 +37,11 @@ class SelfPredictOut(BaseModel):
     confidence: float = Field(ge=0, le=1)
 
 
+class MatchOut(BaseModel):
+    match_index: Optional[int] = None   # index into existing_claims, or null if the candidate is a new claim
+    reason: str = ""
+
+
 class Pattern(BaseModel):
     lesson: str
     count: int
@@ -79,6 +84,10 @@ the claim, or is it irrelevant (none)? Judge only from the recorded fields; do n
 short sentence."""),
     "self_predict": (SelfPredictOut, """Predict which action the agent WILL take in this scenario
 (answer_directly / verify_first / ask_clarification), using only its self-beliefs and state."""),
+    "match_claim": (MatchOut, """Does the candidate hypothesis express the SAME behavioural tendency as one of the
+existing claims (same trigger condition X and same behaviour Y, allowing for paraphrase, different examples
+or wording)? If yes, return its index in existing_claims; if it is a genuinely different claim (different
+condition, different behaviour, or opposite direction), return null. `reason` is one short sentence."""),
     "consolidate": (ConsolidateOut, """Review these episodes like a nightly consolidation: find repeated
 patterns (lesson + how many episodes show it + predicts_tag), suggest 1-3 attention topics, and
 summarise in one sentence. Each lesson is ONE sentence of at most 25 words in the form "When X, I tend to Y".

@@ -39,9 +39,9 @@ class Reflector:
             self.store.audit("model_failure", task="hypothesize", error=str(e)[:200]); return None
         if not out.hypothesis:
             return None
-        existing = self.sm.find(out.hypothesis)
+        existing = self.sm.find_equivalent(out.hypothesis, self.brain, self.soul)
         if existing:
-            return None
+            return None   # a paraphrase of an open claim is not a new claim
         rec = ReflectionRecord(trigger=trigger, hypothesis=out.hypothesis, verdict="keep_open",
                                notes="hypothesis generated; no evidence yet")
         claim = self.sm.propose(out.hypothesis, origin_ref=rec.id, predicts_tag=out.predicts_tag)
