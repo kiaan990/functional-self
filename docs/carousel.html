@@ -1,0 +1,109 @@
+<!doctype html><html><head><meta charset="utf-8"><title>carousel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+@page{size:1080px 1350px;margin:0}
+*{box-sizing:border-box;margin:0}
+body{font-family:"IBM Plex Sans",system-ui,sans-serif;color:#14181d;background:#fff}
+.s{width:1080px;height:1350px;padding:84px 80px;page-break-after:always;position:relative;overflow:hidden;background:#f3f5f7;display:flex;flex-direction:column}
+.s.dark{background:#14181d;color:#eef1f4}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:22px;letter-spacing:.1em;text-transform:uppercase;color:#4e5a66}
+.dark .eyebrow{color:#aab4bf}
+h1{font-family:"Bricolage Grotesque",sans-serif;font-size:84px;line-height:1.02;font-weight:700;letter-spacing:-.02em;margin-top:28px}
+h2{font-family:"Bricolage Grotesque",sans-serif;font-size:62px;line-height:1.06;font-weight:700;letter-spacing:-.015em;margin-top:24px}
+p{font-size:30px;line-height:1.45;margin-top:28px;color:#2b343d}
+.dark p{color:#c9d1da}
+.big{font-family:"Bricolage Grotesque",sans-serif;font-size:150px;font-weight:700;line-height:1;letter-spacing:-.03em;color:#2a78d6}
+.dark .big{color:#3987e5}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px}
+.card{background:#fff;border:2px solid #d8dee5;border-radius:18px;padding:34px}
+.card h3{font-family:"Bricolage Grotesque",sans-serif;font-size:34px;line-height:1.15;font-weight:600}
+.card p{font-size:25px;margin-top:14px;line-height:1.4}
+.tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:20px;padding:6px 14px;border-radius:999px;background:#e3eefb;color:#2a78d6;margin-bottom:14px}
+.tag.b{background:#fdebe3;color:#eb6834}
+.foot{position:absolute;left:80px;right:80px;bottom:60px;display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:20px;color:#4e5a66}
+.dark .foot{color:#aab4bf}
+ul{margin-top:28px;padding-left:36px}li{font-size:30px;line-height:1.4;margin:16px 0;color:#2b343d}
+.dark li{color:#c9d1da}
+img{width:100%;border-radius:14px;border:2px solid #d8dee5;margin-top:32px;background:#fff}
+.q{border-left:8px solid #2a78d6;padding:14px 30px;font-family:"Bricolage Grotesque",sans-serif;font-size:40px;line-height:1.2;font-weight:500;margin-top:40px}
+.rule{display:grid;grid-template-columns:auto 1fr;gap:18px 26px;margin-top:36px;align-items:baseline}
+.rule b{font-family:"IBM Plex Mono",monospace;font-size:26px;color:#2a78d6}
+.rule span{font-size:28px;line-height:1.4;color:#2b343d}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px}
+.stat .card{text-align:left}
+.stat .n{font-family:"Bricolage Grotesque",sans-serif;font-size:92px;font-weight:700;line-height:1;color:#2a78d6;letter-spacing:-.02em}
+.stat .n.b{color:#eb6834}
+.stat small{display:block;font-size:24px;color:#4e5a66;margin-top:10px;line-height:1.35}
+</style></head><body>
+
+<section class="s dark">
+  <div class="eyebrow">Research project · October 2026</div>
+  <h1>Can an AI agent build an honest model of itself?</h1>
+  <p style="margin-top:40px">I designed an architecture where an agent keeps a record of what it actually did, forms beliefs about its own habits from that record, and is only allowed to hold a belief it can prove.</p>
+  <p>Then I cloned it, gave the clones different lives, and measured what changed.</p>
+  <div class="foot"><span>Kiaan Hiranandani · Bentley University</span><span>swipe →</span></div>
+</section>
+
+<section class="s">
+  <div class="eyebrow">The problem</div>
+  <h2>Chatbots improvise a personality every turn, then forget it.</h2>
+  <div class="vs">
+    <div class="card"><span class="tag b">today</span><h3>"I'm careful and thoughtful!"</h3><p>Said because it sounds good. No memory of yesterday, no way to check, no reason it's true tomorrow.</p></div>
+    <div class="card"><span class="tag">this project</span><h3>"When someone gives blunt criticism with no referent, I tend to treat it as information and ask what they mean."</h3><p>Backed by 35 recorded episodes, 2 against. Every one can be opened. Confidence changed only when new evidence arrived.</p></div>
+  </div>
+  <div class="foot"><span>functional-self</span><span>2 / 7</span></div>
+</section>
+
+<section class="s">
+  <div class="eyebrow">The design principle</div>
+  <h2>The model proposes. The code decides.</h2>
+  <p>The language model does the thinking in the moment. Everything that lasts lives in ordinary code and a database the model can only <em>ask</em> to change.</p>
+  <div class="rule">
+    <b>identity</b><span>A read-only constitution, hash-checked at every start. No write path from the model.</span>
+    <b>mood</b><span>Six bounded variables. Capped per event, decaying to baseline. Can nudge decisions, never permissions.</span>
+    <b>memory</b><span>Structured episodes, not transcripts: what happened, how it was read, what was done, how it went.</span>
+    <b>beliefs</b><span>Confidence moves only on new, traceable evidence. A thought is never evidence for itself.</span>
+  </div>
+  <div class="foot"><span>functional-self</span><span>3 / 7</span></div>
+</section>
+
+<section class="s">
+  <div class="eyebrow">The experiment</div>
+  <h2>Same origin. Different lives. Identical test.</h2>
+  <p>One agent cloned into two. Agent A lives in a world where acting on vague requests without checking gets punished; Agent B, the reverse. 120 experiences each. Then both face 20 unseen situations with their mood pinned to neutral, so only what they've learned about themselves can differ.</p>
+  <p>Then switch off one part of the mind at a time and replay the life.</p>
+  <div class="q">Reasoning core: Claude Sonnet 5.5 · 6,180 model calls · every metric computed from logged state, never from how the agent sounds.</div>
+  <div class="foot"><span>functional-self</span><span>4 / 7</span></div>
+</section>
+
+<section class="s">
+  <div class="eyebrow">Result 1 · self-knowledge is real and causal</div>
+  <h2>The agent predicts its own next action.</h2>
+  <div class="stat">
+    <div class="card"><div class="n">70–85%</div><small>self-prediction accuracy with the full architecture (chance: 35–45%)</small></div>
+    <div class="card"><div class="n b">55%</div><small>with the self-model, reflection, or background cognition removed</small></div>
+  </div>
+  <img src="../results/claude/charts/self_prediction.png" alt="">
+  <div class="foot"><span>functional-self</span><span>5 / 7</span></div>
+</section>
+
+<section class="s">
+  <div class="eyebrow">Result 2 · beliefs form, consolidate, and get rejected</div>
+  <h2>6 held beliefs each, 100% traceable, and 13 hypotheses thrown out.</h2>
+  <img src="../results/claude/charts/claim_lifecycle.png" alt="">
+  <p>The two agents' self-models ended up completely disjoint. And one honest null result: the reward manipulation did not override the model's instinct to check before acting on vague requests. The system reported that instead of inventing a difference.</p>
+  <div class="foot"><span>functional-self</span><span>6 / 7</span></div>
+</section>
+
+<section class="s dark">
+  <div class="eyebrow">What this is, and isn't</div>
+  <h2>Functional self-modeling. Not consciousness.</h2>
+  <ul>
+    <li>Open-source Python architecture, 14 tests, provider-independent</li>
+    <li>21-page preprint: methods, equations, 7 tables, 7 figures, 18 references</li>
+    <li>Both real-model runs published, including the one that found the bug</li>
+  </ul>
+  <p style="margin-top:60px">Paper, code and results:<br><b style="color:#fff">github.com/kiaan990/functional-self</b></p>
+  <div class="foot"><span>Kiaan Hiranandani · Bentley University</span><span>7 / 7</span></div>
+</section>
+</body></html>
