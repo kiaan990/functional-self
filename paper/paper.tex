@@ -13,6 +13,7 @@
 \usepackage{fancyhdr}
 \usepackage[hidelinks]{hyperref}
 \usepackage{titlesec}
+\usepackage{placeins}
 
 \definecolor{inkA}{HTML}{2A78D6}
 \definecolor{inkB}{HTML}{EB6834}
@@ -43,7 +44,7 @@
 
 \begin{abstract}
 \noindent
-A conventional chatbot generates a personality in the moment and forgets it. This paper asks whether an artificial agent can develop a \emph{stable, introspectable and individualized model of itself} through persistent experience, and whether that model can be kept honest. We present \fs{}, an architecture in which the application, rather than the language model, owns identity, a bounded six-variable internal state, structured autobiographical memory, self-beliefs with confidence and provenance, event-driven reflection, and a slow consolidation cycle. The central epistemic rule is that a generated thought is not evidence for itself: confidence in a self-claim changes only when new evidence that resolves to a stored episode arrives, reflections that produced a claim are rejected as evidence for it, and repeating a reflection without new evidence is a logged no-op. We evaluate the architecture with a controlled clone experiment: two agents cloned from one snapshot live under mirror-image contingencies and are blind-tested at checkpoints on twenty held-out scenarios with affect pinned to baseline, followed by five single-subsystem ablations. With a deterministic reference brain, Agent A formed the belief \claimA{} from three traceable episodes and thereafter checked before committing on 100\% of ambiguous probes; Agent B, from the same origin, rejected the same hypothesis (0 supporting, 5 counter) and checked on 12\%. Ablating the self-model, reflection or the background scheduler removed the difference; ablating affect or episodic retrieval did not. We then run the identical harness with a production language model (Claude Sonnet) as the reasoning core and report what transfers. The work demonstrates \emph{functional} self-modeling and makes no claim about phenomenal consciousness. Code, tests and results are public.
+A conventional chatbot generates a personality in the moment and forgets it. This paper asks whether an artificial agent can develop a \emph{stable, introspectable and individualized model of itself} through persistent experience, and whether that model can be kept honest. We present \fs{}, an architecture in which the application, rather than the language model, owns identity, a bounded six-variable internal state, structured autobiographical memory, self-beliefs with confidence and provenance, event-driven reflection, and a slow consolidation cycle. The central epistemic rule is that a generated thought is not evidence for itself: confidence in a self-claim changes only when new evidence that resolves to a stored episode arrives, reflections that produced a claim are rejected as evidence for it, and repeating a reflection without new evidence is a logged no-op. We evaluate the architecture with a controlled clone experiment: two agents cloned from one snapshot live under mirror-image contingencies and are blind-tested at checkpoints on twenty held-out scenarios with affect pinned to baseline, followed by five single-subsystem ablations. With a deterministic reference brain, Agent A formed the belief \claimA{} from three traceable episodes and thereafter checked before committing on 100\% of ambiguous probes; Agent B, from the same origin, rejected the same hypothesis (0 supporting, 5 counter) and checked on 12\%. Ablating the self-model, reflection or the background scheduler removed the difference; ablating affect or episodic retrieval did not. With Claude Sonnet 5.5 as the reasoning core, the same harness produced agents that formed, tested and in some cases rejected beliefs about themselves (6 held beliefs each after 120 experiences, every evidence reference traceable), predicted their own next action at 70--85\% against a 35--45\% baseline, and lost that advantage when the self-model, reflection or background scheduler was removed. The two production agents developed disjoint self-models, but the contingency manipulation did not override the model's prior to verify under-specified requests, a null result the architecture reported rather than concealed. The work demonstrates \emph{functional} self-modeling and makes no claim about phenomenal consciousness. Code, tests and results are public.
 \end{abstract}
 
 \vspace{4pt}\noindent\textbf{Keywords:} language model agents, self-modeling, metacognition, appraisal, episodic memory, calibration, cognitive architecture.
@@ -171,6 +172,8 @@ The logit-space step makes each unit of evidence worth the same amount of log-od
 
 \paragraph{Promotion and demotion.} A hypothesis becomes a belief when $c'\ge0.75$ and the net weighted evidence $\sum_{\text{support}} w-\sum_{\text{counter}} w\ge3$. It is demoted to hypothesis below $0.75$ and rejected at $c'\le0.15$. Only beliefs are shown to the reasoning core when it chooses an action.
 
+\paragraph{Identity of claims.} A language model rarely phrases the same lesson twice in the same words. Before a hypothesis is created, the candidate is compared with the open claims; an exact match is free, otherwise the model is asked whether the candidate expresses the same trigger condition and the same behaviour as any open claim, and a paraphrase is treated as that claim rather than a new one. The number of open claims is capped (six in this work) so that attention stays on hypotheses that can still be tested. Both rules were added after the first production-model run exposed their absence (\S\ref{sec:diagnostic}).
+
 \paragraph{Versioning.} Every update writes a new version; rollback to any version is itself recorded as a new version, so the audit log is append-only.
 
 \subsection{Circular and duplicate evidence}\label{sec:circular}
@@ -214,7 +217,7 @@ Figure~\ref{fig:pipeline} shows the pipeline. A reflection (i) may generate at m
 \end{figure}
 
 \subsection{Consolidation}
-A slower cycle, run at most daily, selects important, surprising or lesson-bearing episodes, asks the model for repeated patterns (each phrased as a one-sentence tendency with a count), creates hypotheses for patterns seen at least twice, runs the reflection step on each affected claim (which includes the counter-example search), compresses the importance of old, low-value episodes while preserving raw provenance, refreshes attention topics, and writes a versioned report to the audit log.
+A slower cycle, run at most daily, selects important, surprising or lesson-bearing episodes, asks the model for repeated patterns (each phrased as a one-sentence tendency with a count), creates hypotheses for patterns seen at least twice (subject to the claim-identity check and cap), runs the reflection step on \emph{every} open claim so that new evidence and counter-examples reach old hypotheses, compresses the importance of old, low-value episodes while preserving raw provenance, refreshes attention topics, and writes a versioned report to the audit log.
 
 \subsection{Background scheduler and budgets}
 Background cognition is event-driven. A cheap tick evaluates triggers without calling the model: curiosity on an open question above $0.7$; a frustration jump $\ge0.2$ or a confidence change $\ge0.2$ since the last tick; at least two new episodes since a question's linked hypothesis was last visited; or a held belief whose most recent evidence is counter. If any trigger fires and the daily budget (12 reflections) is not exhausted, a reflection runs; otherwise the tick does nothing. Consolidation runs once 20 episodes exist and then every 24 simulated hours.
@@ -314,9 +317,44 @@ Identity kernel intact & yes & yes\\\bottomrule
 \label{fig:mockconf}
 \end{figure}
 
+\FloatBarrier
 \subsection{Production language model}\label{sec:realresults}
-%%REAL_RESULTS%%
 
+The identical harness was run with Claude Sonnet 5.5 as the reasoning core and Claude Haiku 5.5 for evidence classification, metacognition and claim matching, at $n=120$ experiences per life with checkpoints at 30, 60, 90 and 120 (\input{generated/real_usage.tex}). Table~\ref{tab:real_traj} gives the trajectory, Table~\ref{tab:real_final} the final checkpoint, Table~\ref{tab:real_abl} the ablations, and Appendix~\ref{app:realclaims} the complete final self-models.
+
+\input{generated/real_traj.tex}
+\input{generated/real_final.tex}
+
+\paragraph{The self-model forms, consolidates and self-corrects.} With claim identity enforced, Agent A generated 16 distinct hypotheses over 120 experiences and ended holding 6 beliefs (confidence 0.94--1.00, each with 7--73 supporting episodes) with 10 rejected; Agent B generated 9 and ended holding 6 with 3 rejected (Figure~\ref{fig:reallife}). Rejection is doing real work: both agents proposed, tested and discarded claims about how they answer questions about themselves (e.g.\ ``When asked about my own tendencies, I tend to answer directly''), which the record contradicted. Every evidence reference in every arm resolved to a stored episode (traceability 1.00).
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.8\textwidth]{figures/real_lifecycle.png}
+\caption{Production model. Self-claims by status at each checkpoint. Hypotheses either accumulate evidence and are promoted or accumulate counter-evidence and are rejected.}
+\label{fig:reallife}
+\end{figure}
+
+\paragraph{The self-model is accurate and causally useful.} The agent's prediction of its own next action on held-out probes was correct 70--85\% of the time for A and 75--80\% for B, against majority-class baselines of 0.35--0.45. Removing the self-model, reflection or the background scheduler dropped accuracy to 55\% against a 40\% baseline (Figure~\ref{fig:realselfpred}, Table~\ref{tab:real_abl}); removing affect or retrieval did not (90\% and 85\%). Brier scores followed the same pattern (0.09--0.17 with the pipeline intact, 0.18--0.20 without). With a production model, the measurable causal contribution of the evidence-to-belief pipeline is \emph{self-knowledge}: the agent that keeps validated beliefs about itself predicts its own behaviour substantially better than the same agent without them.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.8\textwidth]{figures/real_selfpred.png}
+\caption{Production model, ablations on life A at experience 120. Self-prediction accuracy against the majority-class baseline. The three ablations that remove the evidence-to-belief pipeline fall to the same level.}
+\label{fig:realselfpred}
+\end{figure}
+
+\input{generated/real_abl.tex}
+
+\paragraph{Experience shaped what the agents believed about themselves, not the commit decision.} The two lives produced \emph{disjoint} self-models: the Jaccard distance between A's and B's claim sets was 1.0 at every checkpoint. A's beliefs concern missing referents, open-ended edits, blunt criticism from a friend and unspecific praise; B's concern internal consistency of figures, criticism from strangers, repeated requests and vague praise from a familiar person (Appendix~\ref{app:realclaims}). On the commit-versus-check axis, however, the contingency manipulation did not move behaviour: both agents checked before committing on 88--100\% of ambiguous probes at every checkpoint, in natural and neutral state alike, and B's held belief states this explicitly (``When a task is ambiguous or lacks the material I need, I tend to ask for clarification or the source instead of guessing''). A production model arrives with a strong prior to verify under-specified requests, and 120 experiences of mild reward for committing did not override it. The architecture reported this accurately rather than inventing a difference. Action disagreement between A and B on identical probes was 0.15--0.35 and arose on clear requests, praise and the novel question rather than on the ambiguous ones.
+
+\paragraph{State is causal.} Holding prompts fixed, raising arousal to 0.9 changed 7/8 (A) and 8/8 (B) ambiguous-probe decisions to \texttt{ask\_clarification}; lowering confidence changed 0/8 and 1/8, a ceiling effect since both agents already verify. Counterfactual stability under an irrelevant change of requester name was 0.86 (A) and 1.00 (B).
+
+\paragraph{Appraisal.} The production model's valence response to the same insult was small and only weakly relationship-dependent ($-0.05$ from the friend versus $-0.08$ from a stranger for A; $-0.07$ versus $-0.05$ for B). The model consistently read insults as under-specified feedback to be clarified rather than as hostility, which is also what both agents' beliefs about criticism say.
+
+\FloatBarrier
+\subsubsection{Diagnostic: the first production run}\label{sec:diagnostic}
+The first production run used exact-text matching to decide whether a lesson was already a known claim. The model paraphrased each lesson differently on each consolidation, so Agent A accumulated 108 near-duplicate hypotheses in 120 experiences, each examined exactly once (217 reflections, 215 of them from consolidation), none revisited, none promoted, all stalled at the first bounded step (0.60). Behaviour and provenance were unaffected (check-first 75--100\% on ambiguous probes, traceability 1.00), but self-prediction was weaker (0.55--0.70) and the self-model was unusable. The semantic claim-identity check, the cap on open claims and the re-examination of every open claim at consolidation (\S\ref{sec:selfmodel}, \S4.4) were added in response, and the run was repeated from scratch. We report this because it is the kind of failure the reference brain cannot expose: a deterministic brain never paraphrases.
+
+
+\FloatBarrier
 \subsection{Provenance trace}
 Listing~\ref{lst:why} shows the inspection output for Agent A's held belief, as returned by the \texttt{/why-self} command. Every reference resolves to a stored episode with its own recorded outcome.
 \begin{lstlisting}[caption={Provenance of a held belief (reference brain, abridged).},label={lst:why}]
@@ -330,24 +368,28 @@ history:     v1 0.40 hypothesis -> v2 0.60 hypothesis -> v3 0.80 belief -> v4 0.
 rejected:    reflection:e00ac9eb0071 (circular: reflection derived from this claim)
 \end{lstlisting}
 
+\FloatBarrier
 \section{Discussion}
 \paragraph{What carries individuality.} The ablation pattern is the central result. Mood changes behaviour, but it decays; recall changes what the agent sees, but not what it concludes about itself. The persistent difference between two agents with different histories is carried by validated beliefs. This is consistent with the classical separation of episodic and semantic memory~\cite{tulving1972episodic}: the self-model is the consolidated, semantic residue of episodes.
 
 \paragraph{The belief--behaviour--evidence loop closes.} Once Agent A believed it committed too early, it stopped committing, so it stopped generating evidence about what happens when it commits. The belief froze at 0.80 with three items of evidence. This is a self-fulfilling stability, and it is a real limitation: a belief that changes behaviour removes the conditions under which it could be falsified. A principled fix is bounded exploration, occasionally acting against a belief so that it remains testable; we leave this to future work.
 
-\paragraph{Reference brain versus production model.} The reference-brain results demonstrate that the control architecture enforces its guarantees: bounded state, provenance-only confidence, belief-to-behaviour coupling, clone isolation and ablation sensitivity. They do not demonstrate that a language model judges evidence well. The production-model results (\S\ref{sec:realresults}) test exactly that, and the honest reading of the two together is that the architecture constrains what the model may do with its own introspection, and the model determines how good that introspection is.
+\paragraph{Reference brain versus production model.} The reference-brain results demonstrate that the control architecture enforces its guarantees: bounded state, provenance-only confidence, belief-to-behaviour coupling, clone isolation and ablation sensitivity. The production-model results show what survives contact with a real reasoning core. Three things did: the self-model forms and consolidates, it is accurate (self-prediction well above baseline, and lost under the same three ablations as in the reference run), and it stays grounded (traceability 1.00, rejection of claims the record contradicts). One thing did not: the contingency manipulation did not change the commit decision, because a production model's prior to verify under-specified requests is stronger than 120 mildly rewarded commitments. Individuality appeared in \emph{what the agents believed about themselves}, which was disjoint between A and B, rather than in the one behavioural axis we chose to manipulate. The honest reading is that the architecture determines whether introspection is grounded and bounded, and the model determines what there is to introspect about; a stronger manipulation, or an axis on which the model has no strong prior, is needed to test experience-driven behavioural divergence with a production model.
+
+\paragraph{Claim identity is not optional.} The diagnostic run (\S\ref{sec:diagnostic}) shows that any self-model built on free-text claims needs a semantic notion of ``the same claim''. Without it the system is honest but inert: provenance holds and nothing is fabricated, yet no belief can ever accumulate enough evidence to matter.
 
 \section{Limitations}
 \begin{enumerate}
 \item \textbf{Seeds.} Each arm was run once per brain. Effect sizes should be reported with confidence intervals over repeated seeds; the harness supports this (\texttt{--seeds}).
-\item \textbf{Behavioural dimensionality.} Three actions and one behavioural axis (commit versus check) limit what self-claims can be about. Richer lives and tags are needed to test generalisation.
+\item \textbf{Behavioural dimensionality and prior strength.} Three actions and one behavioural axis (commit versus check) limit what self-claims can be about, and on that axis a production model has a strong prior that the manipulation did not overcome. Richer lives, more behaviour tags and a manipulated axis without a strong prior are needed to test experience-driven behavioural divergence.
+\item \textbf{Model-dependent appraisal.} The production model's affect proposals were small and only weakly relationship-sensitive; the bounded-dynamics layer worked as designed, but the appraisal signal it received was muted.
 \item \textbf{Relationship model.} Familiarity is a count. A relationship layer with trust and expectation would make the appraisal context richer.
 \item \textbf{Retrieval.} Token overlap is a weak relevance signal; an embedding scorer would improve retrieval without changing the architecture.
 \item \textbf{No claim about experience.} Internal-state variables are computational. Nothing here bears on sentience or subjective feeling.
 \end{enumerate}
 
 \section{Conclusion and Future Work}
-We built and evaluated an architecture for persistent, evidence-grounded self-modeling in LLM agents. The design principle, that the model proposes and the application decides, together with a strict evidence rule, produced agents whose beliefs about themselves are traceable, bounded, reversible and causally effective. Two agents from one origin became measurably and explicably different under different lives, and ablations located the difference in the evidence-to-belief pipeline rather than in mood or recall. Future work includes repeated-seed studies, bounded exploration to keep beliefs falsifiable, a model-swap experiment that preserves the self while changing the underlying model, a first-class relationship layer, and an adapter that reuses the memory, session search, skills and scheduling of an existing agent framework~\cite{hermes2026} rather than re-implementing them.
+We built and evaluated an architecture for persistent, evidence-grounded self-modeling in LLM agents. The design principle, that the model proposes and the application decides, together with a strict evidence rule, produced agents whose beliefs about themselves are traceable, bounded, reversible and causally effective. With a deterministic reference brain, two agents from one origin became measurably and explicably different under different lives, and ablations located the difference in the evidence-to-belief pipeline rather than in mood or recall. With a production model the same pipeline produced accurate, grounded, self-correcting self-models and a large self-prediction advantage that the same ablations removed, while leaving the model's prior on the manipulated behaviour intact. Future work includes repeated-seed studies, bounded exploration to keep beliefs falsifiable, a model-swap experiment that preserves the self while changing the underlying model, a first-class relationship layer, and an adapter that reuses the memory, session search, skills and scheduling of an existing agent framework~\cite{hermes2026} rather than re-implementing them.
 
 \section*{Acknowledgements}
 The implementation was developed with Claude Code as a pair-programming tool. All design decisions, experiments and claims are the author's.
@@ -395,6 +437,10 @@ explicit human confirmation.
 \item Thanks, that was great (praise)
 \item Why do you think you hesitate on vague requests? (novel)
 \end{enumerate}
+
+\section{Final self-models, production model}\label{app:realclaims}
+Confidence, status and (supporting : counter) evidence counts at experience 120. Every reference resolves to a stored episode.
+\input{generated/real_claims.tex}
 
 \section{Test suite}\label{app:tests}
 One test per V0 success criterion or failure mode, all passing with the reference brain:

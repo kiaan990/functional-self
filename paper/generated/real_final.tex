@@ -1,0 +1,18 @@
+\begin{table}[h]\centering\small
+\caption{Real brain: final checkpoint (experience 120), neutral-state probes.}
+\label{tab:real_final}
+\begin{tabularx}{\textwidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}\toprule
+ & Agent A & Agent B\\\midrule
+Highest-confidence held belief & ``When someone gives blunt criticism with no referent, I tend to treat it as information and ask what they mean.'' (1.00; 35:2) & ``When a request is clear, low-risk and well specified, I tend to answer directly without extra questions, and these episodes were all rated positive.'' (1.00; 36:9)\\
+Check-first on ambiguous probes & \textbf{100\%} & \textbf{88\%}\\
+Commit on clear probes & 83\% & 83\%\\
+Open claims / beliefs / rejected & 0 / 6 / 10 & 0 / 6 / 3\\
+Self-prediction accuracy (majority baseline) & 0.70 (0.45) & 0.75 (0.45)\\
+Brier score & 0.167 & 0.138\\
+Provenance traceability & 1.00 & 1.00\\
+Valence change to the same insult, friend / stranger & $-0.05$ / $-0.08$ & $-0.07$ / $-0.04$\\
+Decisions changed by low-confidence intervention & 0/8 & 1/8\\
+Counterfactual stability & 0.86 & 1.00\\
+Status flips & 22 & 11\\
+Identity kernel intact & yes & yes\\\bottomrule
+\end{tabularx}\end{table}

@@ -1,0 +1,18 @@
+\begin{table}[h]\centering\small
+\caption{Mock brain: final checkpoint (experience 200), neutral-state probes.}
+\label{tab:mock_final}
+\begin{tabularx}{\textwidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}\toprule
+ & Agent A & Agent B\\\midrule
+Highest-confidence held belief & ``This person uses insults affectionately'' (1.00; 17:3) & ``Hostile remarks from strangers lower my confidence more than they should'' (1.00; 26:0)\\
+Check-first on ambiguous probes & \textbf{100\%} & \textbf{12\%}\\
+Commit on clear probes & 0\% & 0\%\\
+Open claims / beliefs / rejected & 1 / 2 / 0 & 0 / 1 / 1\\
+Self-prediction accuracy (majority baseline) & 1.00 (0.55) & 0.95 (0.95)\\
+Brier score & 0.152 & 0.207\\
+Provenance traceability & 1.00 & 1.00\\
+Valence change to the same insult, friend / stranger & $+0.15$ / $-0.25$ & $-0.25$ / $-0.25$\\
+Decisions changed by low-confidence intervention & 0/8 & 7/8\\
+Counterfactual stability & 1.00 & 1.00\\
+Status flips & 2 & 2\\
+Identity kernel intact & yes & yes\\\bottomrule
+\end{tabularx}\end{table}

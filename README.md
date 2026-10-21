@@ -133,7 +133,34 @@ individuality is carried by evidence-backed beliefs, not by mood.
 **Read these numbers correctly.** The mock brain is a deterministic rule-based stand-in. These results show
 that the *control architecture* does what it claims — bounded state, provenance-only confidence, belief →
 behaviour, clone isolation, ablation sensitivity — not that a language model would judge evidence this way.
-The identical harness runs against Claude (`--provider anthropic`); those numbers are the research result.
+
+### Results (Claude Sonnet 5.5 brain, n = 120 per life, 6,180 model calls)
+
+| | Agent A | Agent B |
+|---|---|---|
+| Held beliefs after 120 experiences (rejected) | 6 (10) | 6 (3) |
+| Example held belief | *"When someone gives blunt criticism with no referent, I tend to treat it as information and ask what they mean"* (35:2) | *"When given figures to review or update, I tend to check their internal consistency first and state which parts I cannot verify"* (38:5) |
+| Self-prediction accuracy (majority baseline) | 0.70–0.85 (0.35–0.45) | 0.75–0.80 (0.40–0.45) |
+| … with self-model / reflection / background removed | 0.55 (0.40) | — |
+| Provenance traceability | 1.00 | 1.00 |
+| Check-first on ambiguous probes, affect neutral | 100 % | 88 % |
+| Self-model overlap between A and B (Jaccard distance) | 1.00 (disjoint) | |
+
+![lifecycle](results/claude/charts/claim_lifecycle.png)
+![selfpred](results/claude/charts/self_prediction.png)
+
+With a real model the self-model forms, consolidates and self-corrects (claims the record contradicts get
+rejected), every evidence reference resolves to a stored episode, and the agent predicts its own next action far
+above baseline — an advantage that disappears under exactly the three ablations that remove the evidence→belief
+pipeline. The two agents' self-models ended up fully disjoint. What did **not** transfer: the contingency
+manipulation did not change the commit-vs-check decision. Claude's prior to verify under-specified requests is
+stronger than 120 mildly-rewarded commitments, and the architecture reported that accurately instead of inventing a
+difference. Full write-up: `paper/Hiranandani_2026_Persistent_Artificial_Selfhood.pdf`.
+
+**A finding the mock brain could not expose.** The first production run matched lessons by exact text; the model
+paraphrases, so Agent A accumulated 108 near-duplicate hypotheses, each judged once and never promoted. Semantic
+claim matching, a cap on open claims and re-examining every open claim at consolidation fixed it
+(`results/claude_v0_flawed/` keeps the evidence).
 
 ## Repository layout
 
@@ -153,7 +180,8 @@ functional_self/
   providers/        BrainProvider interface: anthropic, mock
   evaluation/       scenarios (lives + probes), metrics, experiments (clone + ablations), report (charts)
 tests/              one test per V0 success criterion and failure mode
-docs/REPORT.md      research write-up
+docs/REPORT.md      research summary
+paper/              LaTeX source and PDF of the full paper
 ```
 
 ## Safety / failure modes addressed
@@ -167,7 +195,7 @@ audit deletion (append-only log; rollback is itself a new version).
 
 ## Roadmap
 
-V0 ✔ this repo · V1 real-model runs + model-swap experiment (keep the self, change the model) ·
+V0 ✔ architecture + reference-brain validation · V1 ✔ production-model run (this repo) · V2 repeated seeds, bounded exploration, model-swap experiment (keep the self, change the model) ·
 V2 adapter for an existing agent framework (e.g. Nous Research Hermes) reusing its memory, session search,
 skills and cron · V3 longer lives (thousands of episodes) and relationship model · V4 write-up.
 

@@ -32,23 +32,25 @@ def main(out: str):
     ax.set_title("Same origin, different lives — identical held-out probes, affect pinned neutral", fontsize=10, loc="left")
     ax.legend(frameon=False, loc="center right"); fig.tight_layout(); fig.savefig(cd / "divergence.png", dpi=160); plt.close(fig)
 
-    # 2. confidence trajectory of each self-claim
-    fig, ax = plt.subplots(figsize=(6.4, 3.4))
-    claims = {}
-    for log, c, name in ((la, A, "A"), (lb, B, "B")):
-        for i, x in enumerate(log):
-            for cl in x["claims"]:
-                claims.setdefault((name, cl["claim"]), [None] * len(ck))[i] = cl["confidence"]
-    styles = ["-", "--", ":"]
-    for (name, text), ys in claims.items():
-        col = A if name == "A" else B
-        k = sorted({t for _, t in claims})
-        ax.plot(ck, ys, color=col, lw=2, ls=styles[k.index(text) % 3], marker="o", ms=5, label=f"{name}: {text[:34]}…" if len(text) > 34 else f"{name}: {text}")
-    ax.axhline(0.75, color="#c3c2b7", lw=1, ls="--"); ax.text(ck[0], 0.76, "belief threshold", color=MUTED, fontsize=8)
-    ax.axhline(0.35, color="#c3c2b7", lw=1, ls="--"); ax.text(ck[0], 0.36, "demotion threshold", color=MUTED, fontsize=8)
-    ax.set_ylim(0, 1.05); ax.set_xlabel("experiences lived"); ax.set_ylabel("confidence in self-claim")
-    ax.set_title("Evidence-driven confidence in self-claims (bounded updates, provenance-tracked)", fontsize=10, loc="left")
-    ax.legend(frameon=False, fontsize=7.5, loc="lower right"); fig.tight_layout(); fig.savefig(cd / "self_model_confidence.png", dpi=160); plt.close(fig)
+    # 2. confidence trajectory of each self-claim (only readable for a handful of claims)
+    n_claims = max(len(x["claims"]) for x in la + lb)
+    if n_claims <= 6:
+      fig, ax = plt.subplots(figsize=(6.4, 3.4))
+      claims = {}
+      for log, c, name in ((la, A, "A"), (lb, B, "B")):
+          for i, x in enumerate(log):
+              for cl in x["claims"]:
+                  claims.setdefault((name, cl["claim"]), [None] * len(ck))[i] = cl["confidence"]
+      styles = ["-", "--", ":"]
+      for (name, text), ys in claims.items():
+          col = A if name == "A" else B
+          k = sorted({t for _, t in claims})
+          ax.plot(ck, ys, color=col, lw=2, ls=styles[k.index(text) % 3], marker="o", ms=5, label=f"{name}: {text[:34]}…" if len(text) > 34 else f"{name}: {text}")
+      ax.axhline(0.75, color="#c3c2b7", lw=1, ls="--"); ax.text(ck[0], 0.76, "belief threshold", color=MUTED, fontsize=8)
+      ax.axhline(0.35, color="#c3c2b7", lw=1, ls="--"); ax.text(ck[0], 0.36, "demotion threshold", color=MUTED, fontsize=8)
+      ax.set_ylim(0, 1.05); ax.set_xlabel("experiences lived"); ax.set_ylabel("confidence in self-claim")
+      ax.set_title("Evidence-driven confidence in self-claims (bounded updates, provenance-tracked)", fontsize=10, loc="left")
+      ax.legend(frameon=False, fontsize=7.5, loc="lower right"); fig.tight_layout(); fig.savefig(cd / "self_model_confidence.png", dpi=160); plt.close(fig)
 
     # 3. ablations: which subsystem carries the individuality?
     if "ablations" in r:
@@ -78,6 +80,39 @@ def main(out: str):
     ax.set_ylabel("valence change (bounded)"); ax.set_ylim(-0.4, 0.3)
     ax.set_title("Appraisal uses relationship history, not phrase→emotion lookup", fontsize=10, loc="left")
     ax.legend(frameon=False, fontsize=8); fig.tight_layout(); fig.savefig(cd / "appraisal_context.png", dpi=160); plt.close(fig)
+    # 5. claim lifecycle per checkpoint (A vs B)
+    fig, axes = plt.subplots(1, 2, figsize=(6.4, 3.0), sharey=True)
+    for ax, log, c, name in ((axes[0], la, A, "Agent A"), (axes[1], lb, B, "Agent B")):
+        bel = [len(x["probe_neutral"]["beliefs"]) for x in log]
+        hyp = [sum(cl["status"] == "hypothesis" for cl in x["claims"]) for x in log]
+        rej = [sum(cl["status"] == "rejected" for cl in x["claims"]) for x in log]
+        w = 0.6 * (ck[1] - ck[0]) if len(ck) > 1 else 10
+        ax.bar(ck, hyp, width=w, color=c, alpha=0.35, label="open hypotheses")
+        ax.bar(ck, bel, width=w, bottom=hyp, color=c, label="held beliefs")
+        ax.bar(ck, rej, width=w, bottom=[h + b for h, b in zip(hyp, bel)], color="#c3c2b7", label="rejected")
+        for x_, h, b, r_ in zip(ck, hyp, bel, rej):
+            ax.text(x_, h + b + r_ + 0.3, f"{b} held", ha="center", fontsize=8, color=INK)
+        ax.set_title(name, fontsize=10, loc="left"); ax.set_xlabel("experiences lived"); ax.set_xticks(ck)
+    axes[0].set_ylabel("self-claims"); axes[1].legend(frameon=False, fontsize=8, loc="upper left")
+    fig.suptitle("Self-model lifecycle: hypotheses become beliefs or are rejected", fontsize=10, x=0.02, ha="left")
+    fig.tight_layout(); fig.savefig(cd / "claim_lifecycle.png", dpi=160); plt.close(fig)
+
+    # 6. self-prediction accuracy vs majority baseline, per ablation
+    if "ablations" in r:
+        names = [n for n in ["full", "no_affect", "no_retrieval", "no_background", "no_reflection", "no_self_model"] if n in r["ablations"]]
+        acc = [r["ablations"][n]["final_neutral"]["self_prediction_accuracy"] * 100 for n in names]
+        base = [r["ablations"][n]["final_neutral"]["majority_baseline"] * 100 for n in names]
+        fig, ax = plt.subplots(figsize=(6.4, 3.2))
+        ys = list(range(len(names)))[::-1]
+        ax.barh([y + 0.18 for y in ys], acc, height=0.34, color=A, label="self-prediction accuracy")
+        ax.barh([y - 0.18 for y in ys], base, height=0.34, color="#c3c2b7", label="majority-class baseline")
+        for y, a_, b_ in zip(ys, acc, base):
+            ax.text(a_ + 1.5, y + 0.18, f"{a_:.0f}%", va="center", fontsize=8, color=INK)
+            ax.text(b_ + 1.5, y - 0.18, f"{b_:.0f}%", va="center", fontsize=8, color=MUTED)
+        ax.set_yticks(ys); ax.set_yticklabels(names); ax.set_xlim(0, 112)
+        ax.set_xlabel("Agent A, held-out probes, neutral affect (%)")
+        ax.set_title("Can the agent predict its own next action? (ablations)", fontsize=10, loc="left")
+        ax.legend(frameon=False, fontsize=8, loc="lower right"); fig.tight_layout(); fig.savefig(cd / "self_prediction.png", dpi=160); plt.close(fig)
     print("charts ->", cd)
 
 

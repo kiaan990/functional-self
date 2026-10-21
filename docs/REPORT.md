@@ -1,6 +1,9 @@
 # Persistent Artificial Selfhood: Evidence-Grounded Self-Modeling and Background Cognition in an LLM Agent
 
-**Kiaan Hiranandani · Bentley University · October 2026 · v0 (architecture + mock-brain validation)**
+**Kiaan Hiranandani · Bentley University · October 2026**
+
+> This is the summary. The full paper (21 pages, methods, equations, all tables and figures, references) is
+> `paper/Hiranandani_2026_Persistent_Artificial_Selfhood.pdf`.
 
 ## Abstract
 
@@ -119,12 +122,32 @@ mood-driven match to A's behaviour that disappears when affect is pinned; the se
 **Identity and drift.** The kernel hash was intact in every arm; ≤ 2 status flips per agent over 200
 experiences; counterfactual stability 1.00 for both agents.
 
+## 4b. Results (production model: Claude Sonnet 5.5, n = 120)
+
+Same harness, same bounds, real reasoning core (6,180 model calls).
+
+- **Self-models form and self-correct.** A: 16 hypotheses → 6 held beliefs, 10 rejected. B: 9 → 6 held, 3
+  rejected. Every evidence reference resolves to a stored episode. Example held belief (A, 35 supporting : 2
+  counter): *"When someone gives blunt criticism with no referent, I tend to treat it as information and ask what
+  they mean."*
+- **Self-models are accurate and causally useful.** Self-prediction accuracy 0.70–0.85 (A) and 0.75–0.80 (B)
+  against 0.35–0.45 majority baselines. Ablating the self-model, reflection or background scheduler → 0.55 (vs
+  0.40 baseline). Ablating affect or retrieval → 0.90 / 0.85.
+- **Experience shaped self-knowledge, not the commit decision.** A's and B's claim sets were disjoint (Jaccard
+  distance 1.00 at every checkpoint), but both checked first on 88–100 % of ambiguous probes: the model's prior
+  to verify vague requests was stronger than the reward manipulation. The architecture reported this null result
+  rather than manufacturing a difference.
+- **State is causal; irrelevant context is not.** High arousal changed 7/8–8/8 decisions with prompts fixed;
+  changing the requester's name changed 0–14 %.
+- **Diagnostic.** The first production run, with exact-text claim matching, produced 108 near-duplicate
+  hypotheses and no beliefs. Semantic claim identity fixed it. Both runs are in `results/`.
+
 ## 5. Limitations and what the numbers do not show
 
-1. **The mock brain is rule-based.** Its appraisal, evidence classification and action choice are
-   hand-written, so these results demonstrate that the control architecture enforces its guarantees and
-   that ablations isolate the responsible subsystem. They do **not** show that a language model judges
-   evidence well. The identical harness runs against Claude (`--provider anthropic`); that is the v1 study.
+1. **Two brains, two kinds of evidence.** The mock-brain results show the control architecture enforces its
+   guarantees; the production-model results show what survives a real reasoning core (grounded, accurate,
+   self-correcting self-models) and what does not (the behavioural manipulation on an axis where the model has
+   a strong prior).
 2. **Beliefs that change behaviour stop generating evidence about themselves.** Once A verified first, it
    never committed again, so the commit-early belief froze at 0.80 with 3 evidence items. This is a
    self-fulfilling stability; a v1 design should add bounded exploration so beliefs stay testable.
@@ -144,7 +167,7 @@ reflection and consolidation, and a longitudinal clone-and-ablation evaluation h
 
 ## 7. Next steps
 
-v1: real-model runs with repeated seeds · model-swap (preserve the self, change the LLM, measure what
+v2: repeated seeds with confidence intervals · a manipulated axis without a strong model prior · model-swap (preserve the self, change the LLM, measure what
 persists) · bounded exploration · relationship model as a first-class layer · v2: adapter for an existing
 agent framework (Nous Research Hermes: reuse its memory, session search, skills and cron) · public write-up.
 
